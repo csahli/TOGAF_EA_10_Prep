@@ -17,13 +17,43 @@
   --radius-sm: 12px;
   --shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --orb-opacity: 0.18;
+  --body-grad-top: #1a242c;
 }
+
+/* ---------- light theme ---------- */
+[data-theme="light"] {
+  --bg: #f4f6f9;
+  --bg-soft: #ffffff;
+  --surface: rgba(15, 28, 40, 0.03);
+  --surface-2: rgba(15, 28, 40, 0.06);
+  --border: rgba(15, 28, 40, 0.12);
+  --text: #1b2630;
+  --text-dim: #4a5a67;
+  --text-faint: #7d8b96;
+  --accent: #1f9e8b;
+  --accent-2: #5b6fa6;
+  --accent-soft: rgba(31, 158, 139, 0.12);
+  --good: #2f9e6a;
+  --warn: #b8862f;
+  --bad: #c75151;
+  --shadow: 0 18px 50px rgba(31, 54, 74, 0.12);
+  --orb-opacity: 0.10;
+  --body-grad-top: #e3ebf2;
+}
+
+/* smooth transition when switching themes */
+body, .card, .option, .seg, .btn, .review-item, .hist-row {
+  transition: background 0.3s var(--ease), color 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background: radial-gradient(1200px 800px at 70% -10%, #1a242c, var(--bg));
+  background: radial-gradient(1200px 800px at 70% -10%, var(--body-grad-top), var(--bg));
+
   color: var(--text);
   min-height: 100vh;
   line-height: 1.55;
@@ -36,8 +66,9 @@ body {
   position: fixed;
   border-radius: 50%;
   filter: blur(90px);
-  opacity: 0.18;
+  opacity: var(--orb-opacity);
   z-index: 0;
+
   pointer-events: none;
 }
 .orb-1 { width: 420px; height: 420px; background: #5fd6c2; top: -120px; right: -80px; }
@@ -61,6 +92,18 @@ body {
 }
 .nav-link:hover { color: var(--text); background: var(--surface); }
 .nav-link.is-active { color: var(--bg); background: var(--accent); }
+
+/* theme toggle */
+.theme-toggle {
+  background: var(--surface); border: 1px solid var(--border);
+  color: var(--text-dim); cursor: pointer;
+  width: 38px; height: 38px; border-radius: 999px; margin-left: 6px;
+  display: grid; place-items: center; font-size: 1.05rem;
+  transition: all 0.25s var(--ease);
+}
+.theme-toggle:hover { color: var(--text); background: var(--surface-2); border-color: var(--accent); }
+.theme-toggle .theme-icon { line-height: 1; }
+
 
 main { position: relative; z-index: 1; max-width: 920px; margin: 0 auto; padding: 12px 32px 80px; }
 

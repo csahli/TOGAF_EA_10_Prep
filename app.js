@@ -5,6 +5,8 @@
    ========================================================================= */
 
 const HISTORY_KEY = "togaf_exam_history_v1";
+const THEME_KEY = "togaf_exam_theme";
+
 
 const state = {
   banks: { 1: [], 2: [] },
@@ -57,7 +59,34 @@ function renderInline(text) {
 }
 
 
+/* ---------- theme (light / dark) ---------- */
+function applyTheme(theme) {
+  const root = document.documentElement;
+  if (theme === "light") root.setAttribute("data-theme", "light");
+  else root.removeAttribute("data-theme");
+  const icon = document.querySelector("#themeToggle .theme-icon");
+  if (icon) icon.textContent = theme === "light" ? "☀" : "☾";
+}
+function initTheme() {
+  let theme;
+  try { theme = localStorage.getItem(THEME_KEY); } catch { theme = null; }
+  if (!theme) {
+    // respect the OS preference on first visit
+    theme = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches
+      ? "light" : "dark";
+  }
+  applyTheme(theme);
+}
+function toggleTheme() {
+  const isLight = document.documentElement.getAttribute("data-theme") === "light";
+  const next = isLight ? "dark" : "light";
+  applyTheme(next);
+  try { localStorage.setItem(THEME_KEY, next); } catch (e) { /* ignore */ }
+}
+
+
 /* ---------- data loading ----------
+
    Banks are loaded as plain <script> files (data/questions_level1.js and
    data/questions_level2.js) that assign window.TOGAF_BANK_1 / _2. This means
    the app runs by simply opening index.html in a browser — NO server needed. */
@@ -369,7 +398,12 @@ function exportHistory() {
 
 /* ---------- wiring ---------- */
 function init() {
+  // theme
+  initTheme();
+  $("#themeToggle").addEventListener("click", toggleTheme);
+
   // nav
+
   $$(".nav-link").forEach((n) => n.addEventListener("click", () => {
     const v = n.dataset.nav;
     if (v === "history") renderHistory();
