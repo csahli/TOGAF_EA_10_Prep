@@ -396,8 +396,87 @@ function exportHistory() {
   URL.revokeObjectURL(url);
 }
 
+/* ---------- glossary / definitions ---------- */
+const glossaryState = { cat: "All", query: "", built: false };
+
+function buildAdmRing() {
+  const g = document.getElementById("admRing");
+  if (!g || g.childNodes.length) return;
+  const phases = ["Prelim", "A. Vision", "B. Business", "C. Info Sys",
+                  "D. Tech", "E. Opp/Sol", "F. Migration", "G. Govern", "H. Change"];
+  // Place 9 labels evenly around the ring.
+  const cx = 160, cy = 160, r = 120;
+  phases.forEach((p, i) => {
+    const ang = (i / phases.length) * Math.PI * 2 - Math.PI / 2;
+    const x = cx + r * Math.cos(ang);
+    const y = cy + r * Math.sin(ang);
+    const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    circle.setAttribute("cx", x); circle.setAttribute("cy", y);
+    circle.setAttribute("r", 26); circle.setAttribute("class", "adm-seg");
+    g.appendChild(circle);
+    const t = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    t.setAttribute("x", x); t.setAttribute("y", y + 3);
+    t.setAttribute("text-anchor", "middle"); t.setAttribute("class", "adm-lbl");
+    t.style.fontSize = "8px";
+    t.textContent = p;
+    g.appendChild(t);
+  });
+}
+
+function renderGlossary() {
+  const data = window.TOGAF_GLOSSARY;
+  const listEl = $("#glossaryList");
+  if (!data) { listEl.innerHTML = `<div class="gloss-empty">Glossary data not loaded.</div>`; return; }
+
+  buildAdmRing();
+
+  // category chips (build once)
+  if (!glossaryState.built) {
+    const cats = ["All", ...Array.from(new Set(data.terms.map((t) => t.category)))];
+    $("#glossaryCats").innerHTML = cats.map((c) =>
+      `<button class="cat-chip${c === glossaryState.cat ? " is-active" : ""}" data-cat="${escapeHtml(c)}">${escapeHtml(c)}</button>`
+    ).join("");
+    $$("#glossaryCats .cat-chip").forEach((chip) => chip.addEventListener("click", () => {
+      glossaryState.cat = chip.dataset.cat;
+      $$("#glossaryCats .cat-chip").forEach((c) => c.classList.toggle("is-active", c === chip));
+      renderGlossary();
+    }));
+    glossaryState.built = true;
+  }
+
+  const q = glossaryState.query.trim().toLowerCase();
+  const filtered = data.terms.filter((t) => {
+    const inCat = glossaryState.cat === "All" || t.category === glossaryState.cat;
+    const inQuery = !q || t.term.toLowerCase().includes(q) || t.definition.toLowerCase().includes(q);
+    return inCat && inQuery;
+  });
+
+  if (!filtered.length) {
+    listEl.innerHTML = `<div class="gloss-empty">No terms match your search.</div>`;
+    return;
+  }
+
+  const highlight = (text) => {
+    const esc = escapeHtml(text);
+    if (!q) return esc;
+    const re = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`, "ig");
+    return esc.replace(re, "<mark>$1</mark>");
+  };
+
+  listEl.innerHTML = filtered.map((t) => `
+    <div class="gloss-item">
+      <div class="gloss-head">
+        <span class="gloss-term">${highlight(t.term)}</span>
+        <span class="gloss-cat">${escapeHtml(t.category)}</span>
+      </div>
+      <p class="gloss-def">${highlight(t.definition)}</p>
+      <a class="gloss-doc" href="${escapeHtml(t.doc)}" target="_blank" rel="noopener">📖 Read in TOGAF Standard ↗</a>
+    </div>`).join("");
+}
+
 /* ---------- wiring ---------- */
 function init() {
+
   // theme
   initTheme();
   $("#themeToggle").addEventListener("click", toggleTheme);
@@ -407,8 +486,16 @@ function init() {
   $$(".nav-link").forEach((n) => n.addEventListener("click", () => {
     const v = n.dataset.nav;
     if (v === "history") renderHistory();
+    if (v === "glossary") renderGlossary();
     showView(v);
   }));
+
+  // glossary search
+  $("#glossarySearch").addEventListener("input", (e) => {
+    glossaryState.query = e.target.value;
+    renderGlossary();
+  });
+
 
   // mode segmented control
   $$("#modeGroup .seg-btn").forEach((b) => b.addEventListener("click", () => {
