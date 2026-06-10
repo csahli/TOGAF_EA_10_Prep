@@ -4,11 +4,27 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TOGAF® EA Practitioner — Mock Exam Studio</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f1418'/%3E%3Cpath d='M32 12 L50 44 L14 44 Z' fill='none' stroke='%237fd1c4' stroke-width='4' stroke-linejoin='round'/%3E%3Ccircle cx='32' cy='34' r='6' fill='%237fd1c4'/%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
+
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=2" />
+
+  <script>
+    // Apply saved/preferred theme before first paint to avoid a flash.
+    (function () {
+      try {
+        var t = localStorage.getItem("togaf_exam_theme");
+        if (!t) {
+          t = (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches) ? "light" : "dark";
+        }
+        if (t === "light") document.documentElement.setAttribute("data-theme", "light");
+      } catch (e) { /* ignore */ }
+    })();
+  </script>
 </head>
+
 <body>
   <div class="bg-orb orb-1"></div>
   <div class="bg-orb orb-2"></div>
@@ -251,7 +267,8 @@
   <script src="data/questions_level1.js"></script>
   <script src="data/questions_level2.js"></script>
   <script src="data/glossary.js"></script>
-  <script src="app.js"></script>
+  <script src="app.js?v=2"></script>
+
 
 </body>
 </html>
