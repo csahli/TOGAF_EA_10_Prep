@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TOGAF® EA Practitioner — Mock Exam Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">◇</span>
+      <span class="brand-name">EA Practitioner <em>Studio</em></span>
+    </div>
+    <nav class="topnav">
+      <button class="nav-link" data-nav="home">Home</button>
+      <button class="nav-link" data-nav="history">History</button>
+      <button class="nav-link" data-nav="about">About</button>
+    </nav>
+  </header>
+
+  <main id="app">
+
+    <!-- HOME / SETUP -->
+    <section class="view view-home" data-view="home">
+      <div class="hero">
+        <p class="eyebrow">TOGAF® Standard, 10th Edition · Study Tool</p>
+        <h1>Practice with intention.</h1>
+        <p class="sub">A calm, focused space to rehearse Level 1 (Foundation) recall and
+          Level 2 (Practitioner) gradient-scored scenarios.</p>
+      </div>
+
+      <div class="card setup-card">
+        <h2 class="card-title">Configure your session</h2>
+
+        <div class="field">
+          <label class="field-label">Exam mode</label>
+          <div class="seg" role="radiogroup" id="modeGroup">
+            <button class="seg-btn is-active" data-mode="1">Level 1 · Foundation</button>
+            <button class="seg-btn" data-mode="2">Level 2 · Practitioner</button>
+            <button class="seg-btn" data-mode="blended">Blended</button>
+          </div>
+          <p class="field-hint" id="modeHint">Single best answer. Knowledge recall across the TOGAF Standard.</p>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="countRange">Number of questions: <strong id="countVal">20</strong></label>
+          <input type="range" id="countRange" min="5" max="40" step="5" value="20" />
+        </div>
+
+        <div class="field field-row">
+          <label class="switch">
+            <input type="checkbox" id="shuffleToggle" checked />
+            <span class="switch-track"></span>
+            <span class="switch-label">Shuffle questions</span>
+          </label>
+          <label class="switch">
+            <input type="checkbox" id="instantToggle" checked />
+            <span class="switch-track"></span>
+            <span class="switch-label">Instant feedback</span>
+          </label>
+        </div>
+
+        <button class="btn btn-primary btn-lg" id="startBtn">Begin session →</button>
+        <p class="bank-note" id="bankNote">Loading question banks…</p>
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section class="view view-quiz hidden" data-view="quiz">
+      <div class="quiz-head">
+        <div class="progress-meta">
+          <span id="qCounter">Question 1 / 20</span>
+          <span class="pill" id="qLevelPill">Level 1</span>
+          <span class="pill pill-ghost" id="qTopic">Topic</span>
+        </div>
+        <button class="btn btn-ghost btn-sm" id="quitBtn">Quit</button>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+      <div class="card quiz-card">
+        <p class="q-text" id="qText"></p>
+        <div class="options" id="optionsWrap"></div>
+        <div class="feedback hidden" id="feedback"></div>
+      </div>
+
+      <div class="quiz-foot">
+        <button class="btn btn-ghost" id="prevBtn">← Previous</button>
+        <button class="btn btn-primary" id="nextBtn">Next →</button>
+      </div>
+    </section>
+
+    <!-- RESULTS -->
+    <section class="view view-results hidden" data-view="results">
+      <div class="card result-card">
+        <div class="score-ring" id="scoreRing">
+          <div class="score-ring-inner">
+            <span class="score-pct" id="scorePct">0%</span>
+            <span class="score-lbl" id="scoreLbl">Score</span>
+          </div>
+        </div>
+        <h2 id="resultVerdict">Session complete</h2>
+        <p class="result-sub" id="resultSub"></p>
+        <div class="result-stats" id="resultStats"></div>
+        <div class="result-actions">
+          <button class="btn btn-primary" id="reviewBtn">Review answers</button>
+          <button class="btn btn-ghost" id="againBtn">New session</button>
+        </div>
+      </div>
+      <div class="review-list hidden" id="reviewList"></div>
+    </section>
+
+    <!-- HISTORY -->
+    <section class="view view-history hidden" data-view="history">
+      <div class="view-header">
+        <h2>Score history</h2>
+        <div class="history-tools">
+          <button class="btn btn-ghost btn-sm" id="exportBtn">Export JSON</button>
+          <button class="btn btn-ghost btn-sm" id="clearBtn">Clear all</button>
+        </div>
+      </div>
+      <div id="historyBody"></div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="view view-about hidden" data-view="about">
+      <div class="card about-card">
+        <h2>About this tool</h2>
+        <p>A self-study practice environment modeled on the format of the
+          <strong>TOGAF® EA Practitioner</strong> certification (TOGAF Standard, 10th Edition).</p>
+        <ul class="about-list">
+          <li><strong>Level 1 (Foundation):</strong> single-best-answer recall questions.</li>
+          <li><strong>Level 2 (Practitioner):</strong> scenario questions with gradient scoring
+            (best = 5, second-best = 3, others = 0).</li>
+          <li><strong>Blended:</strong> mixes both levels in one session.</li>
+        </ul>
+        <p class="disclaimer">⚠️ All questions are <strong>original study material</strong>.
+          They are not real exam questions and reproduce no proprietary Open Group content.
+          For authentic practice exams use The Open Group or accredited training providers.
+          TOGAF® is a registered trademark of The Open Group.</p>
+        <p class="disclaimer">Score history is stored locally in your browser (localStorage)
+          and never leaves your machine. Use “Export JSON” in History to save a file copy.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">Built for focused study · localStorage only · No data leaves your browser</footer>
+
+  <script src="data/questions_level1.js"></script>
+  <script src="data/questions_level2.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
