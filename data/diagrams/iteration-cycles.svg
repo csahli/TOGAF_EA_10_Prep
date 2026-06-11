@@ -1,31 +1,88 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 220" class="svg-diagram" role="img" aria-label="Four ADM iteration cycles: Context (Prelim and A), Development (B, C, D), Transition Planning (E and F), Governance (G and H)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 320" class="svg-diagram" role="img" aria-label="Four ADM iteration cycles. The Architecture Context iteration covers Preliminary and Phase A. The Architecture Development iteration covers Phases B, C and D. The Transition Planning iteration covers Phases E and F. The Architecture Governance iteration covers Phases G and H. A loop arrow on each iteration band indicates the cyclic repetition; Requirements Management iterates throughout.">
+  <defs>
+    <marker id="iter-arrowhead" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="var(--accent)" />
+    </marker>
+  </defs>
+
+  <!-- Coloured iteration bands behind the phase row -->
+  <rect x="14"  y="118" width="86"  height="64" rx="10" class="iter-band iter-band-ctx"  />
+  <rect x="104" y="118" width="138" height="64" rx="10" class="iter-band iter-band-dev"  />
+  <rect x="246" y="118" width="92"  height="64" rx="10" class="iter-band iter-band-tran" />
+  <rect x="342" y="118" width="92"  height="64" rx="10" class="iter-band iter-band-gov"  />
+
+  <!-- Iteration band labels (above each band) -->
+  <text x="57"  y="100" class="iter-band-lbl">Architecture Context</text>
+  <text x="173" y="100" class="iter-band-lbl">Architecture Development</text>
+  <text x="292" y="100" class="iter-band-lbl">Transition Planning</text>
+  <text x="388" y="100" class="iter-band-lbl">Architecture Governance</text>
+
+  <!-- Iteration loop arrows above each band label, showing the band repeats -->
+  <path d="M30 80 a 14 12 0 1 1 28 0" class="iter-loop" marker-end="url(#iter-arrowhead)" />
+  <path d="M155 80 a 18 12 0 1 1 36 0" class="iter-loop" marker-end="url(#iter-arrowhead)" />
+  <path d="M278 80 a 14 12 0 1 1 28 0" class="iter-loop" marker-end="url(#iter-arrowhead)" />
+  <path d="M374 80 a 14 12 0 1 1 28 0" class="iter-loop" marker-end="url(#iter-arrowhead)" />
+
+  <!-- Phase boxes (9 total). Equal widths, equal heights. -->
   <g class="iter-phases">
-    <rect x="8"   y="80" width="34" height="36" rx="5" class="iter-ph" />
-    <text x="25"  y="103" class="iter-ph-lbl">Pre</text>
-    <rect x="48"  y="80" width="34" height="36" rx="5" class="iter-ph" />
-    <text x="65"  y="103" class="iter-ph-lbl">A</text>
-    <rect x="88"  y="80" width="34" height="36" rx="5" class="iter-ph iter-dev" />
-    <text x="105" y="103" class="iter-ph-lbl">B</text>
-    <rect x="128" y="80" width="34" height="36" rx="5" class="iter-ph iter-dev" />
-    <text x="145" y="103" class="iter-ph-lbl">C</text>
-    <rect x="168" y="80" width="34" height="36" rx="5" class="iter-ph iter-dev" />
-    <text x="185" y="103" class="iter-ph-lbl">D</text>
-    <rect x="208" y="80" width="34" height="36" rx="5" class="iter-ph" />
-    <text x="225" y="103" class="iter-ph-lbl">E</text>
-    <rect x="248" y="80" width="34" height="36" rx="5" class="iter-ph" />
-    <text x="265" y="103" class="iter-ph-lbl">F</text>
-    <rect x="288" y="80" width="34" height="36" rx="5" class="iter-ph" />
-    <text x="305" y="103" class="iter-ph-lbl">G</text>
-    <rect x="328" y="80" width="22" height="36" rx="5" class="iter-ph" />
-    <text x="339" y="103" class="iter-ph-lbl">H</text>
+    <rect x="22"  y="130" width="36" height="40" rx="6" class="iter-ph iter-ph-ctx" />
+    <text x="40"  y="148" class="iter-ph-code">Pre</text>
+    <text x="40"  y="162" class="iter-ph-sub">prelim</text>
+
+    <rect x="62"  y="130" width="36" height="40" rx="6" class="iter-ph iter-ph-ctx" />
+    <text x="80"  y="153" class="iter-ph-code">A</text>
+    <text x="80"  y="166" class="iter-ph-sub">Vision</text>
+
+    <rect x="108" y="130" width="36" height="40" rx="6" class="iter-ph iter-ph-dev" />
+    <text x="126" y="153" class="iter-ph-code">B</text>
+    <text x="126" y="166" class="iter-ph-sub">Business</text>
+
+    <rect x="150" y="130" width="36" height="40" rx="6" class="iter-ph iter-ph-dev" />
+    <text x="168" y="153" class="iter-ph-code">C</text>
+    <text x="168" y="166" class="iter-ph-sub">Info Sys</text>
+
+    <rect x="192" y="130" width="44" height="40" rx="6" class="iter-ph iter-ph-dev" />
+    <text x="214" y="153" class="iter-ph-code">D</text>
+    <text x="214" y="166" class="iter-ph-sub">Technology</text>
+
+    <rect x="250" y="130" width="42" height="40" rx="6" class="iter-ph iter-ph-tran" />
+    <text x="271" y="153" class="iter-ph-code">E</text>
+    <text x="271" y="166" class="iter-ph-sub">Opp &amp; Sol</text>
+
+    <rect x="296" y="130" width="38" height="40" rx="6" class="iter-ph iter-ph-tran" />
+    <text x="315" y="153" class="iter-ph-code">F</text>
+    <text x="315" y="166" class="iter-ph-sub">Migration</text>
+
+    <rect x="346" y="130" width="40" height="40" rx="6" class="iter-ph iter-ph-gov" />
+    <text x="366" y="153" class="iter-ph-code">G</text>
+    <text x="366" y="166" class="iter-ph-sub">Governance</text>
+
+    <rect x="390" y="130" width="40" height="40" rx="6" class="iter-ph iter-ph-gov" />
+    <text x="410" y="153" class="iter-ph-code">H</text>
+    <text x="410" y="166" class="iter-ph-sub">Change</text>
   </g>
-  <path d="M12 64 H 82 V 76 H 12 Z" class="iter-bracket iter-ctx" />
-  <text x="47"  y="58"  class="iter-bracket-lbl">Architecture Context</text>
-  <path d="M92 64 H 202 V 76 H 92 Z" class="iter-bracket iter-devb" />
-  <text x="147" y="58"  class="iter-bracket-lbl">Architecture Development</text>
-  <path d="M212 120 H 282 V 132 H 212 Z" class="iter-bracket iter-tran" />
-  <text x="247" y="150" class="iter-bracket-lbl">Transition Planning</text>
-  <path d="M292 120 H 350 V 132 H 292 Z" class="iter-bracket iter-gov" />
-  <text x="321" y="150" class="iter-bracket-lbl">Governance</text>
-  <text x="180" y="200" class="iter-foot">Requirements Management iterates throughout</text>
+
+  <!-- Inter-band sequence arrows (small accent arrows in the gaps) -->
+  <path d="M100 150 L106 150" class="iter-seq" marker-end="url(#iter-arrowhead)" />
+  <path d="M240 150 L246 150" class="iter-seq" marker-end="url(#iter-arrowhead)" />
+  <path d="M337 150 L344 150" class="iter-seq" marker-end="url(#iter-arrowhead)" />
+
+  <!-- Requirements Management band underneath, spanning the full width -->
+  <rect x="14" y="220" width="420" height="42" rx="10" class="iter-rm" />
+  <text x="224" y="240" class="iter-rm-lbl">Requirements Management</text>
+  <text x="224" y="254" class="iter-rm-sub">continuous · interacts with every phase</text>
+
+  <!-- Up-arrows from RM band into each iteration band (the hub idea) -->
+  <path d="M57  213 L57  187" class="iter-rm-link" marker-end="url(#iter-arrowhead)" />
+  <path d="M173 213 L173 187" class="iter-rm-link" marker-end="url(#iter-arrowhead)" />
+  <path d="M292 213 L292 187" class="iter-rm-link" marker-end="url(#iter-arrowhead)" />
+  <path d="M388 213 L388 187" class="iter-rm-link" marker-end="url(#iter-arrowhead)" />
+
+  <!-- Legend (bottom): tiny accent badges + word — clarifies iter-loop semantics -->
+  <g class="iter-legend">
+    <circle cx="44"  cy="290" r="5" class="iter-legend-dot iter-legend-loop" />
+    <text   x="56"   y="294" class="iter-legend-lbl">↻ iterates within the band</text>
+    <circle cx="244" cy="290" r="5" class="iter-legend-dot iter-legend-seq" />
+    <text   x="256"  y="294" class="iter-legend-lbl">→ sequences between bands</text>
+  </g>
 </svg>
