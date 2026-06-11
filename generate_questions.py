@@ -342,8 +342,8 @@ L1_REFS = {
     "What is the relationship between ABBs and SBBs?": "C220 Part 4, §5.2 (Building Blocks)",
     "What is the primary benefit of reusing ABBs/SBBs?": "C220 Part 4, §5.3 (Building Blocks and the ADM)",
     # Repository / Continuum (C220 Part 5)
-    "What does the Enterprise Continuum provide?": "C220 Part 5, Enterprise Continuum",
-    "What is held in the Architecture Repository?": "C220 Part 5, Architecture Repository",
+    "What does the Enterprise Continuum provide?": "C220 Part 4, Ch. 6 (Enterprise Continuum); C220 Part 5 governance context",
+    "What is held in the Architecture Repository?": "C220 Part 4, Ch. 7 (Architecture Repository); C220 Part 5 governance context",
     # Principles (C220 Part 2)
     "What is the purpose of an Architecture Principle?": "C220 Part 2, ch. 2 (Architecture Principles)",
     "What is a key reason to define Architecture Principles early?": "C220 Part 2, ch. 2; C220 Part 1, ch. 2 (Preliminary)",
@@ -352,7 +352,7 @@ L1_REFS = {
     "Which deliverable triggers the start of an architecture engagement?": "C220 Part 4, §4.2.17 (Request for Architecture Work)",
     "What does an Architecture Contract govern?": "C220 Part 4, §4.2.2 (Architecture Contract)",
     "What is the Architecture Definition Document (ADD)?": "C220 Part 4, §4.2.3 (Architecture Definition Document)",
-    "What is the Architecture Requirements Specification?": "C220 Part 4, §4.2 (Deliverables)",
+    "What is the Architecture Requirements Specification?": "C220 Part 4, §4.2.6 (Architecture Requirements Specification)",
     # Views and viewpoints (C220 Part 2)
     "What is a 'view' in TOGAF terms?": "C220 Part 2, Stakeholder Management / Architecture Views and Viewpoints",
     "What is a 'viewpoint'?": "C220 Part 2, Architecture Views and Viewpoints",
@@ -378,9 +378,9 @@ L1_REFS = {
     "What is a catalog (artifact type)?": "C220 Part 4, ch. 3 (Artifacts: Catalogs, Matrices, Diagrams)",
     "What is a matrix (artifact type)?": "C220 Part 4, ch. 3 (Artifacts: Catalogs, Matrices, Diagrams)",
     # Business architecture
-    "Which best describes 'capability-based planning'?": "C220 Part 2, Capability-Based Planning",
-    "What is a Business Capability?": "C220 Part 2, Business Capabilities; C220 Part 1, ch. 4 (Phase B)",
-    "What is a value stream?": "C220 Part 2, Business Scenarios; C220 Part 1, ch. 4 (Phase B)",
+    "Which best describes 'capability-based planning'?": "TOGAF Series Guide: Business Capabilities (Capability-Based Planning); C220 Part 1, ch. 4 (Phase B)",
+    "What is a Business Capability?": "TOGAF Series Guide: Business Capabilities; C220 Part 1, ch. 4 (Phase B)",
+    "What is a value stream?": "TOGAF Series Guide: Value Streams; C220 Part 1, ch. 4 (Phase B)",
     "Which phase confirms the Baseline Business Architecture?": "C220 Part 1, ch. 4 (Phase B: Business Architecture)",
     # Concepts
     "What is a 'baseline' architecture?": "C220 Part 0, ch. 3 (Definitions)",
@@ -434,20 +434,20 @@ L1_NEW_AUTHORED = [
      "To audit financial statements", "To define product pricing", "To replace the Statement of Architecture Work",
      "The Capability Assessment evaluates baseline and target capability gaps for business, IT, and the architecture practice itself.",
      "Deliverables",
-     "C220 Part 4, §4.2.6 (Capability Assessment)"),
+     "C220 Part 4, §4.2.10 (Capability Assessment)"),
     # Phase B
     ("Which artifact catalogs the business capabilities of an enterprise?",
-     "Business Capability Catalog",
+     "Business Capabilities Catalog",
      "Application Portfolio Catalog", "Technology Standards Catalog", "Data Entity Catalog",
-     "The Business Capability Catalog is a Phase B artifact listing the capabilities the business possesses.",
+     "The Business Capabilities Catalog is a Phase B artifact listing the capabilities the business possesses.",
      "Business Architecture",
-     "C220 Part 4, ch. 3 (Artifacts) / Part 1 ch. 4"),
+     "C220 Part 4, §3.6.4.8 (Business Capabilities Catalog)"),
     ("Which best describes a Value Stream Stage?",
      "A discrete step within an end-to-end value stream that produces a defined value item",
      "A funding milestone", "A budget code", "A vendor SKU",
      "Each value-stream stage produces a value item that contributes to the overall stakeholder value delivered by the stream.",
      "Business Architecture",
-     "C220 Part 2, Business Scenarios / Part 4 Content Framework"),
+     "TOGAF Series Guide: Value Streams"),
     # Phase C: Data
     ("Which artifact shows the relationship between data entities and the business functions that consume them?",
      "Data Entity / Business Function Matrix",
@@ -520,21 +520,21 @@ L1_NEW_AUTHORED = [
     ("What is the primary purpose of a Business Transformation Readiness Assessment?",
      "To assess the organization's preparedness to undertake the change implied by the target architecture",
      "To audit project budgets", "To select cloud vendors", "To replace the Architecture Vision",
-     "BTRA identifies organisational readiness factors (vision, desire, need, business case, funding, sponsorship, governance, accountability, workable approach, capacity to implement and operate).",
+     "C220 Part 2 Ch. 7 defines BTRA, which identifies organisational readiness factors (vision, desire, need, business case, funding, sponsorship, governance, accountability, workable approach, capacity to implement and operate).",
      "ADM Techniques",
-     "C220 Part 2, Business Transformation Readiness Assessment"),
+     "C220 Part 2, Ch. 7 (Business Transformation Readiness Assessment)"),
     ("What is a Business Scenario used for in the ADM?",
      "To define stakeholders, business processes, technology environment, desired outcomes and SMART objectives that drive the architecture",
      "To replace the Statement of Architecture Work", "To run penetration tests", "To approve invoices",
      "Business Scenarios capture the business problem and requirements as a basis for the Architecture Vision and downstream phases.",
      "ADM Techniques",
-     "C220 Part 2, Business Scenarios (G176)"),
+     "TOGAF Series Guide G176 (Business Scenarios)"),
     ("How does TOGAF treat security in architecture development?",
      "As a cross-cutting concern integrated across all ADM phases",
      "As an optional add-on for regulated industries", "Only in Phase D after technology is selected", "As a separate framework that replaces the ADM",
      "Security stakeholders, requirements and controls thread through every ADM phase, not just Phase D.",
      "ADM Techniques",
-     "C220 Part 2, Security Architecture and the ADM"),
+     "TOGAF Series Guide G152 (Integrating Risk and Security within a TOGAF EA)"),
     # Applying the ADM
     ("Which three levels are typically used to organize the Architecture Landscape?",
      "Strategic, Segment, Capability",
@@ -543,86 +543,86 @@ L1_NEW_AUTHORED = [
      "Architecture Landscape",
      "C220 Part 3, Applying the ADM (Architecture Landscape)"),
     ("Which iteration cycle within the ADM repeatedly executes Phases B, C and D to develop target architectures?",
-     "Architecture Definition iteration",
+     "Architecture Development iteration",
      "Architecture Context iteration", "Transition Planning iteration", "Architecture Governance iteration",
-     "The Architecture Definition iteration cycles through Phases B, C and D to refine the target architectures.",
+     "The Architecture Development iteration cycles through Phases B, C and D to refine the target architectures (C220 Part 3 §2.2).",
      "Iteration",
-     "C220 Part 3, Applying the ADM (Iteration)"),
+     "C220 Part 3, §2.2 (Iteration in the ADM)"),
     ("Which iteration cycle iterates between Phases E and F?",
      "Transition Planning iteration",
      "Architecture Context iteration", "Architecture Definition iteration", "Requirements iteration",
      "Transition Planning iterations cycle Phase E (Opportunities & Solutions) and Phase F (Migration Planning) to consolidate the roadmap.",
      "Iteration",
      "C220 Part 3, Applying the ADM (Iteration)"),
-    ("In TOGAF, what does architecture partitioning by 'level' refer to?",
-     "Strategic, Segment and Capability levels of the Architecture Landscape",
-     "Salary bands", "Network OSI layers", "Hardware classes",
-     "Partitioning by level uses the Strategic / Segment / Capability levels of the Architecture Landscape.",
+    ("Which of the following is a partitioning criterion identified in TOGAF for organising architectures?",
+     "Subject matter (breadth), time period, level of detail, and maturity/volatility",
+     "Salary bands", "Network OSI layers", "Office floor plans",
+     "C220 Part 3 §4.1 distinguishes partitions from Landscape levels and identifies partitioning criteria such as subject matter (breadth), time, depth (level of detail), and maturity/volatility.",
      "Architecture Partitioning",
-     "C220 Part 3, Architecture Partitioning"),
-    ("In partitioning, what does 'subject matter' classification organize architectures by?",
-     "Architecture domains such as Business, Data, Application and Technology",
-     "Office locations", "Vendor invoices", "Employee headcount",
-     "Subject matter partitioning organises architecture work along architecture domains (BDAT).",
+     "C220 Part 3, §4.1 (Architecture Partitioning Criteria)"),
+    ("In TOGAF architecture partitioning, what does 'subject matter' (breadth) typically classify architectures by?",
+     "Functional subject areas such as applications, departments, divisions, products, services or sites",
+     "Hardware brands", "Vendor invoices", "Employee headcount",
+     "Per C220 Part 3 Table 4-1, the Subject Matter (Breadth) criterion organises architecture work along functional subject areas — applications, departments, divisions, products, services, service centres or sites — not along the BDAT architecture domains, which are an orthogonal concept.",
      "Architecture Partitioning",
-     "C220 Part 3, Architecture Partitioning"),
+     "C220 Part 3, Table 4-1 (Architecture Partitioning: Subject Matter / Breadth)"),
     # Repository structure
     ("Which part of the Architecture Repository holds generic reusable guidance such as reference models and patterns?",
      "Reference Library",
      "Architecture Landscape", "Governance Repository", "Solutions Landscape",
      "The Reference Library holds generic, reusable architectural guidance that can be tailored to specific architectures.",
      "Architecture Repository",
-     "C220 Part 5, Architecture Repository (Reference Library)"),
+     "C220 Part 4, Ch. 7 (Architecture Repository — Reference Library)"),
     ("Which part of the Architecture Repository records governance activity (agendas, decisions, dispensations)?",
      "Governance Repository",
      "Reference Library", "Standards Library", "Solutions Landscape",
      "The Governance Repository records governance process activity: agendas, decisions, compliance assessments, dispensations.",
      "Architecture Repository",
-     "C220 Part 5, Architecture Repository (Governance Repository)"),
+     "C220 Part 4, Ch. 7 (Architecture Repository — Governance Repository)"),
     ("Which part of the Architecture Repository holds the standards the enterprise must comply with?",
      "Standards Library",
      "Reference Library", "Architecture Requirements Repository", "Enterprise Repository",
      "The Standards Library holds the technical, business and regulatory standards the enterprise has committed to.",
      "Architecture Repository",
-     "C220 Part 5, Architecture Repository (Standards Library)"),
+     "C220 Part 4, Ch. 7 (Architecture Repository — Standards Library)"),
     ("Where in the Architecture Repository are authorized architecture requirements held?",
      "Architecture Requirements Repository",
      "Solutions Landscape", "Governance Repository", "Reference Library",
      "The Architecture Requirements Repository holds the agreed, authoritative set of architecture requirements.",
      "Architecture Repository",
-     "C220 Part 5, Architecture Repository (Requirements Repository)"),
+     "C220 Part 4, Ch. 7 (Architecture Repository — Architecture Requirements Repository)"),
     ("Which part of the Architecture Repository represents the architectures themselves at Strategic, Segment and Capability levels?",
      "Architecture Landscape",
      "Reference Library", "Standards Library", "Governance Repository",
      "The Architecture Landscape holds the descriptions of the architectures (Strategic / Segment / Capability) the organisation has produced.",
      "Architecture Repository",
-     "C220 Part 5, Architecture Repository (Architecture Landscape)"),
+     "C220 Part 4, Ch. 7 (Architecture Repository — Architecture Landscape)"),
     # Enterprise Continuum
     ("In the Enterprise Continuum, which end represents the most generic, reusable architectural assets?",
      "Foundation Architectures (Architecture Continuum end)",
      "Organization-Specific Solutions", "Industry Solutions", "Common Systems Solutions",
      "The Architecture Continuum runs from Foundation (most generic) through Common Systems, Industry, to Organization-Specific architectures.",
      "Enterprise Continuum",
-     "C220 Part 5, Enterprise Continuum"),
+     "C220 Part 4, Ch. 6 (Enterprise Continuum — Architecture Continuum classes)"),
     ("How are the Architecture Continuum and Solutions Continuum related?",
      "Each architecture stage in the Architecture Continuum has corresponding solutions in the Solutions Continuum that realise it",
      "They are entirely independent", "The Solutions Continuum replaces the Architecture Continuum", "They both store source code only",
      "The two continua are paired: ABBs in the Architecture Continuum are realised by SBBs in the Solutions Continuum.",
      "Enterprise Continuum",
-     "C220 Part 5, Enterprise Continuum (Architecture / Solutions Continuum)"),
+     "C220 Part 4, Ch. 6 (Enterprise Continuum — Architecture / Solutions Continuum relationship)"),
     # Governance
-    ("Which of the following is NOT one of the four levels of architecture conformance defined by TOGAF?",
+    ("Which of the following is NOT one of the levels of architecture conformance defined by TOGAF?",
      "Conformant by default",
      "Irrelevant", "Consistent", "Conformant",
-     "TOGAF defines Irrelevant, Consistent, Compliant, Conformant, Fully Conformant and Non-conformant levels; 'conformant by default' is not a TOGAF level.",
+     "C220 Part 5 §6.2 (Figure 6-1) defines six levels of conformance: Irrelevant, Consistent, Compliant, Conformant, Fully Conformant and Non-conformant. 'Conformant by default' is not one of them.",
      "Architecture Governance",
-     "C220 Part 5, Architecture Compliance (Levels of Conformance)"),
-    ("Who chairs the Architecture Board?",
-     "A senior leader with authority for architecture decisions across the enterprise",
-     "An intern", "A vendor account manager", "A finance auditor",
-     "The Architecture Board comprises senior stakeholders empowered to take architecture decisions across the enterprise.",
+     "C220 Part 5, §6.2 (Architecture Compliance — Levels of Conformance)"),
+    ("Who typically sponsors the Architecture Board?",
+     "A senior executive at the highest level of the organisation, such as the CIO",
+     "An intern", "A vendor account manager", "An external auditor",
+     "C220 Part 5 Ch. 4 describes the Architecture Board's executive sponsor as a senior executive at the highest level of the organisation — typically the CIO or equivalent — empowering the Board to take cross-enterprise architecture decisions.",
      "Architecture Governance",
-     "C220 Part 5, Architecture Board"),
+     "C220 Part 5, Ch. 4 (Architecture Board)"),
     # Risk
     ("In TOGAF risk management, what is 'residual risk'?",
      "The risk remaining after mitigation actions have been applied",
@@ -632,11 +632,11 @@ L1_NEW_AUTHORED = [
      "C220 Part 2, Risk Management"),
     # Metamodel / Content Framework
     ("Which TOGAF concept describes the entities, attributes and relationships used to structure architectural information?",
-     "Architecture Content Metamodel",
+     "TOGAF Enterprise Metamodel",
      "Stakeholder Map", "Communications Plan", "Architecture Vision",
-     "The Architecture Content Metamodel defines the entities, attributes and relationships that organise architectural information across the four domains.",
+     "TOGAF 10 (C220 Part 4 §§2.2-2.6) defines the TOGAF Enterprise Metamodel, which describes the entities, attributes and relationships used to organise architectural information across the four domains. (TOGAF 9 called this the Content Metamodel.)",
      "Content Framework",
-     "C220 Part 4, ch. 2 (Content Metamodel)"),
+     "C220 Part 4, §§2.2-2.6 (TOGAF Enterprise Metamodel)"),
     # Stakeholder Management technique
     ("In the Power/Interest stakeholder matrix used to support stakeholder management, which group must be 'managed closely'?",
      "High-power, high-interest stakeholders",
@@ -684,7 +684,7 @@ L1_NEW_AUTHORED = [
      "Penetration testing", "Capacity planning of hardware", "Tax planning",
      "Capability-based planning aligns investment with required capability increments and the outcomes they enable.",
      "Business Architecture",
-     "C220 Part 2, Capability-Based Planning"),
+     "TOGAF Series Guide: Business Capabilities (Capability-Based Planning); C220 Part 1, ch. 4 (Phase B)"),
     # Governance vs management
     ("Which best distinguishes architecture governance from architecture management?",
      "Governance sets direction and ensures compliance; management plans and operates the architecture practice",
@@ -726,7 +726,7 @@ L1_NEW_AUTHORED = [
      "A specific vendor's billing application", "The enterprise's organisation chart", "A salary schedule",
      "Common Systems Architectures are reusable across many enterprises (e.g. generic security or management architectures).",
      "Enterprise Continuum",
-     "C220 Part 5, Enterprise Continuum (Common Systems)"),
+     "C220 Part 4, Ch. 6 (Enterprise Continuum — Common Systems Architectures)"),
     # Architecture Definition Document
     ("Which is true of the Architecture Definition Document?",
      "It is updated and elaborated across Phases B, C, and D",
@@ -735,12 +735,12 @@ L1_NEW_AUTHORED = [
      "Deliverables",
      "C220 Part 4, §4.2.3 (Architecture Definition Document)"),
     # Implementation Factor Catalog
-    ("What does an Implementation Factor Assessment & Deduction Matrix capture?",
-     "Factors (risks, issues, assumptions, dependencies) that will influence the architecture implementation",
+    ("What does the Implementation Factor Catalog capture?",
+     "Factors (risks, issues, assumptions, dependencies, actions, impacts) that will influence the architecture implementation",
      "Salaries of architects", "Office floor plans", "A glossary of technical terms",
-     "The Implementation Factor Assessment & Deduction Matrix records factors that affect implementation planning (Phase E).",
+     "C220 Part 4 §3.6.8.3 defines the Implementation Factor Catalog (renamed in TOGAF 10 from the TOGAF 9 'Implementation Factor Assessment & Deduction Matrix'), which records risks, issues, assumptions, dependencies, actions and impacts that affect implementation planning in Phase E.",
      "Content Framework",
-     "C220 Part 4, ch. 3 (Artifacts: Implementation Factor)"),
+     "C220 Part 4, §3.6.8.3 (Implementation Factor Catalog)"),
     # Architecture Roadmap
     ("What does the Architecture Roadmap describe?",
      "A timeline of individual work packages and Transition Architectures that move from baseline to target",
@@ -1231,7 +1231,7 @@ L2_THIRD_AND_REF = [
     # t11 Security & Risk — bolt-on history
     ("Plan two security checkpoint reviews — one in late Phase B/C and one before go-live — to catch security issues earlier than the previous end-of-programme review.",
      "Earlier scheduled checkpoints are an improvement on a single end-of-programme review, but periodic checkpoints still treat security as something inspected rather than designed-in across every ADM phase — partial credit.",
-     "C220 Part 2 (Security Architecture and the ADM)"),
+     "TOGAF Series Guide G152 (Integrating Risk and Security within a TOGAF EA); C220 Part 2 Ch. 8 (Risk Management)"),
     # t12 Architecture Partitioning — diversified conglomerate
     ("Partition by business unit and let each unit develop its own architecture independently; require the units to share their finished architectures with each other afterwards so that overlap is discovered and discussed at group level after the fact.",
      "Partitioning along business-unit boundaries is the right TOGAF instinct, but discovering overlap after each unit has independently designed and decided ignores group-level coherence, reuse, and conflict resolution that partitioning is supposed to enable — partial credit.",
@@ -1253,6 +1253,15 @@ L2_THIRD_AND_REF = [
 # Sanity: must match L2_TEMPLATES exactly so the per-template lookup is safe
 assert len(L2_THIRD_AND_REF) == len(L2_TEMPLATES), \
     "L2_THIRD_AND_REF must have one entry per L2 template"
+
+
+# Per-template gradient correction. The verification pass against C220 found
+# that for these 9 templates the original `second` option (intended for 3 pts)
+# is actually a more obvious anti-pattern than the newly authored 1-pt
+# `third_text` option. We swap their scores so the 1-pt option carries the
+# higher partial credit and the originally-3-pt option scores 1.
+# (Indices match L2_TEMPLATES positions; see verification report.)
+L2_GRADIENT_SWAP = {1, 7, 9, 10, 11, 12, 13, 14, 15}
 
 
 def build_level2():
@@ -1295,11 +1304,22 @@ def build_level2():
         # authored third-best option is added with a 1-point rationale.
         # `zero2` is dropped to keep four options total (one true distractor
         # plus three graduated good-faith answers).
+        # If verification flagged this template as having an invertible 3/1
+        # ordering, swap their scores so the more TOGAF-aligned option earns
+        # 3 pts and the weaker original option earns 1 pt.
+        if t_idx in L2_GRADIENT_SWAP:
+            second_score, third_score = 1, 3
+            second_tag = "Third-best (1 pt)"
+            third_tag = "Second-best (3 pts)"
+        else:
+            second_score, third_score = 3, 1
+            second_tag = "Second-best (3 pts)"
+            third_tag = "Third-best (1 pt)"
         opts = [
-            {"text": best,        "score": 5, "rationale": rb,              "tag": "Best (full marks)"},
-            {"text": second,      "score": 3, "rationale": rs,              "tag": "Second-best (3 pts)"},
-            {"text": third_text,  "score": 1, "rationale": third_rationale, "tag": "Third-best (1 pt)"},
-            {"text": zero1,       "score": 0, "rationale": rz1,             "tag": "Distractor (0 pts)"},
+            {"text": best,        "score": 5,            "rationale": rb,              "tag": "Best (full marks)"},
+            {"text": second,      "score": second_score, "rationale": rs,              "tag": second_tag},
+            {"text": third_text,  "score": third_score,  "rationale": third_rationale, "tag": third_tag},
+            {"text": zero1,       "score": 0,            "rationale": rz1,             "tag": "Distractor (0 pts)"},
         ]
         random.shuffle(opts)
         best_index = next(i for i, o in enumerate(opts) if o["score"] == 5)
