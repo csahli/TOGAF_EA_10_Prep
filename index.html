@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=4" />
+  <link rel="stylesheet" href="styles.css?v=6" />
 
   <script>
     // Apply saved/preferred theme before first paint to avoid a white-flash.
@@ -183,8 +183,10 @@
       </div>
 
       <!-- Recreated reference diagrams (original inline SVG, not copied artwork).
-           SVG-scoped CSS lives in styles.css under "SVG diagram styling". -->
-      <div class="diagram-deck">
+           SVG-scoped CSS lives in styles.css under "SVG diagram styling".
+           Each card is click-to-zoom (see app.js wireDiagramZoom). -->
+      <p class="diagram-hint">Click any diagram to enlarge.</p>
+      <div class="diagram-deck" id="diagramDeck">
         <figure class="diagram-card">
           <figcaption>The ADM Cycle</figcaption>
           <svg viewBox="0 0 320 320" class="svg-diagram" role="img" aria-label="TOGAF ADM cycle diagram">
@@ -431,6 +433,18 @@
 
   </main>
 
+  <!-- Diagram zoom modal — populated by app.js when a diagram card is clicked. -->
+  <div id="diagramModal" class="diagram-modal hidden" role="dialog" aria-modal="true" aria-labelledby="diagramModalTitle">
+    <div class="diagram-modal-backdrop" data-close="1"></div>
+    <div class="diagram-modal-panel" role="document">
+      <div class="diagram-modal-head">
+        <h3 id="diagramModalTitle" class="diagram-modal-title"></h3>
+        <button type="button" id="diagramModalClose" class="diagram-modal-close" aria-label="Close diagram">×</button>
+      </div>
+      <div id="diagramModalBody" class="diagram-modal-body"></div>
+    </div>
+  </div>
+
   <!-- Screen-reader announcer used by app.js for throttled timer milestones. -->
   <div id="liveRegion" class="sr-only" aria-live="polite" aria-atomic="true"></div>
 
@@ -439,6 +453,6 @@
   <script src="data/questions_level1.js?v=3"></script>
   <script src="data/questions_level2.js?v=3"></script>
   <script src="data/glossary.js?v=3"></script>
-  <script src="app.js?v=4"></script>
+  <script src="app.js?v=6"></script>
 </body>
 </html>

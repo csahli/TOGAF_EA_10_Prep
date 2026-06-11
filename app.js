@@ -676,6 +676,9 @@ function buildAdmRing() {
   });
 }
 
+// Sentinel category that hides the term list and shows only the diagram deck.
+const GLOSSARY_DIAGRAMS_CAT = "Diagrams";
+
 function renderGlossary() {
   const data = window.TOGAF_GLOSSARY;
   const listEl = $("#glossaryList");
@@ -683,11 +686,13 @@ function renderGlossary() {
 
   buildAdmRing();
 
-  // Category chips (build once).
+  // Category chips (build once). "Diagrams" is injected as a pseudo-category
+  // alongside the real ones derived from the glossary data.
   if (!glossaryState.built) {
-    const cats = ["All", ...Array.from(new Set(data.terms.map((t) => t.category)))];
+    const cats = ["All", GLOSSARY_DIAGRAMS_CAT,
+                  ...Array.from(new Set(data.terms.map((t) => t.category)))];
     $("#glossaryCats").innerHTML = cats.map((c) =>
-      `<button type="button" class="cat-chip${c === glossaryState.cat ? " is-active" : ""}" aria-pressed="${c === glossaryState.cat}" data-cat="${escapeHtml(c)}">${escapeHtml(c)}</button>`
+      `<button type="button" class="cat-chip${c === glossaryState.cat ? " is-active" : ""}${c === GLOSSARY_DIAGRAMS_CAT ? " cat-chip-diagrams" : ""}" aria-pressed="${c === glossaryState.cat}" data-cat="${escapeHtml(c)}">${escapeHtml(c)}</button>`
     ).join("");
     $$("#glossaryCats .cat-chip").forEach((chip) => chip.addEventListener("click", () => {
       glossaryState.cat = chip.dataset.cat;
@@ -700,6 +705,14 @@ function renderGlossary() {
     }));
     glossaryState.built = true;
   }
+
+  // "Diagrams" mode: hide the search bar and term list, leave the diagram
+  // deck visible (and a little more breathing room around it).
+  const diagramsOnly = glossaryState.cat === GLOSSARY_DIAGRAMS_CAT;
+  $("#glossarySearch").classList.toggle("hidden", diagramsOnly);
+  $("#glossaryList").classList.toggle("hidden", diagramsOnly);
+  $("#diagramDeck").classList.toggle("diagram-deck-only", diagramsOnly);
+  if (diagramsOnly) return;
 
   const q = glossaryState.query.trim().toLowerCase();
   const filtered = data.terms.filter((t) => {
@@ -729,6 +742,80 @@ function renderGlossary() {
       <p class="gloss-def">${highlight(t.definition)}</p>
       <a class="gloss-doc" href="${escapeHtml(t.doc)}" target="_blank" rel="noopener">📖 Read in TOGAF Standard ↗</a>
     </div>`).join("");
+}
+
+
+/* ---------- diagram zoom modal ----------
+   Each .diagram-card in the glossary is clickable: clicking (or pressing
+   Enter / Space on) the card opens a modal showing the same SVG enlarged.
+   Closes on backdrop click, the X button, or the Escape key.
+   Focus returns to the originating card on close. */
+let diagramReturnFocus = null;
+
+function openDiagramModal(card) {
+  const modal = $("#diagramModal");
+  const title = card.querySelector("figcaption");
+  const svg = card.querySelector(".svg-diagram");
+  if (!modal || !svg) return;
+  $("#diagramModalTitle").textContent = title ? title.textContent : "Diagram";
+  const body = $("#diagramModalBody");
+  body.innerHTML = "";
+  // Clone the SVG so the original stays in the deck. Strip width/height so
+  // the CSS .diagram-modal-body sizing controls the enlarged scale via the
+  // preserved viewBox.
+  const clone = svg.cloneNode(true);
+  clone.removeAttribute("width");
+  clone.removeAttribute("height");
+  clone.classList.add("svg-diagram-zoomed");
+  body.appendChild(clone);
+  modal.classList.remove("hidden");
+  diagramReturnFocus = card;
+  $("#diagramModalClose").focus();
+  document.addEventListener("keydown", onDiagramKeydown);
+}
+
+function closeDiagramModal() {
+  const modal = $("#diagramModal");
+  if (!modal || modal.classList.contains("hidden")) return;
+  modal.classList.add("hidden");
+  $("#diagramModalBody").innerHTML = "";
+  document.removeEventListener("keydown", onDiagramKeydown);
+  if (diagramReturnFocus) {
+    diagramReturnFocus.focus();
+    diagramReturnFocus = null;
+  }
+}
+
+function onDiagramKeydown(e) {
+  if (e.key === "Escape") {
+    e.preventDefault();
+    closeDiagramModal();
+  }
+}
+
+function wireDiagramZoom() {
+  const deck = $("#diagramDeck");
+  if (!deck) return;
+  // Make each diagram card behave like a button for keyboard users.
+  $$("#diagramDeck .diagram-card").forEach((card) => {
+    card.setAttribute("role", "button");
+    card.setAttribute("tabindex", "0");
+    const caption = card.querySelector("figcaption");
+    card.setAttribute("aria-label",
+      `Enlarge diagram: ${caption ? caption.textContent : "diagram"}`);
+    card.addEventListener("click", () => openDiagramModal(card));
+    card.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        openDiagramModal(card);
+      }
+    });
+  });
+  // Modal controls.
+  $("#diagramModalClose").addEventListener("click", closeDiagramModal);
+  $("#diagramModal").addEventListener("click", (e) => {
+    if (e.target.dataset && e.target.dataset.close === "1") closeDiagramModal();
+  });
 }
 
 
@@ -842,6 +929,9 @@ function init() {
       renderHistory();
     }
   });
+
+  // Diagram zoom modal (glossary view).
+  wireDiagramZoom();
 
   showView("home");
   refreshExamSummary();
