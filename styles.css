@@ -306,8 +306,8 @@ input[type=range]::-webkit-slider-thumb {
 }
 .cat-chip:hover { color: var(--text); border-color: var(--accent); }
 .cat-chip.is-active { background: var(--accent); color: var(--bg); border-color: var(--accent); font-weight: 600; }
-.cat-chip-diagrams { border-style: dashed; }
-.cat-chip-diagrams::before { content: "▦"; margin-right: 6px; opacity: 0.75; }
+.cat-chip-special { border-style: dashed; }
+.cat-chip-special::before { content: "◆"; margin-right: 6px; opacity: 0.75; font-size: 0.7em; vertical-align: 1px; }
 
 /* diagram deck */
 .diagram-hint { font-size: 0.78rem; color: var(--text-faint); margin-bottom: 10px; font-style: italic; }
@@ -345,7 +345,7 @@ input[type=range]::-webkit-slider-thumb {
   position: relative; z-index: 1;
   background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius);
   box-shadow: var(--shadow);
-  max-width: min(960px, 95vw); width: 100%;
+  max-width: min(1200px, 96vw); width: 100%;
   max-height: 92vh; display: flex; flex-direction: column;
   animation: rise 0.25s var(--ease);
 }
@@ -362,14 +362,32 @@ input[type=range]::-webkit-slider-thumb {
   transition: all 0.2s var(--ease);
 }
 .diagram-modal-close:hover { color: var(--text); background: var(--surface-2); border-color: var(--accent); }
+/* Side-by-side SVG + description on wide screens; stacks on narrow. */
+.diagram-modal-content {
+  display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(280px, 1fr);
+  gap: 0; flex: 1; min-height: 0; overflow: hidden;
+}
 .diagram-modal-body {
   padding: 28px 32px; overflow: auto; display: grid; place-items: center;
-  flex: 1; min-height: 0;
+  min-height: 0;
+}
+.diagram-modal-aside {
+  padding: 24px 28px; overflow-y: auto;
+  border-left: 1px solid var(--border);
+  background: var(--surface);
+}
+.diagram-modal-desc {
+  margin: 0; color: var(--text); font-size: 0.92rem; line-height: 1.6;
 }
 .svg-diagram-zoomed {
   width: 100%; height: auto;
-  max-width: min(880px, 88vw);
+  max-width: min(700px, 70vw);
   max-height: 72vh;
+}
+@media (max-width: 760px) {
+  .diagram-modal-content { grid-template-columns: 1fr; }
+  .diagram-modal-aside { border-left: none; border-top: 1px solid var(--border); max-height: 38vh; }
+  .svg-diagram-zoomed { max-width: 92vw; max-height: 50vh; }
 }
 
 /* glossary entries */
@@ -394,6 +412,85 @@ mark { background: var(--accent-soft); color: var(--accent); border-radius: 3px;
   .result-actions { flex-direction: column; }
 }
 
+/* ---------- ADM Phases reference (special glossary mode) ---------- */
+.adm-phases-view { margin-bottom: 30px; }
+.adm-phases-hint { font-size: 0.78rem; color: var(--text-faint); margin-bottom: 14px; font-style: italic; }
+.adm-phases-layout {
+  display: grid; gap: 18px;
+  grid-template-columns: minmax(180px, 220px) minmax(0, 1fr);
+  align-items: start;
+}
+.adm-phase-picker {
+  display: flex; flex-direction: column; gap: 6px;
+}
+.adm-phase-btn {
+  display: flex; align-items: center; gap: 12px;
+  font: inherit; text-align: left; cursor: pointer;
+  background: var(--surface); border: 1px solid var(--border); color: var(--text);
+  border-radius: var(--radius-sm); padding: 10px 14px;
+  transition: all 0.18s var(--ease);
+}
+.adm-phase-btn:hover { border-color: var(--accent); background: var(--surface-2); }
+.adm-phase-btn.is-active { background: var(--accent-soft); border-color: var(--accent); }
+.adm-phase-code {
+  flex-shrink: 0; min-width: 28px; height: 26px;
+  display: grid; place-items: center;
+  border-radius: 6px; background: var(--surface-2);
+  font-size: 0.78rem; font-weight: 700; color: var(--text-dim);
+  padding: 0 8px;
+}
+.adm-phase-btn.is-active .adm-phase-code { background: var(--accent); color: var(--bg); }
+.adm-phase-name { font-size: 0.86rem; color: var(--text-dim); }
+.adm-phase-btn.is-active .adm-phase-name { color: var(--text); font-weight: 500; }
+
+.adm-phase-detail {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 22px 26px;
+  min-height: 320px;
+}
+.adm-detail-head { margin-bottom: 14px; }
+.adm-detail-title { font-size: 1.1rem; font-weight: 600; color: var(--text); margin: 0; }
+.adm-tabs {
+  display: flex; gap: 4px; flex-wrap: wrap;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 18px;
+}
+.adm-tab {
+  font: inherit; cursor: pointer;
+  background: none; border: none; color: var(--text-dim);
+  padding: 9px 16px; border-radius: 8px 8px 0 0;
+  font-size: 0.86rem; font-weight: 500;
+  border-bottom: 2px solid transparent; margin-bottom: -1px;
+  transition: color 0.18s var(--ease), border-color 0.18s var(--ease), background 0.18s var(--ease);
+}
+.adm-tab:hover { color: var(--text); }
+.adm-tab.is-active { color: var(--accent); border-bottom-color: var(--accent); background: var(--accent-soft); }
+.adm-tabpanel { animation: rise 0.25s var(--ease); }
+.adm-objective {
+  color: var(--text); font-size: 0.95rem; line-height: 1.6;
+  margin: 0;
+}
+.adm-list {
+  margin: 0; padding-left: 22px;
+  color: var(--text); font-size: 0.92rem; line-height: 1.55;
+}
+.adm-list li { margin-bottom: 6px; }
+.adm-list li::marker { color: var(--accent); }
+.adm-ref {
+  margin-top: 22px; padding-top: 14px;
+  border-top: 1px solid var(--border);
+  font-size: 0.78rem; color: var(--text-faint); font-style: italic;
+}
+.adm-ref strong { color: var(--text-dim); font-style: normal; }
+
+@media (max-width: 640px) {
+  .adm-phases-layout { grid-template-columns: 1fr; }
+  .adm-phase-picker {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  }
+}
+
+
 /* ---------- SVG diagram styling ----------
    Scoped to .svg-diagram to keep these rules from leaking. Previously these
    lived inline inside <svg><defs><style> blocks in index.html. */
@@ -404,7 +501,7 @@ mark { background: var(--accent-soft); color: var(--accent); border-radius: 3px;
 .svg-diagram .adm-core-lbl { fill: var(--accent); font-size: 10px; font-weight: 600; font-family: Inter, sans-serif; }
 .svg-diagram .adm-arrow { fill: none; stroke: var(--accent); stroke-width: 1.5; opacity: 0.7; }
 .svg-diagram .adm-prelim { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1.5; }
-.svg-diagram .adm-prelim-lbl { fill: var(--accent); font-size: 11px; font-weight: 700; font-family: Inter, sans-serif; }
+.svg-diagram .adm-prelim-lbl { fill: var(--accent); font-size: 9px; font-weight: 700; font-family: Inter, sans-serif; }
 .svg-diagram .adm-connector { fill: none; stroke: var(--accent); stroke-width: 1.5; opacity: 0.85; }
 
 .svg-diagram .ec-box { fill: var(--surface-2); stroke: var(--border); }
@@ -418,6 +515,19 @@ mark { background: var(--accent-soft); color: var(--accent); border-radius: 3px;
 .svg-diagram .bb-sub { fill: var(--text-dim); font-size: 9px; font-family: Inter, sans-serif; text-anchor: middle; }
 .svg-diagram .bb-arrow { fill: none; stroke: var(--accent); stroke-width: 2; }
 .svg-diagram .bb-arrow-lbl { fill: var(--text-dim); font-size: 10px; font-family: Inter, sans-serif; text-anchor: middle; }
+
+/* TOGAF Enterprise Metamodel */
+.svg-diagram .mm-band-bg   { stroke: var(--border); }
+.svg-diagram .mm-band-mot  { fill: rgba(167, 184, 216, 0.22); }
+.svg-diagram .mm-band-biz  { fill: rgba(127, 209, 196, 0.22); }
+.svg-diagram .mm-band-data { fill: rgba(127, 209, 164, 0.18); }
+.svg-diagram .mm-band-app  { fill: rgba(230, 194, 122, 0.18); }
+.svg-diagram .mm-band-tech { fill: rgba(224, 138, 138, 0.16); }
+.svg-diagram .mm-band-real { fill: rgba(167, 184, 216, 0.14); }
+.svg-diagram .mm-band-lbl  { fill: var(--text); font-size: 11px; font-weight: 700; font-family: Inter, sans-serif; text-anchor: middle; }
+.svg-diagram .mm-entity    { fill: var(--bg-soft); stroke: var(--border); }
+.svg-diagram .mm-entity-lbl{ fill: var(--text); font-size: 10px; font-weight: 500; font-family: Inter, sans-serif; text-anchor: middle; }
+.svg-diagram .mm-trace     { fill: none; stroke: var(--accent); stroke-width: 1.5; opacity: 0.6; }
 
 /* Content Framework */
 .svg-diagram .cf-domain { fill: var(--accent); }

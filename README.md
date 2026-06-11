@@ -21,9 +21,10 @@ aligned to the published OGEA-101 / OGEA-102 / OGEA-103 exam structure.
 - Score ring, per-question review with rationales **and source citations**
   shown on the review screen
 - Glossary of 30 core TOGAF concepts with links to the official TOGAF Standard,
-  plus 9 inline reference diagrams (ADM Cycle, Enterprise Continuum, ABB→SBB,
-  Content Framework, Architecture Repository, ADM Iteration Cycles, Architecture
-  Landscape levels, Stakeholder Power/Interest matrix, Architecture Partitioning)
+  plus 10 inline reference diagrams (ADM Cycle, TOGAF Enterprise Metamodel,
+  Content Framework, Architecture Repository, Enterprise Continuum, ABB→SBB,
+  ADM Iteration Cycles, Architecture Landscape levels, Stakeholder Power/Interest
+  matrix, Architecture Partitioning) — click any diagram to enlarge
 - **Score history stored in your browser (localStorage)** — plus Export to JSON
 
 ## Run it
@@ -59,6 +60,17 @@ Edit the templates in `generate_questions.py`, then:
 python generate_questions.py
 ```
 This rewrites both JSON files and both JS files (128 questions each).
+
+## Edit or add diagrams
+
+Each reference diagram lives as its own `.svg` file in `data/diagrams/`,
+with metadata (title, description, topic) in `data/diagrams/descriptions.json`.
+After editing either, rebuild the runtime bundle:
+```bash
+python build_diagrams.py
+```
+See `data/diagrams/README.md` for the file conventions and how to add a new
+diagram.
 
 ## Disclaimer
 

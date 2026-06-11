@@ -654,8 +654,12 @@ function exportHistory() {
 /* ---------- glossary / definitions ---------- */
 const glossaryState = { cat: "All", query: "", built: false };
 
-function buildAdmRing() {
-  const g = document.getElementById("admRing");
+function buildAdmRing(card) {
+  // Accepts an optional card context so we can scope the lookup to the SVG
+  // injected by renderDiagramDeck. Falls back to document scope for legacy
+  // (no longer used) inline-SVG callers.
+  const root = card || document;
+  const g = root.querySelector("#admRing") || document.getElementById("admRing");
   if (!g || g.childNodes.length) return;
   const SVG = "http://www.w3.org/2000/svg";
 
@@ -673,7 +677,7 @@ function buildAdmRing() {
     { key: "H", lbl1: "H.",  lbl2: "Change Mgmt"},
   ];
 
-  const cx = 160, cy = 175, r = 115, nodeR = 28;
+  const cx = 160, cy = 235, r = 115, nodeR = 28;
   const N = phases.length;
 
   // Position helper: angle for phase i, starting at top (-PI/2).
@@ -728,24 +732,27 @@ function buildAdmRing() {
     g.appendChild(t2);
   });
 
-  // Preliminary box outside the wheel, above Phase A.
-  const aPt = point(0); // top
-  const prelimBoxW = 110, prelimBoxH = 34;
-  const prelimX = cx - prelimBoxW / 2;
-  const prelimY = 12;
-  const prelim = document.createElementNS(SVG, "rect");
-  prelim.setAttribute("x", prelimX); prelim.setAttribute("y", prelimY);
-  prelim.setAttribute("width", prelimBoxW); prelim.setAttribute("height", prelimBoxH);
-  prelim.setAttribute("rx", 6); prelim.setAttribute("class", "adm-prelim");
+  // Preliminary phase: a circle OUTSIDE the wheel, above Phase A. Sized the
+  // same as the wheel nodes (same nodeR) and separated by a clear gap so it
+  // never overlaps Phase A — the connector arrow visually links them.
+  const aPt = point(0); // Phase A is at the top of the wheel
+  const prelimR = nodeR;
+  const gap = 22;                      // visible gap between the two circles
+  const prelimCy = aPt.y - nodeR - gap - prelimR;
+  const prelim = document.createElementNS(SVG, "circle");
+  prelim.setAttribute("cx", cx); prelim.setAttribute("cy", prelimCy);
+  prelim.setAttribute("r", prelimR); prelim.setAttribute("class", "adm-prelim");
   g.appendChild(prelim);
-  const pLbl = document.createElementNS(SVG, "text");
-  pLbl.setAttribute("x", cx); pLbl.setAttribute("y", prelimY + prelimBoxH / 2 + 4);
-  pLbl.setAttribute("text-anchor", "middle"); pLbl.setAttribute("class", "adm-prelim-lbl");
-  pLbl.textContent = "Preliminary";
-  g.appendChild(pLbl);
+  const pLbl1 = document.createElementNS(SVG, "text");
+  pLbl1.setAttribute("x", cx); pLbl1.setAttribute("y", prelimCy - 1);
+  pLbl1.setAttribute("text-anchor", "middle"); pLbl1.setAttribute("class", "adm-prelim-lbl");
+  pLbl1.textContent = "Preliminary";
+  g.appendChild(pLbl1);
 
-  // Connector arrow from Preliminary box down to Phase A.
-  const connectorStart = prelimY + prelimBoxH + 2;
+  // Connector arrow from the bottom of the Preliminary circle down to the
+  // top of Phase A's circle. Endpoints sit on the node edges (not centres)
+  // so the line and arrowhead don't overlap either circle.
+  const connectorStart = prelimCy + prelimR;
   const connectorEnd = aPt.y - nodeR - 2;
   const connector = document.createElementNS(SVG, "path");
   connector.setAttribute("d", `M ${cx} ${connectorStart} L ${cx} ${connectorEnd}`);
@@ -754,24 +761,40 @@ function buildAdmRing() {
   g.appendChild(connector);
 }
 
-// Sentinel category that hides the term list and shows only the diagram deck.
+// Sentinel categories: special chips that swap the glossary content rather
+// than filter the term list. The Diagrams chip shows only the diagram deck;
+// the ADM Phases chip shows the per-phase reference (objective / inputs /
+// steps / outputs).
 const GLOSSARY_DIAGRAMS_CAT = "Diagrams";
+const GLOSSARY_ADM_PHASES_CAT = "ADM Phases";
+const GLOSSARY_SPECIAL_CATS = [GLOSSARY_DIAGRAMS_CAT, GLOSSARY_ADM_PHASES_CAT];
+
+const admPhasesState = { phaseId: null, tab: "objective" };
+const ADM_TAB_ORDER = ["objective", "inputs", "steps", "outputs"];
+const ADM_TAB_LABELS = {
+  objective: "Objective",
+  inputs:    "Inputs",
+  steps:     "Steps",
+  outputs:   "Outputs",
+};
 
 function renderGlossary() {
   const data = window.TOGAF_GLOSSARY;
   const listEl = $("#glossaryList");
   if (!data) { listEl.innerHTML = `<div class="gloss-empty">Glossary data not loaded.</div>`; return; }
 
-  buildAdmRing();
+  renderDiagramDeck();
 
-  // Category chips (build once). "Diagrams" is injected as a pseudo-category
-  // alongside the real ones derived from the glossary data.
+  // Category chips (build once). The two "special" chips (Diagrams, ADM Phases)
+  // are injected first, then the real categories derived from the glossary.
   if (!glossaryState.built) {
-    const cats = ["All", GLOSSARY_DIAGRAMS_CAT,
-                  ...Array.from(new Set(data.terms.map((t) => t.category)))];
-    $("#glossaryCats").innerHTML = cats.map((c) =>
-      `<button type="button" class="cat-chip${c === glossaryState.cat ? " is-active" : ""}${c === GLOSSARY_DIAGRAMS_CAT ? " cat-chip-diagrams" : ""}" aria-pressed="${c === glossaryState.cat}" data-cat="${escapeHtml(c)}">${escapeHtml(c)}</button>`
-    ).join("");
+    const realCats = Array.from(new Set(data.terms.map((t) => t.category)));
+    const cats = ["All", ...GLOSSARY_SPECIAL_CATS, ...realCats];
+    $("#glossaryCats").innerHTML = cats.map((c) => {
+      const isSpecial = GLOSSARY_SPECIAL_CATS.includes(c);
+      const cls = `cat-chip${c === glossaryState.cat ? " is-active" : ""}${isSpecial ? " cat-chip-special" : ""}`;
+      return `<button type="button" class="${cls}" aria-pressed="${c === glossaryState.cat}" data-cat="${escapeHtml(c)}">${escapeHtml(c)}</button>`;
+    }).join("");
     $$("#glossaryCats .cat-chip").forEach((chip) => chip.addEventListener("click", () => {
       glossaryState.cat = chip.dataset.cat;
       $$("#glossaryCats .cat-chip").forEach((c) => {
@@ -784,12 +807,26 @@ function renderGlossary() {
     glossaryState.built = true;
   }
 
-  // "Diagrams" mode: hide the search bar and term list, leave the diagram
-  // deck visible (and a little more breathing room around it).
+  // Toggle the special views. The diagram deck stays mounted in either case
+  // (the Diagrams view simply enlarges it; the ADM Phases view hides it).
   const diagramsOnly = glossaryState.cat === GLOSSARY_DIAGRAMS_CAT;
-  $("#glossarySearch").classList.toggle("hidden", diagramsOnly);
-  $("#glossaryList").classList.toggle("hidden", diagramsOnly);
+  const admPhasesOnly = glossaryState.cat === GLOSSARY_ADM_PHASES_CAT;
+  const anySpecial = diagramsOnly || admPhasesOnly;
+
+  $("#glossarySearch").classList.toggle("hidden", anySpecial);
+  $("#glossaryList").classList.toggle("hidden", anySpecial);
+  $("#diagramDeck").classList.toggle("hidden", admPhasesOnly);
   $("#diagramDeck").classList.toggle("diagram-deck-only", diagramsOnly);
+  $("#admPhasesView").classList.toggle("hidden", !admPhasesOnly);
+  // The diagram hint paragraph sits between the deck and the term list,
+  // so hide it whenever the deck is hidden.
+  const hint = document.querySelector(".diagram-hint");
+  if (hint) hint.classList.toggle("hidden", admPhasesOnly);
+
+  if (admPhasesOnly) {
+    renderAdmPhases();
+    return;
+  }
   if (diagramsOnly) return;
 
   const q = glossaryState.query.trim().toLowerCase();
@@ -823,19 +860,85 @@ function renderGlossary() {
 }
 
 
-/* ---------- diagram zoom modal ----------
-   Each .diagram-card in the glossary is clickable: clicking (or pressing
-   Enter / Space on) the card opens a modal showing the same SVG enlarged.
-   Closes on backdrop click, the X button, or the Escape key.
-   Focus returns to the originating card on close. */
+/* ---------- diagram deck + zoom modal ----------
+   Diagrams are bundled into window.TOGAF_DIAGRAMS by build_diagrams.py
+   (source-of-truth lives in data/diagrams/*.svg + descriptions.json). The
+   deck is rendered dynamically here so the inline HTML stays clean. Each
+   card is clickable: a click opens a modal showing the enlarged SVG with
+   its description text alongside.
+   Closes on backdrop click, the X button, or the Escape key. Focus
+   returns to the originating card on close. */
 let diagramReturnFocus = null;
+
+// Some diagrams have computed parts that need JS post-injection (currently
+// only the ADM cycle, whose 8 phase nodes and arrows are laid out by
+// buildAdmRing). buildHook in the manifest names the post-injection routine.
+const DIAGRAM_BUILD_HOOKS = {
+  "adm-ring": buildAdmRing,
+};
+
+function renderDiagramDeck() {
+  const deck = $("#diagramDeck");
+  if (!deck) return;
+  const manifest = window.TOGAF_DIAGRAMS;
+  if (!manifest || !Array.isArray(manifest.diagrams)) {
+    deck.innerHTML = `<p class="gloss-empty">No diagrams found. Did you run <code>python build_diagrams.py</code>?</p>`;
+    return;
+  }
+  if (deck.dataset.rendered === "true") return; // build once per page load
+
+  // Build all cards as <figure> elements. The .svg field is raw SVG markup;
+  // inserting via innerHTML is safe because the source is our own diagrams.
+  deck.innerHTML = manifest.diagrams.map((d) => `
+    <figure class="diagram-card" data-diagram-id="${escapeHtml(d.id)}">
+      <figcaption>${escapeHtml(d.title)}</figcaption>
+      ${d.svg}
+    </figure>
+  `).join("");
+
+  // Run any post-injection build hooks (e.g. layout the ADM ring nodes).
+  manifest.diagrams.forEach((d) => {
+    if (d.buildHook && DIAGRAM_BUILD_HOOKS[d.buildHook]) {
+      const card = deck.querySelector(`[data-diagram-id="${d.id}"]`);
+      DIAGRAM_BUILD_HOOKS[d.buildHook](card);
+    }
+  });
+
+  // Wire each card for click/keyboard zoom.
+  $$("#diagramDeck .diagram-card").forEach((card) => {
+    card.setAttribute("role", "button");
+    card.setAttribute("tabindex", "0");
+    const caption = card.querySelector("figcaption");
+    card.setAttribute("aria-label",
+      `Enlarge diagram: ${caption ? caption.textContent : "diagram"}`);
+    card.addEventListener("click", () => openDiagramModal(card));
+    card.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        openDiagramModal(card);
+      }
+    });
+  });
+
+  deck.dataset.rendered = "true";
+}
+
+function findDiagramMeta(id) {
+  const manifest = window.TOGAF_DIAGRAMS;
+  if (!manifest || !Array.isArray(manifest.diagrams)) return null;
+  return manifest.diagrams.find((d) => d.id === id) || null;
+}
 
 function openDiagramModal(card) {
   const modal = $("#diagramModal");
-  const title = card.querySelector("figcaption");
   const svg = card.querySelector(".svg-diagram");
   if (!modal || !svg) return;
+  const meta = findDiagramMeta(card.dataset.diagramId);
+  const title = card.querySelector("figcaption");
   $("#diagramModalTitle").textContent = title ? title.textContent : "Diagram";
+  $("#diagramModalDesc").textContent = meta && meta.description
+    ? meta.description
+    : "";
   const body = $("#diagramModalBody");
   body.innerHTML = "";
   // Clone the SVG so the original stays in the deck. Strip width/height so
@@ -857,6 +960,7 @@ function closeDiagramModal() {
   if (!modal || modal.classList.contains("hidden")) return;
   modal.classList.add("hidden");
   $("#diagramModalBody").innerHTML = "";
+  $("#diagramModalDesc").textContent = "";
   document.removeEventListener("keydown", onDiagramKeydown);
   if (diagramReturnFocus) {
     diagramReturnFocus.focus();
@@ -872,27 +976,110 @@ function onDiagramKeydown(e) {
 }
 
 function wireDiagramZoom() {
-  const deck = $("#diagramDeck");
-  if (!deck) return;
-  // Make each diagram card behave like a button for keyboard users.
-  $$("#diagramDeck .diagram-card").forEach((card) => {
-    card.setAttribute("role", "button");
-    card.setAttribute("tabindex", "0");
-    const caption = card.querySelector("figcaption");
-    card.setAttribute("aria-label",
-      `Enlarge diagram: ${caption ? caption.textContent : "diagram"}`);
-    card.addEventListener("click", () => openDiagramModal(card));
-    card.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        openDiagramModal(card);
-      }
-    });
-  });
-  // Modal controls.
+  // The modal close button + backdrop are wired here once; the per-card
+  // listeners are attached inside renderDiagramDeck after the cards exist.
   $("#diagramModalClose").addEventListener("click", closeDiagramModal);
   $("#diagramModal").addEventListener("click", (e) => {
     if (e.target.dataset && e.target.dataset.close === "1") closeDiagramModal();
+  });
+}
+
+
+/* ---------- ADM Phases reference ----------
+   Shown when the user picks the "ADM Phases" chip in the Glossary view.
+   Left column is a 9-button phase picker; right column is the detail panel
+   with four tabs (Objective, Inputs, Steps, Outputs) and a C220 reference. */
+function renderAdmPhases() {
+  const data = window.TOGAF_ADM_PHASES;
+  const picker = $("#admPhasePicker");
+  const detail = $("#admPhaseDetail");
+  if (!data || !Array.isArray(data.phases)) {
+    detail.innerHTML = `<p class="gloss-empty">ADM phase data not loaded.</p>`;
+    return;
+  }
+
+  // Build picker once.
+  if (picker.dataset.built !== "true") {
+    picker.innerHTML = data.phases.map((p) => `
+      <button type="button" class="adm-phase-btn" data-phase-id="${escapeHtml(p.id)}" aria-pressed="false">
+        <span class="adm-phase-code">${escapeHtml(p.code)}</span>
+        <span class="adm-phase-name">${escapeHtml(p.name.replace(/^Phase\s+[A-H]:\s*/, "").replace(/^Preliminary Phase$/, "Preliminary"))}</span>
+      </button>
+    `).join("");
+    picker.querySelectorAll(".adm-phase-btn").forEach((btn) => {
+      btn.addEventListener("click", () => selectAdmPhase(btn.dataset.phaseId));
+    });
+    picker.dataset.built = "true";
+  }
+
+  // Default selection: first phase if nothing chosen yet.
+  if (!admPhasesState.phaseId) admPhasesState.phaseId = data.phases[0].id;
+  renderAdmPhaseDetail();
+}
+
+function selectAdmPhase(id) {
+  admPhasesState.phaseId = id;
+  renderAdmPhaseDetail();
+}
+
+function selectAdmTab(tab) {
+  admPhasesState.tab = tab;
+  renderAdmPhaseDetail();
+}
+
+function renderAdmPhaseDetail() {
+  const data = window.TOGAF_ADM_PHASES;
+  const detail = $("#admPhaseDetail");
+  const picker = $("#admPhasePicker");
+  if (!data || !detail) return;
+  const phase = data.phases.find((p) => p.id === admPhasesState.phaseId);
+  if (!phase) { detail.innerHTML = ""; return; }
+
+  // Update picker aria-pressed / active state.
+  picker.querySelectorAll(".adm-phase-btn").forEach((btn) => {
+    const active = btn.dataset.phaseId === phase.id;
+    btn.classList.toggle("is-active", active);
+    btn.setAttribute("aria-pressed", String(active));
+  });
+
+  const tab = ADM_TAB_ORDER.includes(admPhasesState.tab) ? admPhasesState.tab : "objective";
+  const tabsHtml = ADM_TAB_ORDER.map((t) => {
+    const active = t === tab;
+    return `<button type="button" class="adm-tab${active ? " is-active" : ""}" role="tab" aria-selected="${active}" data-tab="${t}">${ADM_TAB_LABELS[t]}</button>`;
+  }).join("");
+
+  let body;
+  if (tab === "objective") {
+    body = `<p class="adm-objective">${escapeHtml(phase.objective)}</p>`;
+  } else {
+    const items = phase[tab] || [];
+    body = `<ul class="adm-list">${items.map((x) => `<li>${escapeHtml(x)}</li>`).join("")}</ul>`;
+  }
+
+  detail.innerHTML = `
+    <div class="adm-detail-head">
+      <h3 class="adm-detail-title">${escapeHtml(phase.name)}</h3>
+    </div>
+    <div class="adm-tabs" role="tablist">${tabsHtml}</div>
+    <div class="adm-tabpanel" role="tabpanel">${body}</div>
+    ${phase.reference ? `<p class="adm-ref"><strong>Reference:</strong> ${escapeHtml(phase.reference)}</p>` : ""}
+  `;
+
+  // Wire tab buttons.
+  detail.querySelectorAll(".adm-tab").forEach((b) => {
+    b.addEventListener("click", () => selectAdmTab(b.dataset.tab));
+    b.addEventListener("keydown", (e) => {
+      const idx = ADM_TAB_ORDER.indexOf(b.dataset.tab);
+      if (e.key === "ArrowRight") {
+        e.preventDefault();
+        selectAdmTab(ADM_TAB_ORDER[(idx + 1) % ADM_TAB_ORDER.length]);
+        detail.querySelector(`.adm-tab[data-tab="${admPhasesState.tab}"]`).focus();
+      } else if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        selectAdmTab(ADM_TAB_ORDER[(idx - 1 + ADM_TAB_ORDER.length) % ADM_TAB_ORDER.length]);
+        detail.querySelector(`.adm-tab[data-tab="${admPhasesState.tab}"]`).focus();
+      }
+    });
   });
 }
 
