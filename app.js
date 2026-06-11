@@ -12,19 +12,57 @@ const state = {
   banks: { 1: [], 2: [] },
   loaded: false,
   mode: "1",            // "1" | "2" | "blended"
+  style: "practice",    // "practice" | "exam"
   count: 20,
   shuffle: true,
   instant: true,
   session: [],          // array of question objects (working copy)
   answers: [],          // per-question: { choice: index|null, scored: number, max: number, correct: bool }
   index: 0,
+  // Active exam-mode metadata (set when style === "exam")
+  exam: null,           // { id, levelsUsed, count, timeSec, openBook, label }
+  timer: null,          // { endsAt, intervalId, autoSubmitted }
 };
 
 const MODE_HINTS = {
   "1": "Single best answer. Knowledge recall across the TOGAF Standard.",
-  "2": "Scenario questions with gradient scoring: best = 5, second-best = 3, others = 0.",
+  "2": "Scenario questions with the OGEA-102 gradient: best = 5, second-best = 3, third-best = 1, distractor = 0.",
   "blended": "A mix of Level 1 recall and Level 2 scenarios in one session.",
 };
+
+// Official TOGAF Enterprise Architecture exam specifications, as published
+// in The Open Group's "TOGAF Examinations" datasheet (2023-2025). Used when
+// the user picks "Official exam simulation" to enforce realistic conditions.
+//   OGEA-101: Part 1 — 40 q, 60 min, closed book, 24/40 pass
+//   OGEA-102: Part 2 — 8 q,  90 min, open book,   24/40 pass (5/3/1/0 gradient)
+//   OGEA-103: Combined — 48 q, 150 min, each part 24/40 to pass
+const EXAM_SPECS = {
+  "1": {
+    id: "OGEA-101", label: "OGEA-101 · Part 1 (Foundation)",
+    levelsUsed: [1], count: 40, timeSec: 60 * 60, openBook: false,
+    passPct: 60, passPoints: 24, maxPoints: 40,
+  },
+  "2": {
+    id: "OGEA-102", label: "OGEA-102 · Part 2 (Practitioner)",
+    levelsUsed: [2], count: 8, timeSec: 90 * 60, openBook: true,
+    passPct: 60, passPoints: 24, maxPoints: 40,
+  },
+  "blended": {
+    id: "OGEA-103", label: "OGEA-103 · Combined Part 1 + Part 2",
+    levelsUsed: [1, 2], count: 48, timeSec: 150 * 60, openBook: "mixed",
+    passPct: 60, passPoints: 48, maxPoints: 80,
+  },
+};
+
+function describeExam(spec) {
+  if (!spec) return "";
+  const mins = Math.round(spec.timeSec / 60);
+  const ob = spec.openBook === true ? "open book"
+    : spec.openBook === false ? "closed book"
+    : "Part 1 closed book · Part 2 open book";
+  return `${spec.label} — ${spec.count} questions, ${mins} minutes, ${ob}. ` +
+    `Pass mark: ${spec.passPoints}/${spec.maxPoints} (${spec.passPct}%).`;
+}
 
 /* ---------- helpers ---------- */
 const $ = (sel) => document.querySelector(sel);
@@ -121,12 +159,19 @@ function showView(name) {
 
 /* ---------- session build ---------- */
 function buildSession() {
+  // Exam mode overrides count, shuffle and instant-feedback to match the
+  // published OGEA-101 / OGEA-102 / OGEA-103 conditions.
+  const spec = state.style === "exam" ? EXAM_SPECS[state.mode] : null;
+  state.exam = spec;
+
   let pool;
   if (state.mode === "1") pool = state.banks[1].slice();
   else if (state.mode === "2") pool = state.banks[2].slice();
   else pool = state.banks[1].concat(state.banks[2]); // blended
 
-  if (state.shuffle) {
+  const shuffle = spec ? true : state.shuffle;
+
+  if (shuffle) {
     pool = shuffleArr(pool);
   } else if (state.mode === "blended") {
     // keep a deterministic but mixed order: interleave L1 and L2
@@ -140,7 +185,21 @@ function buildSession() {
     }
   }
 
-  state.session = pool.slice(0, state.count);
+  if (spec) {
+    if (spec.id === "OGEA-103") {
+      // Combined: take exactly 40 Level 1 then 8 Level 2 so the section split
+      // matches the real exam structure.
+      const l1 = shuffleArr(state.banks[1]).slice(0, 40);
+      const l2 = shuffleArr(state.banks[2]).slice(0, 8);
+      state.session = l1.concat(l2);
+    } else {
+      state.session = pool
+        .filter((q) => spec.levelsUsed.includes(q.level))
+        .slice(0, spec.count);
+    }
+  } else {
+    state.session = pool.slice(0, state.count);
+  }
 
   state.answers = state.session.map((q) => ({
     choice: null,
@@ -149,6 +208,48 @@ function buildSession() {
     correct: false,
   }));
   state.index = 0;
+}
+
+/* ---------- exam timer ----------
+   Visible countdown for "Official exam simulation" mode. The real OGEA exams
+   auto-submit on timeout, so we mirror that: when the clock hits zero we lock
+   the session and route the user straight to results. */
+function startExamTimer() {
+  if (!state.exam) return;
+  stopExamTimer();
+  const pill = $("#qTimer");
+  pill.classList.remove("hidden", "timer-warn", "timer-crit");
+  const endsAt = Date.now() + state.exam.timeSec * 1000;
+  state.timer = { endsAt, intervalId: null, autoSubmitted: false };
+
+  const tick = () => {
+    const remainMs = state.timer.endsAt - Date.now();
+    if (remainMs <= 0) {
+      pill.textContent = "00:00";
+      pill.classList.add("timer-crit");
+      stopExamTimer();
+      if (!state.timer || !state.timer.autoSubmitted) {
+        if (state.timer) state.timer.autoSubmitted = true;
+        finishSession({ timedOut: true });
+      }
+      return;
+    }
+    const totalSec = Math.ceil(remainMs / 1000);
+    const m = Math.floor(totalSec / 60);
+    const s = totalSec % 60;
+    pill.textContent = `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+    if (totalSec <= 60) pill.classList.add("timer-crit");
+    else if (totalSec <= 300) pill.classList.add("timer-warn");
+  };
+  tick();
+  state.timer.intervalId = setInterval(tick, 1000);
+}
+
+function stopExamTimer() {
+  if (state.timer && state.timer.intervalId) {
+    clearInterval(state.timer.intervalId);
+    state.timer.intervalId = null;
+  }
 }
 
 /* ---------- quiz rendering ---------- */
@@ -177,10 +278,13 @@ function renderQuestion() {
   fb.classList.add("hidden");
   fb.innerHTML = "";
 
+  // Hide the timer chip outside exam mode
+  if (!state.exam) $("#qTimer").classList.add("hidden");
+
   // If already answered, re-display locked state
   if (a.choice !== null) {
     applyAnsweredStyles();
-    if (state.instant) showFeedback();
+    if (!state.exam && state.instant) showFeedback();
   }
 
   $("#prevBtn").disabled = state.index === 0;
@@ -189,8 +293,11 @@ function renderQuestion() {
 
 function selectOption(i) {
   const a = state.answers[state.index];
-  // In instant mode, lock after first answer; allow change if not instant.
-  if (state.instant && a.choice !== null) return;
+  // Exam mode never reveals correctness mid-session and always allows changes
+  // (mirrors how the real Pearson VUE exam UI behaves). Practice instant mode
+  // still locks after the first pick.
+  const instant = state.exam ? false : state.instant;
+  if (instant && a.choice !== null) return;
 
   const q = state.session[state.index];
   a.choice = i;
@@ -205,21 +312,22 @@ function selectOption(i) {
   }
 
   applyAnsweredStyles();
-  if (state.instant) showFeedback();
+  if (instant) showFeedback();
 }
 
 function applyAnsweredStyles() {
   const q = state.session[state.index];
   const a = state.answers[state.index];
   const opts = $$("#optionsWrap .option");
+  const instant = state.exam ? false : state.instant;
 
   opts.forEach((el, i) => {
     el.classList.remove("selected", "correct", "partial", "wrong");
-    if (state.instant) el.classList.add("locked");
+    if (instant) el.classList.add("locked");
 
     if (i === a.choice) el.classList.add("selected");
 
-    if (state.instant) {
+    if (instant) {
       if (q.level === 2) {
         const s = q.scores[i];
         if (s === (q.maxScore || 5)) el.classList.add("correct");
@@ -274,7 +382,9 @@ function prevQuestion() {
 }
 
 /* ---------- results ---------- */
-function finishSession() {
+function finishSession(opts) {
+  const timedOut = opts && opts.timedOut;
+  stopExamTimer();
   $("#progressFill").style.width = "100%";
 
   const earned = state.answers.reduce((s, a) => s + a.scored, 0);
@@ -288,9 +398,33 @@ function finishSession() {
   $("#scoreRing").style.setProperty("--pct", `${pct}%`);
 
   let verdict, sub;
-  if (pct >= 80) { verdict = "Excellent work."; sub = "You're tracking well above the typical pass threshold."; }
-  else if (pct >= 60) { verdict = "Solid progress."; sub = "Around the pass mark — keep reinforcing weak topics."; }
-  else { verdict = "Keep practising."; sub = "Review the rationales below and revisit the ADM phases."; }
+  if (state.exam) {
+    // Real exam: pass mark is a points threshold, not a percentage. For the
+    // combined OGEA-103 each part must independently pass 24/40.
+    let passed;
+    if (state.exam.id === "OGEA-103") {
+      const p1 = state.answers.slice(0, 40);
+      const p2 = state.answers.slice(40);
+      const p1pts = p1.reduce((s, a) => s + a.scored, 0);
+      const p2pts = p2.reduce((s, a) => s + a.scored, 0);
+      passed = p1pts >= 24 && p2pts >= 24;
+      sub = `Part 1: ${p1pts}/40 · Part 2: ${p2pts}/40 · Pass requires 24 in each part.`;
+    } else {
+      passed = earned >= state.exam.passPoints;
+      sub = `Pass mark: ${state.exam.passPoints}/${state.exam.maxPoints} points (${state.exam.passPct}%).`;
+    }
+    if (timedOut) verdict = passed ? "Time up — provisional PASS." : "Time up — provisional FAIL.";
+    else verdict = passed ? `${state.exam.id}: PASS.` : `${state.exam.id}: FAIL.`;
+  } else if (pct >= 80) {
+    verdict = "Excellent work.";
+    sub = "You're tracking well above the typical pass threshold.";
+  } else if (pct >= 60) {
+    verdict = "Solid progress.";
+    sub = "Around the 60% pass mark — keep reinforcing weak topics.";
+  } else {
+    verdict = "Keep practising.";
+    sub = "Review the rationales below and revisit the ADM phases.";
+  }
   $("#resultVerdict").textContent = verdict;
   $("#resultSub").textContent = sub;
 
@@ -306,6 +440,9 @@ function finishSession() {
   saveHistory({
     when: Date.now(),
     mode: state.mode,
+    style: state.style,
+    examId: state.exam ? state.exam.id : null,
+    timedOut: !!timedOut,
     count: state.session.length,
     earned, max, pct, fullCount, partialCount,
     responses: state.session.map((q, i) => ({
@@ -343,10 +480,14 @@ function renderReview() {
     const expl = q.level === 2
       ? (a.choice !== null ? escapeHtml(q.rationales[a.choice]) : "Not answered.")
       : escapeHtml(q.explanation);
+    const refHtml = q.reference
+      ? `<div class="review-ref"><strong>Reference:</strong> ${escapeHtml(q.reference)}</div>`
+      : "";
     item.innerHTML =
       `<div class="review-q">${idx + 1}. ${renderInline(q.question)}</div>` +
       optsHtml +
-      `<div class="review-expl"><strong>Scored ${a.scored}/${a.max}.</strong> ${expl}</div>`;
+      `<div class="review-expl"><strong>Scored ${a.scored}/${a.max}.</strong> ${expl}</div>` +
+      refHtml;
     list.appendChild(item);
   });
   list.classList.remove("hidden");
@@ -503,6 +644,15 @@ function init() {
     b.classList.add("is-active");
     state.mode = b.dataset.mode;
     $("#modeHint").textContent = MODE_HINTS[state.mode];
+    refreshExamSummary();
+  }));
+
+  // session style switcher: practice vs. official exam simulation
+  $$("#styleGroup .seg-btn").forEach((b) => b.addEventListener("click", () => {
+    $$("#styleGroup .seg-btn").forEach((x) => x.classList.remove("is-active"));
+    b.classList.add("is-active");
+    state.style = b.dataset.style;
+    refreshExamSummary();
   }));
 
   // count + toggles
@@ -519,12 +669,18 @@ function init() {
     buildSession();
     showView("quiz");
     renderQuestion();
+    if (state.exam) startExamTimer();
   });
 
   // quiz nav
   $("#nextBtn").addEventListener("click", nextQuestion);
   $("#prevBtn").addEventListener("click", prevQuestion);
-  $("#quitBtn").addEventListener("click", () => { if (confirm("Quit this session? Progress will not be saved.")) showView("home"); });
+  $("#quitBtn").addEventListener("click", () => {
+    if (confirm("Quit this session? Progress will not be saved.")) {
+      stopExamTimer();
+      showView("home");
+    }
+  });
 
   // results
   $("#reviewBtn").addEventListener("click", renderReview);
@@ -537,7 +693,22 @@ function init() {
   });
 
   showView("home");
+  refreshExamSummary();
   loadBanks();
+}
+
+// Show or hide the per-style helper UI and the exam summary blurb that tells
+// the user exactly what the OGEA-101/102/103 conditions are.
+function refreshExamSummary() {
+  const isExam = state.style === "exam";
+  const spec = EXAM_SPECS[state.mode];
+  $("#practiceFields").classList.toggle("hidden", isExam);
+  $("#practiceToggles").classList.toggle("hidden", isExam);
+  const summary = $("#examSummary");
+  summary.classList.toggle("hidden", !isExam);
+  if (isExam && spec) {
+    $("#examSummaryText").textContent = describeExam(spec);
+  }
 }
 
 document.addEventListener("DOMContentLoaded", init);

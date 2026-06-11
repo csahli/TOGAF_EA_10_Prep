@@ -320,12 +320,581 @@ L1_TOPICS_EXTRA = [
 ]
 
 
+# Reference map: stem -> C220 reference for every base L1 fact above.
+# Sections are taken from the TOGAF Standard, 10th Edition evaluation bundle
+# (C220, parts 0-5). Where a concept appears in multiple parts, the canonical
+# definitional location is cited.
+L1_REFS = {
+    # ADM phases (C220 Part 1)
+    "Which ADM phase establishes the Architecture Vision and the Statement of Architecture Work?": "C220 Part 1, ch. 3 (Phase A: Architecture Vision)",
+    "Which ADM phase is concerned with the Business Architecture?": "C220 Part 1, ch. 4 (Phase B: Business Architecture)",
+    "Phase C of the ADM addresses which architecture domains?": "C220 Part 1, ch. 5-6 (Phase C: Information Systems Architectures)",
+    "Which ADM phase develops the Technology Architecture?": "C220 Part 1, ch. 7 (Phase D: Technology Architecture)",
+    "Which ADM phase identifies major work packages and Transition Architectures?": "C220 Part 1, ch. 8 (Phase E: Opportunities & Solutions)",
+    "Which ADM phase produces the detailed Implementation and Migration Plan?": "C220 Part 1, ch. 9 (Phase F: Migration Planning)",
+    "Which ADM phase provides architectural oversight of implementation?": "C220 Part 1, ch. 10 (Phase G: Implementation Governance)",
+    "Which ADM phase manages changes to the architecture after deployment?": "C220 Part 1, ch. 11 (Phase H: Architecture Change Management)",
+    "What process operates continuously throughout all ADM phases?": "C220 Part 1, ch. 12 (Requirements Management)",
+    "Which phase establishes the organization's architecture capability and tailors the ADM?": "C220 Part 1, ch. 2 (Preliminary Phase)",
+    # Building Blocks (C220 Part 4)
+    "What is an Architecture Building Block (ABB)?": "C220 Part 4, §5.2.3 (Architecture Building Blocks)",
+    "What is a Solution Building Block (SBB)?": "C220 Part 4, §5.2.4 (Solution Building Blocks)",
+    "What is the relationship between ABBs and SBBs?": "C220 Part 4, §5.2 (Building Blocks)",
+    "What is the primary benefit of reusing ABBs/SBBs?": "C220 Part 4, §5.3 (Building Blocks and the ADM)",
+    # Repository / Continuum (C220 Part 5)
+    "What does the Enterprise Continuum provide?": "C220 Part 5, Enterprise Continuum",
+    "What is held in the Architecture Repository?": "C220 Part 5, Architecture Repository",
+    # Principles (C220 Part 2)
+    "What is the purpose of an Architecture Principle?": "C220 Part 2, ch. 2 (Architecture Principles)",
+    "What is a key reason to define Architecture Principles early?": "C220 Part 2, ch. 2; C220 Part 1, ch. 2 (Preliminary)",
+    # Deliverables (C220 Part 4 §4.2)
+    "Which document formally authorizes the architecture project and defines scope?": "C220 Part 4, §4.2.20 (Statement of Architecture Work)",
+    "Which deliverable triggers the start of an architecture engagement?": "C220 Part 4, §4.2.17 (Request for Architecture Work)",
+    "What does an Architecture Contract govern?": "C220 Part 4, §4.2.2 (Architecture Contract)",
+    "What is the Architecture Definition Document (ADD)?": "C220 Part 4, §4.2.3 (Architecture Definition Document)",
+    "What is the Architecture Requirements Specification?": "C220 Part 4, §4.2 (Deliverables)",
+    # Views and viewpoints (C220 Part 2)
+    "What is a 'view' in TOGAF terms?": "C220 Part 2, Stakeholder Management / Architecture Views and Viewpoints",
+    "What is a 'viewpoint'?": "C220 Part 2, Architecture Views and Viewpoints",
+    "What governs how a view is constructed?": "C220 Part 2, Architecture Views and Viewpoints",
+    # Stakeholders (C220 Part 2)
+    "What is the purpose of a Stakeholder Map?": "C220 Part 2, ch. 3 (Stakeholder Management)",
+    "What is a 'concern' in TOGAF?": "C220 Part 2, ch. 3 (Stakeholder Management)",
+    "Who typically sponsors an architecture engagement?": "C220 Part 1, ch. 2 (Preliminary Phase) / Part 2 ch. 3",
+    "What is the purpose of the Communications Plan?": "C220 Part 2, ch. 3 (Stakeholder Management)",
+    # Gap analysis / transitions (C220 Part 2 / Part 1)
+    "What is gap analysis used for in the ADM?": "C220 Part 2, ch. 5 (Gap Analysis)",
+    "What is a Transition Architecture?": "C220 Part 1, ch. 8 (Phase E); C220 Part 4 §4.2",
+    "What is the main value of Transition Architectures?": "C220 Part 1, ch. 8 (Phase E: Opportunities & Solutions)",
+    # Governance (C220 Part 5)
+    "What is the role of the Architecture Board?": "C220 Part 5, Architecture Board",
+    "What is a 'dispensation' in architecture governance?": "C220 Part 5, Architecture Governance",
+    "What is the purpose of a compliance review?": "C220 Part 5, Architecture Compliance",
+    "What does 'conformance' mean in governance?": "C220 Part 5, Architecture Compliance",
+    # Partitioning / Content Framework
+    "What is architecture partitioning used for?": "C220 Part 3, Architecture Partitioning",
+    "What is the TOGAF Content Framework?": "C220 Part 4, ch. 2 (Content Framework)",
+    "What is an artifact in the Content Framework?": "C220 Part 4, ch. 3 (Artifacts)",
+    "What is a catalog (artifact type)?": "C220 Part 4, ch. 3 (Artifacts: Catalogs, Matrices, Diagrams)",
+    "What is a matrix (artifact type)?": "C220 Part 4, ch. 3 (Artifacts: Catalogs, Matrices, Diagrams)",
+    # Business architecture
+    "Which best describes 'capability-based planning'?": "C220 Part 2, Capability-Based Planning",
+    "What is a Business Capability?": "C220 Part 2, Business Capabilities; C220 Part 1, ch. 4 (Phase B)",
+    "What is a value stream?": "C220 Part 2, Business Scenarios; C220 Part 1, ch. 4 (Phase B)",
+    "Which phase confirms the Baseline Business Architecture?": "C220 Part 1, ch. 4 (Phase B: Business Architecture)",
+    # Concepts
+    "What is a 'baseline' architecture?": "C220 Part 0, ch. 3 (Definitions)",
+    "What is a 'target' architecture?": "C220 Part 0, ch. 3 (Definitions)",
+    "What does 'interoperability' refer to in architecture?": "C220 Part 2, Interoperability Requirements",
+    # Tailoring / iteration
+    "Why tailor the ADM?": "C220 Part 3, ch. 2-3 (Applying the ADM: Tailoring)",
+    "Which statement about the ADM is correct?": "C220 Part 1, ch. 1 (Introduction to the ADM)",
+    # Phase summaries
+    "What is the main output of Phase A?": "C220 Part 1, ch. 3 (Phase A: Architecture Vision)",
+    "What is the main concern of Phase D?": "C220 Part 1, ch. 7 (Phase D: Technology Architecture)",
+    "What is the main concern of Phase F?": "C220 Part 1, ch. 9 (Phase F: Migration Planning)",
+    # Requirements
+    "Which is a key relationship for Requirements Management?": "C220 Part 1, ch. 12 (Requirements Management)",
+    # Risk
+    "Which best describes 'risk' handling in the ADM?": "C220 Part 2, Risk Management",
+    # Change
+    "Which ADM phase would you revisit to handle a major change that re-architects the enterprise?": "C220 Part 1, ch. 11 (Phase H: Architecture Change Management)",
+}
+
+
+# ---------------------------------------------------------------------------
+# Additional Level 1 items authored from the C220 evaluation bundle to give
+# even coverage of every learning unit and replace the previous duplicate
+# "variant-leads" padding. Each item carries an explicit C220 reference.
+# 7-tuple: (stem, correct, d1, d2, d3, explanation, topic, reference)
+# ---------------------------------------------------------------------------
+L1_NEW_AUTHORED = [
+    # Preliminary Phase (under-weighted previously)
+    ("Which of the following is NOT an output of the Preliminary Phase?",
+     "An approved Implementation and Migration Plan",
+     "Tailored Architecture Framework", "Initial Architecture Repository", "Architecture Principles",
+     "The Implementation and Migration Plan is produced in Phase F, not in the Preliminary Phase.",
+     "Preliminary Phase",
+     "C220 Part 1, ch. 2 (Preliminary Phase: Outputs)"),
+    ("Which deliverable established in the Preliminary Phase defines the rules that govern the architecture practice?",
+     "Architecture Governance Framework",
+     "Statement of Architecture Work", "Architecture Vision", "Implementation and Migration Plan",
+     "The Architecture Governance Framework, established in the Preliminary Phase, defines how architecture decisions will be governed.",
+     "Preliminary Phase",
+     "C220 Part 1, ch. 2; C220 Part 5 (EA Capability & Governance)"),
+    # Phase A details
+    ("Which input to Phase A is mandatory rather than optional?",
+     "Request for Architecture Work",
+     "Architecture Vision", "Architecture Definition Document", "Implementation and Migration Plan",
+     "The Request for Architecture Work triggers Phase A; the Architecture Vision is an output, not an input.",
+     "ADM Phases",
+     "C220 Part 1, ch. 3 (Phase A: Inputs)"),
+    ("What is the purpose of the Capability Assessment produced or refined in Phase A?",
+     "To establish the baseline business, IT, and architecture capability ready to undertake the engagement",
+     "To audit financial statements", "To define product pricing", "To replace the Statement of Architecture Work",
+     "The Capability Assessment evaluates baseline and target capability gaps for business, IT, and the architecture practice itself.",
+     "Deliverables",
+     "C220 Part 4, §4.2.6 (Capability Assessment)"),
+    # Phase B
+    ("Which artifact catalogs the business capabilities of an enterprise?",
+     "Business Capability Catalog",
+     "Application Portfolio Catalog", "Technology Standards Catalog", "Data Entity Catalog",
+     "The Business Capability Catalog is a Phase B artifact listing the capabilities the business possesses.",
+     "Business Architecture",
+     "C220 Part 4, ch. 3 (Artifacts) / Part 1 ch. 4"),
+    ("Which best describes a Value Stream Stage?",
+     "A discrete step within an end-to-end value stream that produces a defined value item",
+     "A funding milestone", "A budget code", "A vendor SKU",
+     "Each value-stream stage produces a value item that contributes to the overall stakeholder value delivered by the stream.",
+     "Business Architecture",
+     "C220 Part 2, Business Scenarios / Part 4 Content Framework"),
+    # Phase C: Data
+    ("Which artifact shows the relationship between data entities and the business functions that consume them?",
+     "Data Entity / Business Function Matrix",
+     "Network Diagram", "Risk Register", "Project Gantt Chart",
+     "The Data Entity / Business Function matrix expresses ownership and usage of data across the business.",
+     "Content Framework",
+     "C220 Part 4, ch. 3 (Architectural Artifacts)"),
+    # Phase C: Application
+    ("Which catalog enumerates the application components present in the enterprise?",
+     "Application Portfolio Catalog",
+     "Standards Library", "Stakeholder Map", "Implementation Factor Catalog",
+     "The Application Portfolio Catalog lists the application components that are part of the architecture.",
+     "Content Framework",
+     "C220 Part 4, ch. 3 (Artifacts)"),
+    # Phase D
+    ("Which catalog records the technology standards the enterprise has committed to?",
+     "Technology Standards Catalog",
+     "Application Portfolio Catalog", "Data Entity Catalog", "Stakeholder Catalog",
+     "The Technology Standards Catalog records technology standards that govern the Target Technology Architecture.",
+     "Content Framework",
+     "C220 Part 4, ch. 3 (Artifacts)"),
+    # Phase E
+    ("What is the purpose of the Consolidated Gaps, Solutions and Dependencies Matrix?",
+     "To consolidate gaps with candidate solutions and dependencies as input to defining work packages and Transition Architectures",
+     "To track employee performance", "To set product prices", "To replace the Architecture Vision",
+     "Used in Phase E, this matrix groups gap-analysis results with solutions and dependencies to inform work-package definition.",
+     "ADM Phases",
+     "C220 Part 1, ch. 8 (Phase E); Part 4 (Artifacts)"),
+    ("Which of the following is one of the three basic implementation approaches discussed in Phase E?",
+     "Evolutionary (incremental change)",
+     "Outsource the architecture function", "Disband the Architecture Board", "Skip Phase F",
+     "TOGAF identifies Greenfield, Revolutionary and Evolutionary implementation approaches in Phase E.",
+     "ADM Phases",
+     "C220 Part 1, ch. 8 (Phase E: Implementation Approaches)"),
+    # Phase F
+    ("What is the role of the Implementation and Migration Plan?",
+     "A schedule for delivery of the Transition Architectures with timing, cost and resourcing",
+     "A list of stakeholders", "A glossary of TOGAF terms", "An employee handbook",
+     "The Implementation and Migration Plan is the Phase F deliverable sequencing work packages to deliver each Transition Architecture.",
+     "Deliverables",
+     "C220 Part 1, ch. 9; C220 Part 4 §4.2 (Implementation and Migration Plan)"),
+    # Phase G
+    ("During Phase G, which document binds the delivery organization to deliver in conformance with the architecture?",
+     "Architecture Contract",
+     "Architecture Vision", "Capability Assessment", "Communications Plan",
+     "Architecture Contracts are agreements (with development partners, with business users, between the architecture function and sponsors) to deliver in conformance.",
+     "Architecture Governance",
+     "C220 Part 4, §4.2.2 (Architecture Contract)"),
+    ("Which governance mechanism formally assesses whether an implementation conforms to its architecture?",
+     "Architecture Compliance Review",
+     "Stakeholder Map", "Business Scenario", "Capability Assessment",
+     "Compliance reviews are the Phase G mechanism for verifying conformance to the architecture and its standards.",
+     "Architecture Governance",
+     "C220 Part 5, Architecture Compliance"),
+    # Phase H
+    ("Which classification of change normally triggers a new ADM cycle starting at the Architecture Vision?",
+     "Re-architecting change",
+     "Simplification change", "Incremental change", "No-impact change",
+     "TOGAF classifies changes as Simplification, Incremental or Re-architecting. Re-architecting changes warrant a new ADM cycle.",
+     "Change Management",
+     "C220 Part 1, ch. 11 (Phase H: Change Classification)"),
+    # Requirements Management
+    ("Which artifact captures requirements that the architecture is expected to satisfy?",
+     "Architecture Requirements Specification",
+     "Architecture Contract", "Statement of Architecture Work", "Capability Assessment",
+     "The Architecture Requirements Specification holds the quantitative statements of architecture requirements managed continuously through Requirements Management.",
+     "Requirements Management",
+     "C220 Part 1, ch. 12; Part 4 §4.2 (Architecture Requirements Specification)"),
+    # Stakeholder Management & ADM Techniques
+    ("What is the primary purpose of a Business Transformation Readiness Assessment?",
+     "To assess the organization's preparedness to undertake the change implied by the target architecture",
+     "To audit project budgets", "To select cloud vendors", "To replace the Architecture Vision",
+     "BTRA identifies organisational readiness factors (vision, desire, need, business case, funding, sponsorship, governance, accountability, workable approach, capacity to implement and operate).",
+     "ADM Techniques",
+     "C220 Part 2, Business Transformation Readiness Assessment"),
+    ("What is a Business Scenario used for in the ADM?",
+     "To define stakeholders, business processes, technology environment, desired outcomes and SMART objectives that drive the architecture",
+     "To replace the Statement of Architecture Work", "To run penetration tests", "To approve invoices",
+     "Business Scenarios capture the business problem and requirements as a basis for the Architecture Vision and downstream phases.",
+     "ADM Techniques",
+     "C220 Part 2, Business Scenarios (G176)"),
+    ("How does TOGAF treat security in architecture development?",
+     "As a cross-cutting concern integrated across all ADM phases",
+     "As an optional add-on for regulated industries", "Only in Phase D after technology is selected", "As a separate framework that replaces the ADM",
+     "Security stakeholders, requirements and controls thread through every ADM phase, not just Phase D.",
+     "ADM Techniques",
+     "C220 Part 2, Security Architecture and the ADM"),
+    # Applying the ADM
+    ("Which three levels are typically used to organize the Architecture Landscape?",
+     "Strategic, Segment, Capability",
+     "Vision, Build, Run", "Business, Data, Technology", "Baseline, Transition, Target",
+     "The Architecture Landscape is partitioned by Strategic (broad/long-term), Segment (coherent business area) and Capability (specific capability) levels.",
+     "Architecture Landscape",
+     "C220 Part 3, Applying the ADM (Architecture Landscape)"),
+    ("Which iteration cycle within the ADM repeatedly executes Phases B, C and D to develop target architectures?",
+     "Architecture Definition iteration",
+     "Architecture Context iteration", "Transition Planning iteration", "Architecture Governance iteration",
+     "The Architecture Definition iteration cycles through Phases B, C and D to refine the target architectures.",
+     "Iteration",
+     "C220 Part 3, Applying the ADM (Iteration)"),
+    ("Which iteration cycle iterates between Phases E and F?",
+     "Transition Planning iteration",
+     "Architecture Context iteration", "Architecture Definition iteration", "Requirements iteration",
+     "Transition Planning iterations cycle Phase E (Opportunities & Solutions) and Phase F (Migration Planning) to consolidate the roadmap.",
+     "Iteration",
+     "C220 Part 3, Applying the ADM (Iteration)"),
+    ("In TOGAF, what does architecture partitioning by 'level' refer to?",
+     "Strategic, Segment and Capability levels of the Architecture Landscape",
+     "Salary bands", "Network OSI layers", "Hardware classes",
+     "Partitioning by level uses the Strategic / Segment / Capability levels of the Architecture Landscape.",
+     "Architecture Partitioning",
+     "C220 Part 3, Architecture Partitioning"),
+    ("In partitioning, what does 'subject matter' classification organize architectures by?",
+     "Architecture domains such as Business, Data, Application and Technology",
+     "Office locations", "Vendor invoices", "Employee headcount",
+     "Subject matter partitioning organises architecture work along architecture domains (BDAT).",
+     "Architecture Partitioning",
+     "C220 Part 3, Architecture Partitioning"),
+    # Repository structure
+    ("Which part of the Architecture Repository holds generic reusable guidance such as reference models and patterns?",
+     "Reference Library",
+     "Architecture Landscape", "Governance Repository", "Solutions Landscape",
+     "The Reference Library holds generic, reusable architectural guidance that can be tailored to specific architectures.",
+     "Architecture Repository",
+     "C220 Part 5, Architecture Repository (Reference Library)"),
+    ("Which part of the Architecture Repository records governance activity (agendas, decisions, dispensations)?",
+     "Governance Repository",
+     "Reference Library", "Standards Library", "Solutions Landscape",
+     "The Governance Repository records governance process activity: agendas, decisions, compliance assessments, dispensations.",
+     "Architecture Repository",
+     "C220 Part 5, Architecture Repository (Governance Repository)"),
+    ("Which part of the Architecture Repository holds the standards the enterprise must comply with?",
+     "Standards Library",
+     "Reference Library", "Architecture Requirements Repository", "Enterprise Repository",
+     "The Standards Library holds the technical, business and regulatory standards the enterprise has committed to.",
+     "Architecture Repository",
+     "C220 Part 5, Architecture Repository (Standards Library)"),
+    ("Where in the Architecture Repository are authorized architecture requirements held?",
+     "Architecture Requirements Repository",
+     "Solutions Landscape", "Governance Repository", "Reference Library",
+     "The Architecture Requirements Repository holds the agreed, authoritative set of architecture requirements.",
+     "Architecture Repository",
+     "C220 Part 5, Architecture Repository (Requirements Repository)"),
+    ("Which part of the Architecture Repository represents the architectures themselves at Strategic, Segment and Capability levels?",
+     "Architecture Landscape",
+     "Reference Library", "Standards Library", "Governance Repository",
+     "The Architecture Landscape holds the descriptions of the architectures (Strategic / Segment / Capability) the organisation has produced.",
+     "Architecture Repository",
+     "C220 Part 5, Architecture Repository (Architecture Landscape)"),
+    # Enterprise Continuum
+    ("In the Enterprise Continuum, which end represents the most generic, reusable architectural assets?",
+     "Foundation Architectures (Architecture Continuum end)",
+     "Organization-Specific Solutions", "Industry Solutions", "Common Systems Solutions",
+     "The Architecture Continuum runs from Foundation (most generic) through Common Systems, Industry, to Organization-Specific architectures.",
+     "Enterprise Continuum",
+     "C220 Part 5, Enterprise Continuum"),
+    ("How are the Architecture Continuum and Solutions Continuum related?",
+     "Each architecture stage in the Architecture Continuum has corresponding solutions in the Solutions Continuum that realise it",
+     "They are entirely independent", "The Solutions Continuum replaces the Architecture Continuum", "They both store source code only",
+     "The two continua are paired: ABBs in the Architecture Continuum are realised by SBBs in the Solutions Continuum.",
+     "Enterprise Continuum",
+     "C220 Part 5, Enterprise Continuum (Architecture / Solutions Continuum)"),
+    # Governance
+    ("Which of the following is NOT one of the four levels of architecture conformance defined by TOGAF?",
+     "Conformant by default",
+     "Irrelevant", "Consistent", "Conformant",
+     "TOGAF defines Irrelevant, Consistent, Compliant, Conformant, Fully Conformant and Non-conformant levels; 'conformant by default' is not a TOGAF level.",
+     "Architecture Governance",
+     "C220 Part 5, Architecture Compliance (Levels of Conformance)"),
+    ("Who chairs the Architecture Board?",
+     "A senior leader with authority for architecture decisions across the enterprise",
+     "An intern", "A vendor account manager", "A finance auditor",
+     "The Architecture Board comprises senior stakeholders empowered to take architecture decisions across the enterprise.",
+     "Architecture Governance",
+     "C220 Part 5, Architecture Board"),
+    # Risk
+    ("In TOGAF risk management, what is 'residual risk'?",
+     "The risk remaining after mitigation actions have been applied",
+     "Risk that has not yet been identified", "Risk that is transferred to a third party", "Risk that is automatically eliminated",
+     "Residual risk is the risk that remains after mitigation; it is contrasted with initial risk before mitigation.",
+     "Risk Management",
+     "C220 Part 2, Risk Management"),
+    # Metamodel / Content Framework
+    ("Which TOGAF concept describes the entities, attributes and relationships used to structure architectural information?",
+     "Architecture Content Metamodel",
+     "Stakeholder Map", "Communications Plan", "Architecture Vision",
+     "The Architecture Content Metamodel defines the entities, attributes and relationships that organise architectural information across the four domains.",
+     "Content Framework",
+     "C220 Part 4, ch. 2 (Content Metamodel)"),
+    # Stakeholder Management technique
+    ("In the Power/Interest stakeholder matrix used to support stakeholder management, which group must be 'managed closely'?",
+     "High-power, high-interest stakeholders",
+     "Low-power, low-interest stakeholders", "Low-power, high-interest stakeholders", "High-power, low-interest stakeholders",
+     "Stakeholders with high power and high interest are typically managed closely; others are kept informed, kept satisfied or monitored.",
+     "Stakeholder Management",
+     "C220 Part 2, ch. 3 (Stakeholder Management: Power/Interest)"),
+    ("What is the purpose of the Stakeholder Matrix?",
+     "To classify stakeholders by attributes such as power and interest to determine engagement approach",
+     "To set salaries", "To list servers", "To record source-code commits",
+     "The Stakeholder Matrix classifies stakeholders so engagement effort can be directed where it most matters.",
+     "Stakeholder Management",
+     "C220 Part 2, ch. 3 (Stakeholder Management)"),
+    # Interoperability
+    ("What is an Interoperability Requirement?",
+     "A statement of the degree to which information must be shared between systems",
+     "A pricing schedule", "A hardware warranty", "An office floor plan",
+     "Interoperability requirements specify the necessary information sharing between systems and stakeholders.",
+     "ADM Techniques",
+     "C220 Part 2, Interoperability Requirements"),
+    # Architecture Vision artefact
+    ("Which is true of the Architecture Vision document?",
+     "It provides a first-cut, high-level description of the Baseline and Target Architectures",
+     "It is the final detailed design", "It is the Implementation and Migration Plan", "It is a list of vendors",
+     "The Architecture Vision is a Phase A deliverable that gives a high-level snapshot of Baseline and Target used to obtain buy-in.",
+     "Deliverables",
+     "C220 Part 4, §4.2 (Architecture Vision); Part 1 ch. 3"),
+    # ADM general
+    ("Which best describes the relationship of Requirements Management to the ADM phases?",
+     "Requirements Management runs continuously and interacts with every ADM phase",
+     "It runs only in Phase A", "It runs only after go-live", "It replaces governance",
+     "Requirements Management is the central, continuous process at the hub of the ADM, interacting with every phase.",
+     "Requirements Management",
+     "C220 Part 1, ch. 12 (Requirements Management)"),
+    # Tailoring detail
+    ("Which of the following is an explicit purpose of tailoring the ADM?",
+     "To align the method with the organisation's context (industry, scale, agility, regulation)",
+     "To make the ADM longer", "To remove governance", "To delete the repository",
+     "Tailoring adapts the ADM to fit the enterprise's context — sector, regulation, scale, delivery approach — without losing rigour.",
+     "Tailoring",
+     "C220 Part 3, ch. 2-3 (Applying the ADM: Tailoring)"),
+    # Phase B / value stream relation
+    ("Which Phase B technique helps prioritise capability investment by linking capabilities to outcomes?",
+     "Capability-based planning",
+     "Penetration testing", "Capacity planning of hardware", "Tax planning",
+     "Capability-based planning aligns investment with required capability increments and the outcomes they enable.",
+     "Business Architecture",
+     "C220 Part 2, Capability-Based Planning"),
+    # Governance vs management
+    ("Which best distinguishes architecture governance from architecture management?",
+     "Governance sets direction and ensures compliance; management plans and operates the architecture practice",
+     "They are synonyms", "Management replaces governance", "Governance is optional",
+     "Governance and management are complementary: governance ensures the right things are done; management ensures things are done right.",
+     "Architecture Governance",
+     "C220 Part 5 (EA Capability and Governance)"),
+    # Architecture Compliance scope
+    ("Which of these is a typical outcome of an Architecture Compliance Review?",
+     "An assessment classifying the project against TOGAF conformance levels",
+     "A salary increase", "A new vendor contract", "A network upgrade",
+     "A compliance review reports the project's conformance level (e.g. Irrelevant, Consistent, Compliant, Conformant, Fully Conformant, Non-conformant).",
+     "Architecture Governance",
+     "C220 Part 5, Architecture Compliance"),
+    # Repository / capability
+    ("Which best describes an Enterprise Architecture Capability?",
+     "The ability of the enterprise to establish, sustain and use the Enterprise Architecture practice",
+     "A single product purchase", "An IT operations team", "A finance function",
+     "The EA Capability is the organizational ability to do EA work, sustained through people, process, governance and content.",
+     "EA Capability",
+     "C220 Part 5 (EA Capability and Governance)"),
+    # Communications plan placement
+    ("In which phase is the Communications Plan typically first established?",
+     "Phase A",
+     "Phase F", "Phase G", "Phase H",
+     "The Communications Plan is typically created in Phase A as part of stakeholder management for the engagement.",
+     "Stakeholder Management",
+     "C220 Part 1, ch. 3 (Phase A)"),
+    # Building blocks behaviour
+    ("Which best describes the levels of building block?",
+     "Building blocks may exist at any level of detail — strategic ABBs through to physical SBBs — and decompose into smaller building blocks",
+     "Building blocks are always physical software", "Building blocks may not be reused", "Only Solution Building Blocks are governed",
+     "Building blocks can exist at multiple levels of detail and decompose; both ABBs and SBBs are governed within the architecture practice.",
+     "Building Blocks",
+     "C220 Part 4, ch. 5 (Building Blocks)"),
+    # Enterprise Continuum classification
+    ("Which Common Systems Architecture example is typically held in the Enterprise Continuum?",
+     "Generic security architecture",
+     "A specific vendor's billing application", "The enterprise's organisation chart", "A salary schedule",
+     "Common Systems Architectures are reusable across many enterprises (e.g. generic security or management architectures).",
+     "Enterprise Continuum",
+     "C220 Part 5, Enterprise Continuum (Common Systems)"),
+    # Architecture Definition Document
+    ("Which is true of the Architecture Definition Document?",
+     "It is updated and elaborated across Phases B, C, and D",
+     "It is created only in Phase H", "It is a single static document set in Phase A", "It is identical to the Implementation and Migration Plan",
+     "The ADD captures the architecture across domains and is updated through Phases B, C and D as each domain architecture is developed.",
+     "Deliverables",
+     "C220 Part 4, §4.2.3 (Architecture Definition Document)"),
+    # Implementation Factor Catalog
+    ("What does an Implementation Factor Assessment & Deduction Matrix capture?",
+     "Factors (risks, issues, assumptions, dependencies) that will influence the architecture implementation",
+     "Salaries of architects", "Office floor plans", "A glossary of technical terms",
+     "The Implementation Factor Assessment & Deduction Matrix records factors that affect implementation planning (Phase E).",
+     "Content Framework",
+     "C220 Part 4, ch. 3 (Artifacts: Implementation Factor)"),
+    # Architecture Roadmap
+    ("What does the Architecture Roadmap describe?",
+     "A timeline of individual work packages and Transition Architectures that move from baseline to target",
+     "A diagram of network cabling", "An employee handbook", "A budget forecast",
+     "The Architecture Roadmap lists the individual work packages and the Transition Architectures, providing the timeline used in the Implementation and Migration Plan.",
+     "Deliverables",
+     "C220 Part 4, §4.2 (Architecture Roadmap)"),
+    # Dispensation re-iterated with detail
+    ("Which is true of a dispensation in architecture governance?",
+     "It is time-bound, conditional, recorded, and triggers a remediation plan",
+     "It is a permanent removal of a standard", "It is informal and undocumented", "It is granted by the delivery team itself",
+     "Dispensations are granted by the governing body, conditional, time-bound, recorded in the Governance Repository, and accompanied by remediation.",
+     "Architecture Governance",
+     "C220 Part 5, Architecture Governance (Dispensations)"),
+    # ABB realised by SBB phrasing
+    ("Which statement is true about ABBs and SBBs?",
+     "An ABB defines what is required; an SBB is the concrete realisation, often product-specific",
+     "ABBs are concrete; SBBs are abstract", "They are interchangeable", "ABBs are produced only after SBBs",
+     "ABBs express required capabilities at the logical level; SBBs are physical or vendor-specific realisations.",
+     "Building Blocks",
+     "C220 Part 4, §5.2 (Building Blocks)"),
+    # Phase E
+    ("Which best describes the focus of Phase E (Opportunities & Solutions)?",
+     "Identify major work packages and define Transition Architectures",
+     "Develop the detailed Technology Architecture", "Establish the Architecture Capability", "Govern post-implementation change",
+     "Phase E consolidates gaps from B/C/D into work packages and defines Transition Architectures.",
+     "ADM Phases",
+     "C220 Part 1, ch. 8 (Phase E)"),
+    # Phase G inputs
+    ("Which is a key Phase G activity?",
+     "Provide architectural oversight of implementation, including compliance reviews",
+     "Establish the architecture capability", "Develop the Business Architecture", "Define the Architecture Vision",
+     "Phase G governs implementation, ensuring delivered solutions conform to the Architecture Contract via compliance reviews.",
+     "ADM Phases",
+     "C220 Part 1, ch. 10 (Phase G)"),
+    # Phase H criteria
+    ("Which of the following is a recognised category of architectural change handled in Phase H?",
+     "Simplification change",
+     "Salary change", "Office relocation change", "Stock-price change",
+     "Phase H classifies changes as Simplification, Incremental or Re-architecting.",
+     "Change Management",
+     "C220 Part 1, ch. 11 (Phase H)"),
+    # ADM ordering
+    ("Which is the correct order of ADM phases following Phase A?",
+     "B, C, D, E, F, G, H",
+     "C, B, D, E, G, F, H", "B, D, C, E, F, H, G", "C, D, B, F, E, G, H",
+     "Phases run A → B → C → D → E → F → G → H, with Requirements Management at the centre.",
+     "ADM Phases",
+     "C220 Part 1, ch. 1 (ADM Overview)"),
+    # Architecture Vision/SoAW relationship
+    ("Which document is approved at the end of Phase A?",
+     "Statement of Architecture Work",
+     "Architecture Contract for implementation", "Implementation and Migration Plan", "Architecture Repository",
+     "The signed Statement of Architecture Work concludes Phase A and authorises the rest of the engagement.",
+     "Deliverables",
+     "C220 Part 1, ch. 3 (Phase A: Outputs)"),
+    # Transition Architecture detail
+    ("Transition Architectures are described in which artifact?",
+     "Architecture Roadmap",
+     "Stakeholder Map", "Risk Register", "Business Footprint Diagram",
+     "Transition Architectures are listed in the Architecture Roadmap, which sequences them between Baseline and Target.",
+     "Transition Architectures",
+     "C220 Part 4, ch. 3 (Architecture Roadmap)"),
+    # Open group library reference
+    ("Where can practitioners find practical guidance that complements the TOGAF Standard?",
+     "The Open Group Library (TOGAF Series Guides)",
+     "Vendor product manuals", "Internal HR policies", "Vendor pricing catalogs",
+     "TOGAF Series Guides in The Open Group Library complement the Standard with practical guidance on capabilities, domains and techniques.",
+     "EA Capability",
+     "C220 Part 0, Preface; TOGAF Series Guides"),
+    # Architecture Principles structure
+    ("Which is a recommended structure for an Architecture Principle?",
+     "Name, Statement, Rationale, Implications",
+     "Vendor, Cost, License, Owner", "ID, Salary, Bonus", "Floor, Room, Desk, Chair",
+     "TOGAF recommends each principle is captured with Name, Statement, Rationale and Implications.",
+     "Architecture Principles",
+     "C220 Part 2, ch. 2 (Architecture Principles: Format)"),
+    # ADM techniques
+    ("Which technique helps ensure that architecture artifacts address stakeholder concerns?",
+     "Architecture Views and Viewpoints",
+     "Penetration testing", "Office relocation planning", "Marketing segmentation",
+     "Views are constructed using viewpoints to ensure stakeholder concerns are addressed.",
+     "Views & Viewpoints",
+     "C220 Part 2 (Architecture Views and Viewpoints)"),
+    # Phase D outputs
+    ("Which is a typical output of Phase D?",
+     "Target Technology Architecture (including technology components)",
+     "Approved Implementation and Migration Plan", "Architecture Vision document", "Architecture Capability Assessment",
+     "Phase D produces the Target Technology Architecture along with updated ADD and Architecture Requirements Specification.",
+     "ADM Phases",
+     "C220 Part 1, ch. 7 (Phase D)"),
+    # A small set to reach 128 while filling thin topics
+    ("Which TOGAF technique is used to identify what is missing between the Baseline and Target Architectures?",
+     "Gap Analysis",
+     "Capability-Based Planning", "Stakeholder Mapping", "Capacity Planning",
+     "Gap Analysis identifies items that have been deliberately omitted, accidentally left out, or are new — and is performed in Phases B/C/D and consolidated in Phase E.",
+     "Gap Analysis",
+     "C220 Part 2, ch. 5 (Gap Analysis)"),
+    ("During gap analysis, which of the following is a typical category of finding?",
+     "Items 'New' that exist in Target but not Baseline",
+     "Items the architect personally prefers", "A vendor's price list", "An employee performance score",
+     "Gaps are typically categorised as 'New', 'Eliminated' (intentionally removed) or 'Accidentally omitted', driving subsequent solution definition.",
+     "Gap Analysis",
+     "C220 Part 2, ch. 5 (Gap Analysis)"),
+    ("In TOGAF risk management, what is 'initial risk'?",
+     "Risk categorisation prior to determining and implementing mitigating actions",
+     "Risk after full mitigation", "Risk that has been transferred", "Risk that has been accepted",
+     "Initial risk is the risk classification before any mitigating actions are applied; residual risk is what remains after mitigation.",
+     "Risk Management",
+     "C220 Part 2, Risk Management"),
+    ("Which is a typical artefact for tracking risk through the ADM?",
+     "Consolidated Risk Register / Risk Assessment matrix",
+     "Stakeholder Map", "Application Portfolio Catalog", "Capability Assessment",
+     "A Risk Register / Risk Assessment matrix consolidates risks identified across phases and tracks them through to mitigation.",
+     "Risk Management",
+     "C220 Part 2, Risk Management"),
+    ("Which Architecture Landscape level is the longest-term and least detailed?",
+     "Strategic",
+     "Segment", "Capability", "Transition",
+     "Strategic architectures provide an enterprise-wide, long-term, summary view; Segment narrows scope; Capability adds detail for delivery.",
+     "Architecture Landscape",
+     "C220 Part 3 (Applying the ADM: Architecture Landscape)"),
+    ("Which Architecture Landscape level is short-term, highly detailed, and bounded by what one project can deliver?",
+     "Capability",
+     "Strategic", "Segment", "Foundation",
+     "Capability architectures are detailed enough to deliver a specific capability — short term and high detail.",
+     "Architecture Landscape",
+     "C220 Part 3 (Applying the ADM: Architecture Landscape)"),
+    ("Which best describes the purpose of an EA Capability?",
+     "To establish, sustain and use an EA practice that delivers value through change",
+     "To replace project management", "To centralise IT operations", "To set salaries",
+     "An EA Capability provides the organisational ability — people, process, governance, content — to do enterprise architecture continuously.",
+     "EA Capability",
+     "C220 Part 5 (EA Capability and Governance)"),
+]
+
+# Reference lookup for the four L1_TOPICS_EXTRA stems not in L1_REFS yet.
+L1_REFS.update({
+    "What is the relationship between ABBs and SBBs?": "C220 Part 4, §5.2 (Building Blocks)",
+    "What is the purpose of a compliance review?": "C220 Part 5, Architecture Compliance",
+    "Which statement about the ADM is correct?": "C220 Part 1, ch. 1 (ADM Overview)",
+    "What is the main value of Transition Architectures?": "C220 Part 1, ch. 8 (Phase E)",
+    "What does the Preliminary Phase define regarding governance?": "C220 Part 1, ch. 2 (Preliminary)",
+    "Which ADM phase would you revisit to handle a major change that re-architects the enterprise?": "C220 Part 1, ch. 11 (Phase H)",
+})
+
+
 def build_level1():
-    base = L1_FACTS + L1_TOPICS_EXTRA  # 50 + 6 = 56 unique stems
+    base = L1_FACTS + L1_TOPICS_EXTRA  # 56 unique stems, all with references
     questions = []
     qid = 1
-    # First pass: the unique stems
-    for stem, correct, d1, d2, d3, expl, topic in base:
+
+    def emit(stem, correct, d1, d2, d3, expl, topic, reference):
+        nonlocal qid
         opts = [correct, d1, d2, d3]
         order = list(range(4))
         random.shuffle(order)
@@ -339,38 +908,22 @@ def build_level1():
             "options": shuffled,
             "answer": answer_index,
             "explanation": expl,
+            "reference": reference,
         })
         qid += 1
-    # Second pass: create variant phrasings to reach 128, re-using stems with
-    # reworded lead-ins but identical correct concept (kept clearly answerable).
-    variant_leads = [
-        "In the context of the TOGAF Standard, ",
-        "According to TOGAF best practice, ",
-        "For the EA Practitioner, ",
-        "Within the ADM, ",
-    ]
-    i = 0
-    while len(questions) < 128:
-        stem, correct, d1, d2, d3, expl, topic = base[i % len(base)]
-        lead = variant_leads[(i // len(base)) % len(variant_leads)]
-        # Lowercase first char of stem when appending after a lead-in
-        new_stem = lead + stem[0].lower() + stem[1:]
-        opts = [correct, d1, d2, d3]
-        order = list(range(4))
-        random.shuffle(order)
-        shuffled = [opts[k] for k in order]
-        answer_index = shuffled.index(correct)
-        questions.append({
-            "id": f"L1-{qid:03d}",
-            "level": 1,
-            "topic": topic,
-            "question": new_stem,
-            "options": shuffled,
-            "answer": answer_index,
-            "explanation": expl,
-        })
-        qid += 1
-        i += 1
+
+    # First: the canonical 56 base stems
+    for stem, correct, d1, d2, d3, expl, topic in base:
+        ref = L1_REFS.get(stem, "C220 (TOGAF Standard, 10th Edition)")
+        emit(stem, correct, d1, d2, d3, expl, topic, ref)
+
+    # Then: the newly authored items (each carries its own reference)
+    for stem, correct, d1, d2, d3, expl, topic, ref in L1_NEW_AUTHORED:
+        if len(questions) >= 128:
+            break
+        emit(stem, correct, d1, d2, d3, expl, topic, ref)
+
+    # Defensive cap: do not exceed 128 items
     return questions[:128]
 
 
@@ -625,6 +1178,83 @@ ORG_DESCRIPTORS = [
 ]
 
 
+# ---------------------------------------------------------------------------
+# Per-template third-best option (1 point) plus the C220 reference, matching
+# the 5/3/1/0 gradient the real OGEA-102 exam uses. Indexed by L2_TEMPLATES.
+# Each entry: (third_option_text, third_rationale, reference).
+# ---------------------------------------------------------------------------
+L2_THIRD_AND_REF = [
+    # t0  Vision & Stakeholders / Phase A — multinational order-management
+    ("Document each regional director's objections and metrics in the Statement of Architecture Work as accepted constraints; then proceed to a Target Architecture that assumes the conflicting metrics will be resolved by the operating model team after architecture work is complete.",
+     "Documenting concerns in the SoAW and a credible plan to resolve them is at least within Phase A scope and uses the right deliverable, but delegating the resolution of stakeholder conflict to a downstream team leaves the Vision unagreed — partial credit.",
+     "C220 Part 1, ch. 3 (Phase A); Part 2 ch. 3 (Stakeholder Management)"),
+    # t1  Business Architecture / Phase B — strategy and capability map
+    ("Build a draft capability map and use it to advise the sponsor informally; let the sponsor pick which executive's project to fund first, then retro-fit the chosen project into the capability view so progress is not delayed.",
+     "Building a capability map is the correct Phase B technique, but using it only to rubber-stamp pre-chosen projects loses the objectivity that capability-based planning provides — partial credit.",
+     "C220 Part 2 (Capability-Based Planning); Part 1, ch. 4 (Phase B)"),
+    # t2  Information Systems / Phase C — financial services data
+    ("Define authoritative sources and common definitions for the highest-impact data entities only, and leave the rest of the duplicated and inconsistent data to be tidied opportunistically by individual application projects over time.",
+     "Targeting the most material entities first applies the right Phase C technique, but explicitly leaving the rest untouched perpetuates the audit problem and gives no end-state for data ownership — partial credit.",
+     "C220 Part 1, ch. 5 (Phase C: Data); Part 4 (Content Framework)"),
+    # t3  Technology Architecture / Phase D — tech sprawl
+    ("Publish a recommended technology standards catalogue but make it advisory rather than governed, on the assumption that delivery teams will adopt it voluntarily once they see the benefits.",
+     "Defining the standards catalogue is the right Phase D step, but making it purely advisory without a dispensation route or governance leaves the CIO's consolidation goal unenforced — partial credit.",
+     "C220 Part 1, ch. 7 (Phase D); Part 5 (Architecture Governance)"),
+    # t4  Migration Planning / Phase E/F — 18-month transformation
+    ("Define a single Transition Architecture covering the lowest-risk components and put their delivery into an Implementation and Migration Plan; defer planning for everything else until that Transition has been delivered.",
+     "Using a Transition Architecture and an Implementation and Migration Plan are the right Phase E/F mechanisms, but planning only the easy increment and deferring the rest gives no roadmap to the Target — partial credit.",
+     "C220 Part 1, ch. 8 (Phase E) and ch. 9 (Phase F)"),
+    # t5  Implementation Governance / Phase G — non-conformance
+    ("Allow the deviation to proceed to go-live, then immediately raise a formal dispensation request after go-live so the non-conformance is recorded against the Architecture Contract and a remediation plan is tracked through governance.",
+     "Recording the non-conformance and asking for a formal dispensation is correct in form, but granting it after go-live means the dispensation does not actually constrain the deviation it is meant to govern — partial credit.",
+     "C220 Part 1, ch. 10 (Phase G); Part 5 (Architecture Governance: Dispensations)"),
+    # t6  Change Management / Phase H — new regulated product line
+    ("Classify the change as Incremental and update the affected portions of the existing architecture in place, on the basis that the new product line can be modelled as additional capabilities, processes and data inside the current architecture.",
+     "Using Phase H change classification is correct, but classifying a new regulated product line with new partners and compliance as Incremental understates its scope; the right classification is Re-architecting — partial credit.",
+     "C220 Part 1, ch. 11 (Phase H: Change Classification)"),
+    # t7  Requirements Management / Central
+    ("Raise the new mandate through the central Requirements Management process; update the in-progress Phase C deliverables; and schedule the impact assessment on the previously baselined Phase B deliverables as a separate work item to be carried out by the architecture team after the current phase completes.",
+     "Using Requirements Management and assessing Phase B impact is correct, but deliberately deferring the Phase B re-validation knowingly leaves a temporary compliance gap that should be closed under the same change — partial credit.",
+     "C220 Part 1, ch. 12 (Requirements Management)"),
+    # t8  Enterprise Continuum / Repository — bespoke build duplicating IAM
+    ("Direct the team to the existing ABB and SBB and ask them to extend the existing Solution Building Block with whatever capability they feel is missing, without requiring a formal dispensation or governance assessment for the extension.",
+     "Pointing the team at the existing repository asset is the right reuse instinct, but allowing them to extend it freely without governance bypasses the architecture process and risks degrading a proven, governed asset — partial credit.",
+     "C220 Part 5 (Enterprise Continuum / Architecture Repository); Part 4 §5 (Building Blocks)"),
+    # t9  Governance — Architecture Board bottleneck
+    ("Keep the existing rule that the Architecture Board reviews every decision but increase the Board's meeting frequency and add additional members to clear the backlog more quickly.",
+     "Adding capacity is at least a recognition that the bottleneck must be addressed, but it does not change the fundamental policy of universal approval and so reproduces the bottleneck as soon as load grows again — partial credit.",
+     "C220 Part 5 (EA Capability and Governance: Architecture Board)"),
+    # t10 Preliminary & Tailoring
+    ("Run a textbook Preliminary Phase exactly as the Standard describes, producing every recommended artifact and deliverable in full, and ask the delivery teams to comply with the resulting governance once it is published.",
+     "Running the Preliminary Phase is correct and would establish the capability, but skipping the tailoring step the Preliminary Phase explicitly mandates ignores the organisation's agile and regulatory context and is likely to provoke the leadership resistance the architect must avoid — partial credit.",
+     "C220 Part 1, ch. 2 (Preliminary); Part 3 (Applying the ADM: Tailoring)"),
+    # t11 Security & Risk — bolt-on history
+    ("Plan two security checkpoint reviews — one in late Phase B/C and one before go-live — to catch security issues earlier than the previous end-of-programme review.",
+     "Earlier scheduled checkpoints are an improvement on a single end-of-programme review, but periodic checkpoints still treat security as something inspected rather than designed-in across every ADM phase — partial credit.",
+     "C220 Part 2 (Security Architecture and the ADM)"),
+    # t12 Architecture Partitioning — diversified conglomerate
+    ("Partition by business unit and let each unit develop its own architecture independently; require the units to share their finished architectures with each other afterwards so that overlap is discovered and discussed at group level after the fact.",
+     "Partitioning along business-unit boundaries is the right TOGAF instinct, but discovering overlap after each unit has independently designed and decided ignores group-level coherence, reuse, and conflict resolution that partitioning is supposed to enable — partial credit.",
+     "C220 Part 3 (Architecture Partitioning)"),
+    # t13 Stakeholder Management — regulator
+    ("Add the regulator to the Stakeholder Map at low engagement level and brief the regulator only at major milestones, so that the regulator is formally included but the sponsor's preferred pace is not slowed.",
+     "Including the regulator in the Stakeholder Map at all is correct, but classifying a regulator whose concerns could block go-live as a low-engagement stakeholder under-rates the stakeholder and exposes the engagement to the very risk the architect identified — partial credit.",
+     "C220 Part 2, ch. 3 (Stakeholder Management)"),
+    # t14 Application Architecture / Phase C — overlapping SaaS
+    ("Develop the Target Application Architecture, map proposed products onto it, and recommend the single SaaS product that covers the largest share of the end-to-end process; allow that product to be extended over time to cover the remaining functions.",
+     "Defining the Target Application Architecture and mapping products is correct, and picking the broadest-coverage product is a defensible starting point, but committing to a single product without quantifying its gaps risks lock-in and ignores stakeholder coverage — partial credit.",
+     "C220 Part 1, ch. 6 (Phase C: Application); Part 4 (Content Framework)"),
+    # t15 Value & Benefits / Phase B — CFO challenge
+    ("Provide the CFO with a list of the business capabilities the programme will affect, but stop short of tying each proposed investment to the specific capabilities, value-stream stages and outcomes it improves.",
+     "Naming the affected capabilities is the right Business Architecture vocabulary, but stopping short of the investment-to-capability-to-outcome traceability the CFO has explicitly demanded leaves the value case incomplete — partial credit.",
+     "C220 Part 2 (Business Architecture: Capabilities, Value Streams); Part 1 ch. 4 (Phase B)"),
+]
+
+# Sanity: must match L2_TEMPLATES exactly so the per-template lookup is safe
+assert len(L2_THIRD_AND_REF) == len(L2_TEMPLATES), \
+    "L2_THIRD_AND_REF must have one entry per L2 template"
+
+
 def build_level2():
     questions = []
     qid = 1
@@ -647,6 +1277,7 @@ def build_level2():
         used.add(key)
         (topic, phase, context, situation, qtext, best, second, zero1, zero2,
          rb, rs, rz1, rz2) = L2_TEMPLATES[t_idx]
+        third_text, third_rationale, reference = L2_THIRD_AND_REF[t_idx]
         org = ORG_NAMES[o_idx]
         desc = ORG_DESCRIPTORS[o_idx]
         # Multi-paragraph Practitioner-style scenario: context, situation, question.
@@ -657,12 +1288,18 @@ def build_level2():
         )
 
 
-        # Build options with scores; shuffle while tracking scores+rationale
+        # Build options with the official OGEA-102 5 / 3 / 1 / 0 gradient
+        # (best=5, second-best=3, third-best=1, distractor=0). The two zeros
+        # from the original template are collapsed: the more plausible of the
+        # two becomes the second-best (already in `second`), and a newly
+        # authored third-best option is added with a 1-point rationale.
+        # `zero2` is dropped to keep four options total (one true distractor
+        # plus three graduated good-faith answers).
         opts = [
-            {"text": best, "score": 5, "rationale": rb, "tag": "Best (full marks)"},
-            {"text": second, "score": 3, "rationale": rs, "tag": "Second-best (partial)"},
-            {"text": zero1, "score": 0, "rationale": rz1, "tag": "Scores 0"},
-            {"text": zero2, "score": 0, "rationale": rz2, "tag": "Scores 0 (distractor)"},
+            {"text": best,        "score": 5, "rationale": rb,              "tag": "Best (full marks)"},
+            {"text": second,      "score": 3, "rationale": rs,              "tag": "Second-best (3 pts)"},
+            {"text": third_text,  "score": 1, "rationale": third_rationale, "tag": "Third-best (1 pt)"},
+            {"text": zero1,       "score": 0, "rationale": rz1,             "tag": "Distractor (0 pts)"},
         ]
         random.shuffle(opts)
         best_index = next(i for i, o in enumerate(opts) if o["score"] == 5)
@@ -678,6 +1315,7 @@ def build_level2():
             "tags": [o["tag"] for o in opts],
             "answer": best_index,  # the full-marks option
             "maxScore": 5,
+            "reference": reference,
         })
         qid += 1
     return questions[:128]

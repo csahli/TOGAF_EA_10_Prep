@@ -73,11 +73,24 @@
         </div>
 
         <div class="field">
+          <label class="field-label">Session style</label>
+          <div class="seg" role="radiogroup" id="styleGroup">
+            <button class="seg-btn is-active" data-style="practice">Practice (your settings)</button>
+            <button class="seg-btn" data-style="exam">Official exam simulation</button>
+          </div>
+          <p class="field-hint" id="styleHint">
+            Practice mode lets you pick a question count and toggle instant feedback.
+            Official exam simulation enforces the published OGEA-101 / OGEA-102 / OGEA-103
+            count, time limit and closed-book / open-book rules.
+          </p>
+        </div>
+
+        <div class="field" id="practiceFields">
           <label class="field-label" for="countRange">Number of questions: <strong id="countVal">20</strong></label>
           <input type="range" id="countRange" min="5" max="40" step="5" value="20" />
         </div>
 
-        <div class="field field-row">
+        <div class="field field-row" id="practiceToggles">
           <label class="switch">
             <input type="checkbox" id="shuffleToggle" checked />
             <span class="switch-track"></span>
@@ -88,6 +101,10 @@
             <span class="switch-track"></span>
             <span class="switch-label">Instant feedback</span>
           </label>
+        </div>
+
+        <div class="field exam-summary hidden" id="examSummary">
+          <p class="field-hint" id="examSummaryText"></p>
         </div>
 
         <button class="btn btn-primary btn-lg" id="startBtn">Begin session →</button>
@@ -102,6 +119,7 @@
           <span id="qCounter">Question 1 / 20</span>
           <span class="pill" id="qLevelPill">Level 1</span>
           <span class="pill pill-ghost" id="qTopic">Topic</span>
+          <span class="pill pill-timer hidden" id="qTimer" aria-live="polite">--:--</span>
         </div>
         <button class="btn btn-ghost btn-sm" id="quitBtn">Quit</button>
       </div>
@@ -247,10 +265,14 @@
         <p>A self-study practice environment modeled on the format of the
           <strong>TOGAF® EA Practitioner</strong> certification (TOGAF Standard, 10th Edition).</p>
         <ul class="about-list">
-          <li><strong>Level 1 (Foundation):</strong> single-best-answer recall questions.</li>
-          <li><strong>Level 2 (Practitioner):</strong> scenario questions with gradient scoring
-            (best = 5, second-best = 3, others = 0).</li>
-          <li><strong>Blended:</strong> mixes both levels in one session.</li>
+          <li><strong>Level 1 (Foundation):</strong> single-best-answer recall questions, every item
+            referenced back to the C220 evaluation bundle.</li>
+          <li><strong>Level 2 (Practitioner):</strong> scenario questions with the official OGEA-102
+            gradient: <strong>best = 5, second-best = 3, third-best = 1, distractor = 0</strong>.</li>
+          <li><strong>Blended:</strong> mixes both levels in one practice session.</li>
+          <li><strong>Official exam simulation:</strong> enforces the published OGEA-101 (40 q / 60 min /
+            closed book), OGEA-102 (8 q / 90 min / open book) or OGEA-103 combined (48 q / 150 min)
+            structure with a visible timer. Pass mark is 60% in each part.</li>
         </ul>
         <p class="disclaimer">⚠️ All questions are <strong>original study material</strong>.
           They are not real exam questions and reproduce no proprietary Open Group content.
@@ -267,10 +289,8 @@
 
   <script src="data/questions_level1.js"></script>
   <script src="data/questions_level2.js"></script>
-  <!-- Supplemental syllabus-aligned questions; must load AFTER the two banks above and BEFORE app.js -->
-  <script src="data/questions_supplement.js?v=1"></script>
   <script src="data/glossary.js"></script>
-  <script src="app.js?v=2"></script>
+  <script src="app.js?v=3"></script>
 
 
 

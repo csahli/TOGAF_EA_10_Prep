@@ -179,6 +179,11 @@ input[type=range]::-webkit-slider-thumb {
 .progress-meta { display: flex; align-items: center; gap: 12px; font-size: 0.85rem; color: var(--text-dim); flex-wrap: wrap; }
 .pill { background: var(--accent-soft); color: var(--accent); padding: 4px 12px; border-radius: 99px; font-size: 0.74rem; font-weight: 600; }
 .pill-ghost { background: var(--surface-2); color: var(--text-dim); font-weight: 400; }
+.pill-timer { background: var(--surface-2); color: var(--text); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-variant-numeric: tabular-nums; letter-spacing: 0.05em; }
+.pill-timer.timer-warn { background: rgba(230, 194, 122, 0.18); color: var(--warn); }
+.pill-timer.timer-crit { background: rgba(224, 138, 138, 0.18); color: var(--bad); }
+.exam-summary { background: var(--surface-2); border: 1px solid var(--border); border-left: 3px solid var(--accent); padding: 12px 14px; border-radius: var(--radius-sm); }
+.exam-summary p { margin: 0; color: var(--text); font-size: 0.86rem; }
 .progress-bar { height: 5px; background: var(--surface-2); border-radius: 99px; overflow: hidden; margin-bottom: 22px; }
 .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent), #9ad6cc); border-radius: 99px; transition: width 0.4s var(--ease); }
 
@@ -235,6 +240,8 @@ input[type=range]::-webkit-slider-thumb {
 .review-opt.partial { background: rgba(230,194,122,0.12); border-color: var(--warn); }
 .review-opt.chosen-wrong { background: rgba(224,138,138,0.1); border-color: var(--bad); }
 .review-expl { font-size: 0.84rem; color: var(--text-dim); margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
+.review-ref { font-size: 0.78rem; color: var(--text-faint); margin-top: 8px; font-style: italic; }
+.review-ref strong { color: var(--text-dim); font-style: normal; }
 
 /* history */
 .view-header { display: flex; align-items: center; justify-content: space-between; margin: 18px 0 22px; }
