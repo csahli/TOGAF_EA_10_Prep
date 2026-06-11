@@ -548,8 +548,12 @@ mark { background: var(--accent-soft); color: var(--accent); border-radius: 3px;
 /* Iteration cycles */
 .svg-diagram .iter2-ph          { fill: var(--surface-2); stroke: var(--border); stroke-width: 1; }
 .svg-diagram .iter2-ph-lbl      { fill: var(--text); font-size: 13px; font-weight: 700; font-family: Inter, sans-serif; text-anchor: middle; }
-.svg-diagram .iter2-bracket     { fill: none; stroke: var(--accent); stroke-width: 1.5; opacity: 0.85; }
-.svg-diagram .iter2-bracket-lbl { fill: var(--text); font-size: 10.5px; font-weight: 600; font-family: Inter, sans-serif; text-anchor: middle; }
+.svg-diagram .iter2-bar         { stroke-width: 0; }
+.svg-diagram .iter2-bar-ctx     { fill: var(--accent-2); opacity: 0.55; }
+.svg-diagram .iter2-bar-dev     { fill: var(--accent);   opacity: 0.85; }
+.svg-diagram .iter2-bar-tran    { fill: var(--warn);     opacity: 0.65; }
+.svg-diagram .iter2-bar-gov     { fill: var(--good);     opacity: 0.65; }
+.svg-diagram .iter2-bar-lbl     { fill: var(--text); font-size: 11px; font-weight: 600; font-family: Inter, sans-serif; text-anchor: middle; }
 .svg-diagram .iter2-foot        { fill: var(--text-dim); font-size: 10px; font-style: italic; font-family: Inter, sans-serif; text-anchor: middle; }
 
 /* Architecture Landscape (stacked trapezoids) */
