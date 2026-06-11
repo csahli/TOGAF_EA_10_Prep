@@ -1,53 +1,55 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 240" class="svg-diagram" role="img" aria-label="Four ADM iteration cycles drawn as curly brackets grouping the phases: Architecture Context covers Preliminary and Phase A; Architecture Development covers Phases B, C and D; Transition Planning covers Phases E and F; Architecture Governance covers Phases G and H. Requirements Management iterates throughout.">
-  <!-- Row of 9 phase boxes (Pre + A..H), uniform size, evenly spaced -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 260" class="svg-diagram" role="img" aria-label="Four ADM iteration cycles, each on its own row beneath the phase row. Architecture Context covers Preliminary and Phase A. Architecture Development covers Phases B, C and D. Transition Planning covers Phases E and F. Architecture Governance covers Phases G and H. Requirements Management iterates throughout.">
+  <!-- Single row of 9 phase boxes (Pre + A..H), uniform size, evenly spaced -->
   <g class="iter2-phases">
-    <rect x="20"  y="120" width="40" height="40" rx="6" class="iter2-ph" />
-    <text x="40"  y="146" class="iter2-ph-lbl">Pre</text>
+    <rect x="20"  y="20" width="40" height="40" rx="6" class="iter2-ph" />
+    <text x="40"  y="46" class="iter2-ph-lbl">Pre</text>
 
-    <rect x="65"  y="120" width="40" height="40" rx="6" class="iter2-ph" />
-    <text x="85"  y="146" class="iter2-ph-lbl">A</text>
+    <rect x="65"  y="20" width="40" height="40" rx="6" class="iter2-ph" />
+    <text x="85"  y="46" class="iter2-ph-lbl">A</text>
 
-    <rect x="110" y="120" width="40" height="40" rx="6" class="iter2-ph" />
-    <text x="130" y="146" class="iter2-ph-lbl">B</text>
+    <rect x="110" y="20" width="40" height="40" rx="6" class="iter2-ph" />
+    <text x="130" y="46" class="iter2-ph-lbl">B</text>
 
-    <rect x="155" y="120" width="40" height="40" rx="6" class="iter2-ph" />
-    <text x="175" y="146" class="iter2-ph-lbl">C</text>
+    <rect x="155" y="20" width="40" height="40" rx="6" class="iter2-ph" />
+    <text x="175" y="46" class="iter2-ph-lbl">C</text>
 
-    <rect x="200" y="120" width="40" height="40" rx="6" class="iter2-ph" />
-    <text x="220" y="146" class="iter2-ph-lbl">D</text>
+    <rect x="200" y="20" width="40" height="40" rx="6" class="iter2-ph" />
+    <text x="220" y="46" class="iter2-ph-lbl">D</text>
 
-    <rect x="245" y="120" width="40" height="40" rx="6" class="iter2-ph" />
-    <text x="265" y="146" class="iter2-ph-lbl">E</text>
+    <rect x="245" y="20" width="40" height="40" rx="6" class="iter2-ph" />
+    <text x="265" y="46" class="iter2-ph-lbl">E</text>
 
-    <rect x="290" y="120" width="40" height="40" rx="6" class="iter2-ph" />
-    <text x="310" y="146" class="iter2-ph-lbl">F</text>
+    <rect x="290" y="20" width="40" height="40" rx="6" class="iter2-ph" />
+    <text x="310" y="46" class="iter2-ph-lbl">F</text>
 
-    <rect x="335" y="120" width="40" height="40" rx="6" class="iter2-ph" />
-    <text x="355" y="146" class="iter2-ph-lbl">G</text>
+    <rect x="335" y="20" width="40" height="40" rx="6" class="iter2-ph" />
+    <text x="355" y="46" class="iter2-ph-lbl">G</text>
 
-    <rect x="380" y="120" width="40" height="40" rx="6" class="iter2-ph" />
-    <text x="400" y="146" class="iter2-ph-lbl">H</text>
+    <rect x="380" y="20" width="40" height="40" rx="6" class="iter2-ph" />
+    <text x="400" y="46" class="iter2-ph-lbl">H</text>
   </g>
 
-  <!-- Iteration brackets — drawn as curly braces grouping the phases.
-       Each bracket: short stem down at each end + short notch down at midpoint. -->
+  <!-- Four iteration lanes stacked vertically. Each lane: a coloured bar
+       spanning exactly the phases it covers, plus a label centred under the
+       bar. Each lane has its own y-row so labels can never collide with
+       each other regardless of horizontal width. -->
 
-  <!-- Architecture Context: Pre + A  →  x = 20..105, mid = 62.5 -->
-  <path d="M20 110 V 100 H 105 V 110 M 62.5 100 V 92" class="iter2-bracket" />
-  <text x="62.5" y="82" class="iter2-bracket-lbl">Architecture Context</text>
+  <!-- Lane 1: Architecture Context (Pre + A) — spans x=20..105 -->
+  <rect x="20"  y="78"  width="85"  height="12" rx="4" class="iter2-bar iter2-bar-ctx" />
+  <text x="62.5" y="106" class="iter2-bar-lbl">Architecture Context</text>
 
-  <!-- Architecture Development: B + C + D  →  x = 110..240, mid = 175 -->
-  <path d="M110 110 V 100 H 240 V 110 M 175 100 V 92" class="iter2-bracket" />
-  <text x="175" y="82" class="iter2-bracket-lbl">Architecture Development</text>
+  <!-- Lane 2: Architecture Development (B + C + D) — spans x=110..240 -->
+  <rect x="110" y="118" width="130" height="12" rx="4" class="iter2-bar iter2-bar-dev" />
+  <text x="175" y="146" class="iter2-bar-lbl">Architecture Development</text>
 
-  <!-- Transition Planning: E + F  →  x = 245..330, mid = 287.5 -->
-  <path d="M245 110 V 100 H 330 V 110 M 287.5 100 V 92" class="iter2-bracket" />
-  <text x="287.5" y="82" class="iter2-bracket-lbl">Transition Planning</text>
+  <!-- Lane 3: Transition Planning (E + F) — spans x=245..330 -->
+  <rect x="245" y="158" width="85"  height="12" rx="4" class="iter2-bar iter2-bar-tran" />
+  <text x="287.5" y="186" class="iter2-bar-lbl">Transition Planning</text>
 
-  <!-- Architecture Governance: G + H  →  x = 335..420, mid = 377.5 -->
-  <path d="M335 110 V 100 H 420 V 110 M 377.5 100 V 92" class="iter2-bracket" />
-  <text x="377.5" y="82" class="iter2-bracket-lbl">Architecture Governance</text>
+  <!-- Lane 4: Architecture Governance (G + H) — spans x=335..420 -->
+  <rect x="335" y="198" width="85"  height="12" rx="4" class="iter2-bar iter2-bar-gov" />
+  <text x="377.5" y="226" class="iter2-bar-lbl">Architecture Governance</text>
 
   <!-- Footer: Requirements Management line -->
-  <text x="220" y="200" class="iter2-foot">Requirements Management iterates throughout the ADM</text>
+  <text x="220" y="252" class="iter2-foot">Requirements Management iterates throughout the ADM</text>
 </svg>
