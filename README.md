@@ -5,11 +5,13 @@ aligned to the published OGEA-101 / OGEA-102 / OGEA-103 exam structure.
 
 ## Features
 
-- **Level 1 (Foundation)** — 128 single-best-answer recall questions, every
-  item with a citation back to the TOGAF Standard 10th Edition (C220) or the
-  relevant TOGAF Series Guide. 128 unique stems across 25 topics.
-- **Level 2 (Practitioner)** — 128 scenario questions using the **official
-  OGEA-102 gradient: best = 5, second-best = 3, third-best = 1, distractor = 0**.
+- **Level 1 (Foundation)** — 128 single-best-answer recall questions, each
+  with a best-effort citation back to the TOGAF Standard 10th Edition (C220)
+  or the relevant TOGAF Series Guide. 128 unique stems across 25 topics.
+- **Level 2 (Practitioner)** — 128 scenario questions scored on the same
+  5/3/1/0 gradient the OGEA-102 exam uses (best = 5, second-best = 3,
+  third-best = 1, distractor = 0). The gradings themselves are the author's
+  interpretation, not an Open Group answer key.
 - **Blended** — mixes both levels in one practice session.
 - **Practice mode** — pick your own question count, shuffle and toggle instant
   feedback per question.
@@ -39,19 +41,41 @@ so everything runs straight from `file://`. Keep the `data/` folder next to
 
 ## Accuracy and verification
 
-Every Level 1 item and every Level 2 template was cross-checked against the
-TOGAF Standard 10th Edition evaluation bundle (C220 Parts 0-5) by a per-part
-verification pass. The check confirmed:
+> **This tool is provided as a free study aid on a best-effort basis. It is
+> not authoritative and is not a substitute for the official TOGAF Standard,
+> a reputable study guide, or accredited training.**
 
-- 16 of 16 Level 2 "best" (5-point) answers are correct per C220
-- All Level 1 ADM-phase items (37/37) verified clean against C220 Part 1
-- Substantive errors found during verification have been corrected (including
-  TOGAF 10 renames: Architecture Development iteration, TOGAF Enterprise
-  Metamodel, Implementation Factor Catalog) and citations have been moved to
-  the correct C220 part or TOGAF Series Guide
+The questions and rationales were drafted with reference to the TOGAF Standard
+10th Edition evaluation bundle (C220 Parts 0-5) and then run through a
+self-review pass to catch obvious errors, miscitations, and TOGAF 10 → TOGAF 9
+naming drift. A handful of corrections were applied as a result (e.g.
+*Architecture Development iteration*, *TOGAF Enterprise Metamodel*,
+*Implementation Factor Catalog*). The per-question `Reference:` line on the
+review screen points at the C220 section the item was drafted from, so you
+can always verify a claim against the source yourself — and you should,
+especially before relying on any item for exam preparation.
 
-See the per-question `Reference:` line on the review screen for the exact
-C220 section that supports each item.
+Known limitations:
+
+- The review pass was best-effort, not exhaustive; remaining inaccuracies,
+  ambiguous phrasing, or outdated terminology are likely.
+- "Best", "second-best", "third-best" and "distractor" gradings on Level 2
+  scenarios reflect the author's interpretation of TOGAF guidance, not an
+  Open Group answer key. Real OGEA-102 grading may differ on borderline
+  options.
+- The L2 question pool is built from a small number of scenario templates
+  combined with org-name variants; coverage is narrower than the headline
+  question count suggests. Treat repeated exposure as familiarity practice,
+  not as evidence of mastery.
+- Citation accuracy is the author's best read of where each concept lives in
+  the standard; chapter and section numbers may be off by one in places.
+
+If you spot an error, please open an issue or a pull request — corrections
+are welcome.
+
+For authoritative practice and assessment, use The Open Group's own
+materials, an accredited training provider's study pack, or the published
+TOGAF® Series Guides and the TOGAF Standard itself.
 
 ## Regenerate / extend the question banks
 
