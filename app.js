@@ -657,23 +657,101 @@ const glossaryState = { cat: "All", query: "", built: false };
 function buildAdmRing() {
   const g = document.getElementById("admRing");
   if (!g || g.childNodes.length) return;
-  const phases = ["Prelim", "A. Vision", "B. Business", "C. Info Sys",
-                  "D. Tech", "E. Opp/Sol", "F. Migration", "G. Govern", "H. Change"];
-  const cx = 160, cy = 160, r = 120;
-  phases.forEach((p, i) => {
-    const ang = (i / phases.length) * Math.PI * 2 - Math.PI / 2;
-    const x = cx + r * Math.cos(ang);
-    const y = cy + r * Math.sin(ang);
-    const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    circle.setAttribute("cx", x); circle.setAttribute("cy", y);
-    circle.setAttribute("r", 26); circle.setAttribute("class", "adm-seg");
-    g.appendChild(circle);
-    const t = document.createElementNS("http://www.w3.org/2000/svg", "text");
-    t.setAttribute("x", x); t.setAttribute("y", y + 3);
-    t.setAttribute("text-anchor", "middle"); t.setAttribute("class", "adm-lbl");
-    t.textContent = p;
-    g.appendChild(t);
+  const SVG = "http://www.w3.org/2000/svg";
+
+  // Eight ADM phases (A-H), starting at the top (Phase A) and going clockwise.
+  // Preliminary sits OUTSIDE the wheel, above Phase A, with an arrow pointing
+  // down into it.
+  const phases = [
+    { key: "A", lbl1: "A.",  lbl2: "Vision"     },
+    { key: "B", lbl1: "B.",  lbl2: "Business"   },
+    { key: "C", lbl1: "C.",  lbl2: "Info Sys"   },
+    { key: "D", lbl1: "D.",  lbl2: "Technology" },
+    { key: "E", lbl1: "E.",  lbl2: "Opp & Sol"  },
+    { key: "F", lbl1: "F.",  lbl2: "Migration"  },
+    { key: "G", lbl1: "G.",  lbl2: "Governance" },
+    { key: "H", lbl1: "H.",  lbl2: "Change Mgmt"},
+  ];
+
+  const cx = 160, cy = 175, r = 115, nodeR = 28;
+  const N = phases.length;
+
+  // Position helper: angle for phase i, starting at top (-PI/2).
+  const angleAt = (i) => (i / N) * Math.PI * 2 - Math.PI / 2;
+  const point = (i, radius = r) => ({
+    x: cx + radius * Math.cos(angleAt(i)),
+    y: cy + radius * Math.sin(angleAt(i)),
   });
+
+  // Arrows between adjacent phases. We draw a short curved arc from the edge
+  // of node i to the edge of node i+1 (mod N), going clockwise around the
+  // ring. The arc bows outward slightly for a wheel-like feel.
+  for (let i = 0; i < N; i++) {
+    const a = point(i);
+    const b = point((i + 1) % N);
+    // Trim line so it starts/ends at the node edge, not centre.
+    const dx = b.x - a.x, dy = b.y - a.y;
+    const len = Math.hypot(dx, dy);
+    const ux = dx / len, uy = dy / len;
+    const sx = a.x + ux * nodeR, sy = a.y + uy * nodeR;
+    const ex = b.x - ux * nodeR, ey = b.y - uy * nodeR;
+    // Bow the arc outward from centre by ~14px for the curved wheel effect.
+    const mx = (sx + ex) / 2, my = (sy + ey) / 2;
+    const outwardX = mx - cx, outwardY = my - cy;
+    const outLen = Math.hypot(outwardX, outwardY);
+    const bow = 14;
+    const ctrlX = mx + (outwardX / outLen) * bow;
+    const ctrlY = my + (outwardY / outLen) * bow;
+    const path = document.createElementNS(SVG, "path");
+    path.setAttribute("d", `M ${sx} ${sy} Q ${ctrlX} ${ctrlY} ${ex} ${ey}`);
+    path.setAttribute("class", "adm-arrow");
+    path.setAttribute("marker-end", "url(#adm-arrowhead)");
+    g.appendChild(path);
+  }
+
+  // Phase nodes.
+  phases.forEach((p, i) => {
+    const pt = point(i);
+    const circle = document.createElementNS(SVG, "circle");
+    circle.setAttribute("cx", pt.x); circle.setAttribute("cy", pt.y);
+    circle.setAttribute("r", nodeR); circle.setAttribute("class", "adm-seg");
+    g.appendChild(circle);
+    const t1 = document.createElementNS(SVG, "text");
+    t1.setAttribute("x", pt.x); t1.setAttribute("y", pt.y - 2);
+    t1.setAttribute("text-anchor", "middle"); t1.setAttribute("class", "adm-lbl-key");
+    t1.textContent = p.lbl1;
+    g.appendChild(t1);
+    const t2 = document.createElementNS(SVG, "text");
+    t2.setAttribute("x", pt.x); t2.setAttribute("y", pt.y + 11);
+    t2.setAttribute("text-anchor", "middle"); t2.setAttribute("class", "adm-lbl");
+    t2.textContent = p.lbl2;
+    g.appendChild(t2);
+  });
+
+  // Preliminary box outside the wheel, above Phase A.
+  const aPt = point(0); // top
+  const prelimBoxW = 110, prelimBoxH = 34;
+  const prelimX = cx - prelimBoxW / 2;
+  const prelimY = 12;
+  const prelim = document.createElementNS(SVG, "rect");
+  prelim.setAttribute("x", prelimX); prelim.setAttribute("y", prelimY);
+  prelim.setAttribute("width", prelimBoxW); prelim.setAttribute("height", prelimBoxH);
+  prelim.setAttribute("rx", 6); prelim.setAttribute("class", "adm-prelim");
+  g.appendChild(prelim);
+  const pLbl = document.createElementNS(SVG, "text");
+  pLbl.setAttribute("x", cx); pLbl.setAttribute("y", prelimY + prelimBoxH / 2 + 4);
+  pLbl.setAttribute("text-anchor", "middle"); pLbl.setAttribute("class", "adm-prelim-lbl");
+  pLbl.textContent = "Preliminary";
+  g.appendChild(pLbl);
+
+  // Connector arrow from Preliminary box down to Phase A.
+  const connectorStart = prelimY + prelimBoxH + 2;
+  const connectorEnd = aPt.y - nodeR - 2;
+  const connector = document.createElementNS(SVG, "path");
+  connector.setAttribute("d", `M ${cx} ${connectorStart} L ${cx} ${connectorEnd}`);
+  connector.setAttribute("class", "adm-connector");
+  connector.setAttribute("marker-end", "url(#adm-arrowhead)");
+  g.appendChild(connector);
 }
 
 // Sentinel category that hides the term list and shows only the diagram deck.

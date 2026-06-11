@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=6" />
+  <link rel="stylesheet" href="styles.css?v=8" />
 
   <script>
     // Apply saved/preferred theme before first paint to avoid a white-flash.
@@ -189,11 +189,16 @@
       <div class="diagram-deck" id="diagramDeck">
         <figure class="diagram-card">
           <figcaption>The ADM Cycle</figcaption>
-          <svg viewBox="0 0 320 320" class="svg-diagram" role="img" aria-label="TOGAF ADM cycle diagram">
+          <svg viewBox="0 0 320 340" class="svg-diagram" role="img" aria-label="TOGAF ADM cycle diagram: Preliminary phase sits above the wheel of eight phases A through H, which connect clockwise around the central Requirements Management circle">
+            <defs>
+              <marker id="adm-arrowhead" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+                <path d="M0,0 L7,3 L0,6 Z" fill="var(--accent)" />
+              </marker>
+            </defs>
             <g id="admRing"></g>
-            <circle cx="160" cy="160" r="46" class="adm-core" />
-            <text x="160" y="156" text-anchor="middle" class="adm-core-lbl">Requirements</text>
-            <text x="160" y="170" text-anchor="middle" class="adm-core-lbl">Management</text>
+            <circle cx="160" cy="175" r="42" class="adm-core" />
+            <text x="160" y="171" text-anchor="middle" class="adm-core-lbl">Requirements</text>
+            <text x="160" y="185" text-anchor="middle" class="adm-core-lbl">Management</text>
           </svg>
         </figure>
 
@@ -259,40 +264,44 @@
 
         <figure class="diagram-card">
           <figcaption>Architecture Repository</figcaption>
-          <svg viewBox="0 0 360 230" class="svg-diagram" role="img" aria-label="Architecture Repository: six core parts holding architectures, requirements, references, standards, governance records, and solutions">
-            <rect x="10" y="10" width="340" height="210" rx="10" class="repo-shell" />
-            <text x="180" y="30" class="repo-title">Architecture Repository</text>
-            <!-- 6 parts in a 3x2 grid -->
+          <svg viewBox="0 0 420 250" class="svg-diagram" role="img" aria-label="Architecture Repository: six core parts holding architectures, requirements, references, standards, governance records, and solutions">
+            <rect x="10" y="10" width="400" height="230" rx="10" class="repo-shell" />
+            <text x="210" y="32" class="repo-title">Architecture Repository</text>
+            <!-- 6 parts in a 3x2 grid (each box: 124w × 82h, 8px gutter) -->
             <g class="repo-cells">
-              <rect x="22"  y="46"  width="100" height="74" rx="6" class="repo-cell" />
-              <text x="72"  y="76"  class="repo-cell-h">Architecture</text>
-              <text x="72"  y="92"  class="repo-cell-h">Landscape</text>
-              <text x="72"  y="110" class="repo-cell-s">Strategic · Segment · Capability</text>
+              <rect x="22"  y="50"  width="124" height="82" rx="6" class="repo-cell" />
+              <text x="84"  y="74"  class="repo-cell-h">Architecture</text>
+              <text x="84"  y="90"  class="repo-cell-h">Landscape</text>
+              <text x="84"  y="110" class="repo-cell-s">Strategic · Segment</text>
+              <text x="84"  y="122" class="repo-cell-s">· Capability</text>
 
-              <rect x="130" y="46"  width="100" height="74" rx="6" class="repo-cell" />
-              <text x="180" y="76"  class="repo-cell-h">Architecture</text>
-              <text x="180" y="92"  class="repo-cell-h">Requirements</text>
-              <text x="180" y="110" class="repo-cell-s">authorised requirements</text>
+              <rect x="154" y="50"  width="124" height="82" rx="6" class="repo-cell" />
+              <text x="216" y="74"  class="repo-cell-h">Architecture</text>
+              <text x="216" y="90"  class="repo-cell-h">Requirements</text>
+              <text x="216" y="110" class="repo-cell-s">authorised</text>
+              <text x="216" y="122" class="repo-cell-s">requirements</text>
 
-              <rect x="238" y="46"  width="100" height="74" rx="6" class="repo-cell" />
-              <text x="288" y="76"  class="repo-cell-h">Reference</text>
-              <text x="288" y="92"  class="repo-cell-h">Library</text>
-              <text x="288" y="110" class="repo-cell-s">models · patterns</text>
+              <rect x="286" y="50"  width="124" height="82" rx="6" class="repo-cell" />
+              <text x="348" y="74"  class="repo-cell-h">Reference</text>
+              <text x="348" y="90"  class="repo-cell-h">Library</text>
+              <text x="348" y="115" class="repo-cell-s">models · patterns</text>
 
-              <rect x="22"  y="128" width="100" height="74" rx="6" class="repo-cell" />
-              <text x="72"  y="158" class="repo-cell-h">Standards</text>
-              <text x="72"  y="174" class="repo-cell-h">Library</text>
-              <text x="72"  y="192" class="repo-cell-s">tech · biz · regulatory</text>
+              <rect x="22"  y="140" width="124" height="82" rx="6" class="repo-cell" />
+              <text x="84"  y="164" class="repo-cell-h">Standards</text>
+              <text x="84"  y="180" class="repo-cell-h">Library</text>
+              <text x="84"  y="200" class="repo-cell-s">tech · biz ·</text>
+              <text x="84"  y="212" class="repo-cell-s">regulatory</text>
 
-              <rect x="130" y="128" width="100" height="74" rx="6" class="repo-cell" />
-              <text x="180" y="158" class="repo-cell-h">Governance</text>
-              <text x="180" y="174" class="repo-cell-h">Repository</text>
-              <text x="180" y="192" class="repo-cell-s">decisions · dispensations</text>
+              <rect x="154" y="140" width="124" height="82" rx="6" class="repo-cell" />
+              <text x="216" y="164" class="repo-cell-h">Governance</text>
+              <text x="216" y="180" class="repo-cell-h">Repository</text>
+              <text x="216" y="200" class="repo-cell-s">decisions ·</text>
+              <text x="216" y="212" class="repo-cell-s">dispensations</text>
 
-              <rect x="238" y="128" width="100" height="74" rx="6" class="repo-cell" />
-              <text x="288" y="158" class="repo-cell-h">Solutions</text>
-              <text x="288" y="174" class="repo-cell-h">Landscape</text>
-              <text x="288" y="192" class="repo-cell-s">deployed SBBs</text>
+              <rect x="286" y="140" width="124" height="82" rx="6" class="repo-cell" />
+              <text x="348" y="164" class="repo-cell-h">Solutions</text>
+              <text x="348" y="180" class="repo-cell-h">Landscape</text>
+              <text x="348" y="205" class="repo-cell-s">deployed SBBs</text>
             </g>
           </svg>
         </figure>
@@ -453,6 +462,6 @@
   <script src="data/questions_level1.js?v=3"></script>
   <script src="data/questions_level2.js?v=3"></script>
   <script src="data/glossary.js?v=3"></script>
-  <script src="app.js?v=6"></script>
+  <script src="app.js?v=7"></script>
 </body>
 </html>

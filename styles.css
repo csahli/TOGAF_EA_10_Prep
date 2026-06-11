@@ -398,9 +398,14 @@ mark { background: var(--accent-soft); color: var(--accent); border-radius: 3px;
    Scoped to .svg-diagram to keep these rules from leaking. Previously these
    lived inline inside <svg><defs><style> blocks in index.html. */
 .svg-diagram .adm-seg { fill: var(--surface-2); stroke: var(--border); stroke-width: 1; }
-.svg-diagram .adm-lbl { fill: var(--text); font-size: 8px; font-family: Inter, sans-serif; }
+.svg-diagram .adm-lbl { fill: var(--text-dim); font-size: 8.5px; font-family: Inter, sans-serif; }
+.svg-diagram .adm-lbl-key { fill: var(--accent); font-size: 10px; font-weight: 700; font-family: Inter, sans-serif; }
 .svg-diagram .adm-core { fill: var(--accent-soft); stroke: var(--accent); }
 .svg-diagram .adm-core-lbl { fill: var(--accent); font-size: 10px; font-weight: 600; font-family: Inter, sans-serif; }
+.svg-diagram .adm-arrow { fill: none; stroke: var(--accent); stroke-width: 1.5; opacity: 0.7; }
+.svg-diagram .adm-prelim { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1.5; }
+.svg-diagram .adm-prelim-lbl { fill: var(--accent); font-size: 11px; font-weight: 700; font-family: Inter, sans-serif; }
+.svg-diagram .adm-connector { fill: none; stroke: var(--accent); stroke-width: 1.5; opacity: 0.85; }
 
 .svg-diagram .ec-box { fill: var(--surface-2); stroke: var(--border); }
 .svg-diagram .ec-lbl { fill: var(--text); font-size: 11px; font-family: Inter, sans-serif; text-anchor: middle; }
