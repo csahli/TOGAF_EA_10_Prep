@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 210" class="svg-diagram" role="img" aria-label="Architecture Landscape: Strategic level is long-term and low detail, Segment is medium, Capability is short-term and high detail">
+  <polygon points="120,20 240,20 280,70 80,70"   class="land-strat" />
+  <text x="180" y="50" class="land-lbl">Strategic</text>
+  <polygon points="80,75 280,75 320,135 40,135"  class="land-seg" />
+  <text x="180" y="110" class="land-lbl">Segment</text>
+  <polygon points="40,140 320,140 355,200 5,200" class="land-cap" />
+  <text x="180" y="175" class="land-lbl">Capability</text>
+  <text x="345" y="35"  class="land-axis" text-anchor="end">long term · low detail</text>
+  <text x="345" y="195" class="land-axis" text-anchor="end">short term · high detail</text>
+</svg>

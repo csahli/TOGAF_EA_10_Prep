@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 220" class="svg-diagram" role="img" aria-label="Four ADM iteration cycles: Context (Prelim and A), Development (B, C, D), Transition Planning (E and F), Governance (G and H)">
+  <g class="iter-phases">
+    <rect x="8"   y="80" width="34" height="36" rx="5" class="iter-ph" />
+    <text x="25"  y="103" class="iter-ph-lbl">Pre</text>
+    <rect x="48"  y="80" width="34" height="36" rx="5" class="iter-ph" />
+    <text x="65"  y="103" class="iter-ph-lbl">A</text>
+    <rect x="88"  y="80" width="34" height="36" rx="5" class="iter-ph iter-dev" />
+    <text x="105" y="103" class="iter-ph-lbl">B</text>
+    <rect x="128" y="80" width="34" height="36" rx="5" class="iter-ph iter-dev" />
+    <text x="145" y="103" class="iter-ph-lbl">C</text>
+    <rect x="168" y="80" width="34" height="36" rx="5" class="iter-ph iter-dev" />
+    <text x="185" y="103" class="iter-ph-lbl">D</text>
+    <rect x="208" y="80" width="34" height="36" rx="5" class="iter-ph" />
+    <text x="225" y="103" class="iter-ph-lbl">E</text>
+    <rect x="248" y="80" width="34" height="36" rx="5" class="iter-ph" />
+    <text x="265" y="103" class="iter-ph-lbl">F</text>
+    <rect x="288" y="80" width="34" height="36" rx="5" class="iter-ph" />
+    <text x="305" y="103" class="iter-ph-lbl">G</text>
+    <rect x="328" y="80" width="22" height="36" rx="5" class="iter-ph" />
+    <text x="339" y="103" class="iter-ph-lbl">H</text>
+  </g>
+  <path d="M12 64 H 82 V 76 H 12 Z" class="iter-bracket iter-ctx" />
+  <text x="47"  y="58"  class="iter-bracket-lbl">Architecture Context</text>
+  <path d="M92 64 H 202 V 76 H 92 Z" class="iter-bracket iter-devb" />
+  <text x="147" y="58"  class="iter-bracket-lbl">Architecture Development</text>
+  <path d="M212 120 H 282 V 132 H 212 Z" class="iter-bracket iter-tran" />
+  <text x="247" y="150" class="iter-bracket-lbl">Transition Planning</text>
+  <path d="M292 120 H 350 V 132 H 292 Z" class="iter-bracket iter-gov" />
+  <text x="321" y="150" class="iter-bracket-lbl">Governance</text>
+  <text x="180" y="200" class="iter-foot">Requirements Management iterates throughout</text>
+</svg>

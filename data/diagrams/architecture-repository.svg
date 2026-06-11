@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 250" class="svg-diagram" role="img" aria-label="Architecture Repository: six core parts holding architectures, requirements, references, standards, governance records, and solutions">
+  <rect x="10" y="10" width="400" height="230" rx="10" class="repo-shell" />
+  <text x="210" y="32" class="repo-title">Architecture Repository</text>
+  <g class="repo-cells">
+    <rect x="22"  y="50"  width="124" height="82" rx="6" class="repo-cell" />
+    <text x="84"  y="74"  class="repo-cell-h">Architecture</text>
+    <text x="84"  y="90"  class="repo-cell-h">Landscape</text>
+    <text x="84"  y="110" class="repo-cell-s">Strategic · Segment</text>
+    <text x="84"  y="122" class="repo-cell-s">· Capability</text>
+
+    <rect x="154" y="50"  width="124" height="82" rx="6" class="repo-cell" />
+    <text x="216" y="74"  class="repo-cell-h">Architecture</text>
+    <text x="216" y="90"  class="repo-cell-h">Requirements</text>
+    <text x="216" y="110" class="repo-cell-s">authorised</text>
+    <text x="216" y="122" class="repo-cell-s">requirements</text>
+
+    <rect x="286" y="50"  width="124" height="82" rx="6" class="repo-cell" />
+    <text x="348" y="74"  class="repo-cell-h">Reference</text>
+    <text x="348" y="90"  class="repo-cell-h">Library</text>
+    <text x="348" y="115" class="repo-cell-s">models · patterns</text>
+
+    <rect x="22"  y="140" width="124" height="82" rx="6" class="repo-cell" />
+    <text x="84"  y="164" class="repo-cell-h">Standards</text>
+    <text x="84"  y="180" class="repo-cell-h">Library</text>
+    <text x="84"  y="200" class="repo-cell-s">tech · biz ·</text>
+    <text x="84"  y="212" class="repo-cell-s">regulatory</text>
+
+    <rect x="154" y="140" width="124" height="82" rx="6" class="repo-cell" />
+    <text x="216" y="164" class="repo-cell-h">Governance</text>
+    <text x="216" y="180" class="repo-cell-h">Repository</text>
+    <text x="216" y="200" class="repo-cell-s">decisions ·</text>
+    <text x="216" y="212" class="repo-cell-s">dispensations</text>
+
+    <rect x="286" y="140" width="124" height="82" rx="6" class="repo-cell" />
+    <text x="348" y="164" class="repo-cell-h">Solutions</text>
+    <text x="348" y="180" class="repo-cell-h">Landscape</text>
+    <text x="348" y="205" class="repo-cell-s">deployed SBBs</text>
+  </g>
+</svg>

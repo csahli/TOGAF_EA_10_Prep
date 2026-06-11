@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 200" class="svg-diagram" role="img" aria-label="Architecture Partitioning: four partition criteria — Subject Matter, Time, Depth, Maturity">
+  <rect x="10" y="10" width="340" height="180" rx="10" class="part-shell" />
+  <text x="180" y="34" class="part-title">Partitioning criteria</text>
+  <g class="part-cells">
+    <rect x="24"  y="50"  width="150" height="60" rx="6" class="part-cell" />
+    <text x="99"  y="76"  class="part-cell-h">Subject Matter</text>
+    <text x="99"  y="94"  class="part-cell-s">apps · depts · products · sites</text>
+
+    <rect x="186" y="50"  width="150" height="60" rx="6" class="part-cell" />
+    <text x="261" y="76"  class="part-cell-h">Time</text>
+    <text x="261" y="94"  class="part-cell-s">baseline · transition · target</text>
+
+    <rect x="24"  y="118" width="150" height="60" rx="6" class="part-cell" />
+    <text x="99"  y="144" class="part-cell-h">Depth</text>
+    <text x="99"  y="162" class="part-cell-s">summary → fully elaborated</text>
+
+    <rect x="186" y="118" width="150" height="60" rx="6" class="part-cell" />
+    <text x="261" y="144" class="part-cell-h">Maturity / Volatility</text>
+    <text x="261" y="162" class="part-cell-s">stable vs. changing scope</text>
+  </g>
+</svg>

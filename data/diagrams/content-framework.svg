@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 220" class="svg-diagram" role="img" aria-label="Architecture Content Framework: Deliverables contain Artifacts contain Building Blocks across the four architecture domains">
+  <rect x="10" y="10"  width="335" height="22" rx="5" class="cf-domain" />
+  <text x="178" y="25" class="cf-domain-lbl">Business · Data · Application · Technology</text>
+  <rect x="10" y="42"  width="335" height="55" rx="6" class="cf-deliv" />
+  <text x="178" y="64" class="cf-lbl-h">Deliverables</text>
+  <text x="178" y="82" class="cf-lbl-s">SoAW · Architecture Definition Document · Roadmap · Contract</text>
+  <rect x="30" y="103" width="295" height="50" rx="6" class="cf-art" />
+  <text x="178" y="124" class="cf-lbl-h">Artifacts</text>
+  <text x="178" y="142" class="cf-lbl-s">Catalogs · Matrices · Diagrams</text>
+  <rect x="50" y="160" width="255" height="50" rx="6" class="cf-bb" />
+  <text x="178" y="181" class="cf-lbl-h">Building Blocks</text>
+  <text x="178" y="199" class="cf-lbl-s">ABBs (logical) → realized by SBBs (physical)</text>
+</svg>

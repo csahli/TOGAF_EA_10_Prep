@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 360" class="svg-diagram" role="img" aria-label="TOGAF Enterprise Metamodel: six horizontal domain bands (Motivation, Business, Data, Application, Technology, Realization) showing canonical entities and how traceability chains from drivers down through capabilities, data, application, technology to deployed components">
+  <defs>
+    <marker id="mm-arrowhead" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="var(--accent)" />
+    </marker>
+  </defs>
+
+  <g class="mm-band">
+    <rect x="10"  y="14"  width="80"  height="42" rx="6" class="mm-band-bg mm-band-mot" />
+    <text x="50"  y="40"  class="mm-band-lbl">Motivation</text>
+    <rect x="100" y="18"  width="92"  height="34" rx="5" class="mm-entity" />
+    <text x="146" y="40"  class="mm-entity-lbl">Driver / Goal</text>
+    <rect x="200" y="18"  width="100" height="34" rx="5" class="mm-entity" />
+    <text x="250" y="40"  class="mm-entity-lbl">Objective</text>
+    <rect x="308" y="18"  width="102" height="34" rx="5" class="mm-entity" />
+    <text x="359" y="40"  class="mm-entity-lbl">Principle</text>
+  </g>
+
+  <g class="mm-band">
+    <rect x="10"  y="70"  width="80"  height="42" rx="6" class="mm-band-bg mm-band-biz" />
+    <text x="50"  y="96"  class="mm-band-lbl">Business</text>
+    <rect x="100" y="74"  width="92"  height="34" rx="5" class="mm-entity" />
+    <text x="146" y="96"  class="mm-entity-lbl">Capability</text>
+    <rect x="200" y="74"  width="100" height="34" rx="5" class="mm-entity" />
+    <text x="250" y="96"  class="mm-entity-lbl">Value Stream</text>
+    <rect x="308" y="74"  width="102" height="34" rx="5" class="mm-entity" />
+    <text x="359" y="96"  class="mm-entity-lbl">Org · Role · Actor</text>
+  </g>
+
+  <g class="mm-band">
+    <rect x="10"  y="126" width="80"  height="42" rx="6" class="mm-band-bg mm-band-data" />
+    <text x="50"  y="152" class="mm-band-lbl">Data</text>
+    <rect x="100" y="130" width="92"  height="34" rx="5" class="mm-entity" />
+    <text x="146" y="152" class="mm-entity-lbl">Data Entity</text>
+    <rect x="200" y="130" width="100" height="34" rx="5" class="mm-entity" />
+    <text x="250" y="152" class="mm-entity-lbl">Logical Component</text>
+    <rect x="308" y="130" width="102" height="34" rx="5" class="mm-entity" />
+    <text x="359" y="152" class="mm-entity-lbl">Physical Component</text>
+  </g>
+
+  <g class="mm-band">
+    <rect x="10"  y="182" width="80"  height="42" rx="6" class="mm-band-bg mm-band-app" />
+    <text x="50"  y="208" class="mm-band-lbl">Application</text>
+    <rect x="100" y="186" width="92"  height="34" rx="5" class="mm-entity" />
+    <text x="146" y="208" class="mm-entity-lbl">App Service</text>
+    <rect x="200" y="186" width="100" height="34" rx="5" class="mm-entity" />
+    <text x="250" y="208" class="mm-entity-lbl">Logical Component</text>
+    <rect x="308" y="186" width="102" height="34" rx="5" class="mm-entity" />
+    <text x="359" y="208" class="mm-entity-lbl">Physical Component</text>
+  </g>
+
+  <g class="mm-band">
+    <rect x="10"  y="238" width="80"  height="42" rx="6" class="mm-band-bg mm-band-tech" />
+    <text x="50"  y="264" class="mm-band-lbl">Technology</text>
+    <rect x="100" y="242" width="92"  height="34" rx="5" class="mm-entity" />
+    <text x="146" y="264" class="mm-entity-lbl">Tech Service</text>
+    <rect x="200" y="242" width="100" height="34" rx="5" class="mm-entity" />
+    <text x="250" y="264" class="mm-entity-lbl">Logical Component</text>
+    <rect x="308" y="242" width="102" height="34" rx="5" class="mm-entity" />
+    <text x="359" y="264" class="mm-entity-lbl">Physical Component</text>
+  </g>
+
+  <g class="mm-band">
+    <rect x="10"  y="294" width="80"  height="42" rx="6" class="mm-band-bg mm-band-real" />
+    <text x="50"  y="320" class="mm-band-lbl">Realization</text>
+    <rect x="100" y="298" width="92"  height="34" rx="5" class="mm-entity" />
+    <text x="146" y="320" class="mm-entity-lbl">Work Package</text>
+    <rect x="200" y="298" width="100" height="34" rx="5" class="mm-entity" />
+    <text x="250" y="320" class="mm-entity-lbl">Requirement</text>
+    <rect x="308" y="298" width="102" height="34" rx="5" class="mm-entity" />
+    <text x="359" y="320" class="mm-entity-lbl">Constraint / Gap</text>
+  </g>
+
+  <path d="M50 56  L50 70"  class="mm-trace" marker-end="url(#mm-arrowhead)" />
+  <path d="M50 112 L50 126" class="mm-trace" marker-end="url(#mm-arrowhead)" />
+  <path d="M50 168 L50 182" class="mm-trace" marker-end="url(#mm-arrowhead)" />
+  <path d="M50 224 L50 238" class="mm-trace" marker-end="url(#mm-arrowhead)" />
+  <path d="M50 280 L50 294" class="mm-trace" marker-end="url(#mm-arrowhead)" />
+</svg>

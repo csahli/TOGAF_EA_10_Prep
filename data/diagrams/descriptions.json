@@ -1,0 +1,66 @@
+{
+  "_comment": "Source of truth for diagram metadata. Each entry pairs with the same-named .svg file in this directory. The build_diagrams.py script reads this file + the .svg files and produces ../diagrams.js (the runtime manifest).",
+  "diagrams": [
+    {
+      "id": "adm-cycle",
+      "title": "The ADM Cycle",
+      "topic": "ADM",
+      "description": "The Architecture Development Method (ADM) is the core process of TOGAF. The Preliminary Phase, shown outside the wheel above Phase A, establishes the architecture capability, tailors the method to the enterprise, and sets up the governance framework — it runs once at the start of an EA practice, not every cycle. The eight ADM phases A through H then run iteratively as a wheel: Phase A (Vision) scopes the engagement, Phases B-D develop the Business, Information Systems (Data + Application), and Technology architectures, Phase E identifies work packages and Transition Architectures, Phase F finalises the Implementation and Migration Plan, Phase G governs the implementation, and Phase H manages change after go-live. Requirements Management sits at the hub because it is a continuous process that interacts with every phase, not a stage of its own.",
+      "buildHook": "adm-ring"
+    },
+    {
+      "id": "enterprise-metamodel",
+      "title": "TOGAF Enterprise Metamodel",
+      "topic": "Content Framework",
+      "description": "The TOGAF Enterprise Metamodel defines the entities, attributes and relationships used to organise architectural information. It is structured as horizontal bands: Motivation (drivers, goals, principles), Business (capabilities, value streams, organisations), Data, Application and Technology (each typically expressed as services plus logical and physical components), and Realization (work packages, requirements, constraints, gaps). The vertical arrows on the left represent end-to-end traceability — every technology component should trace back through application and data services, through the capabilities they enable, to the goals and drivers they support. (Note: TOGAF 10 renamed the TOGAF 9 'Content Metamodel' to the 'TOGAF Enterprise Metamodel'.)"
+    },
+    {
+      "id": "content-framework",
+      "title": "Architecture Content Framework",
+      "topic": "Content Framework",
+      "description": "The Architecture Content Framework organises the work products produced by the ADM into three nested layers, each spanning the four BDAT domains (Business, Data, Application, Technology). Deliverables are formal, contractually signed-off outputs such as the Statement of Architecture Work, the Architecture Definition Document, the Architecture Roadmap and the Architecture Contract. Artifacts are the structured work products that populate deliverables — Catalogs (lists of building blocks), Matrices (relationships between them) and Diagrams (visual representations). Building Blocks are the atomic units: Architecture Building Blocks (ABBs) capture logical requirements, and Solution Building Blocks (SBBs) realize them as physical, often product-specific components."
+    },
+    {
+      "id": "architecture-repository",
+      "title": "Architecture Repository",
+      "topic": "EA Capability",
+      "description": "The Architecture Repository is the enterprise's persistent store of architectural assets, organised into six logical parts. The Architecture Landscape holds the architectures themselves at Strategic, Segment and Capability levels. The Architecture Requirements Repository holds the authoritative set of requirements the architecture must satisfy. The Reference Library holds generic, reusable guidance such as reference models and patterns. The Standards Library holds the technical, business and regulatory standards the enterprise has committed to comply with. The Governance Repository records governance activity: agendas, decisions, compliance assessments and dispensations. The Solutions Landscape captures the deployed SBBs that realise the architectures. (Defined in C220 Part 4 Ch. 7 and referenced throughout the governance material in Part 5.)"
+    },
+    {
+      "id": "enterprise-continuum",
+      "title": "Enterprise Continuum",
+      "topic": "EA Capability",
+      "description": "The Enterprise Continuum classifies architectural assets along a spectrum from most generic to most organisation-specific. The Architecture Continuum runs Foundation → Common Systems → Industry → Organization-Specific architectures, and the Solutions Continuum mirrors it with Products → Systems → Industry → Organization-Specific solutions. Each architecture stage has corresponding solutions that realise it — ABBs in the Architecture Continuum are realised by SBBs in the Solutions Continuum. The Continuum is the conceptual tool the Architecture Repository uses to organise its contents for reuse: a generic Common Systems pattern can be tailored down the continuum into an Industry-specific then Organization-specific solution."
+    },
+    {
+      "id": "abb-sbb",
+      "title": "ABB → realized by → SBB",
+      "topic": "Building Blocks",
+      "description": "Building blocks are the atoms of architecture. An Architecture Building Block (ABB) is a logical, supplier-independent component that captures architecture requirements — what is needed and at what level. A Solution Building Block (SBB) is the concrete, often product- or vendor-specific component that realises one or more ABBs. The 'realised by' relationship is core to TOGAF: ABBs are designed first (Phases B/C/D), then SBBs are selected or built to realise them (Phases E/F/G). Both can exist at multiple levels of decomposition and both are governed assets in the Architecture Repository."
+    },
+    {
+      "id": "iteration-cycles",
+      "title": "ADM Iteration Cycles",
+      "topic": "Applying the ADM",
+      "description": "The ADM is not strictly linear — TOGAF defines four iteration cycles that group phases for repeated execution. Architecture Context iterates the Preliminary Phase and Phase A to refine scope and stakeholder understanding. Architecture Development iterates Phases B, C and D to elaborate the target architectures across the BDAT domains (highlighted here in accent colour). Transition Planning iterates Phases E and F to refine work packages, Transition Architectures and the migration plan. Governance iterates Phases G and H to oversee delivery and respond to change. Requirements Management runs continuously throughout — it is the hub that every iteration cycle interacts with."
+    },
+    {
+      "id": "architecture-landscape",
+      "title": "Architecture Landscape Levels",
+      "topic": "Applying the ADM",
+      "description": "TOGAF partitions the Architecture Landscape (the part of the Architecture Repository that holds actual architectures) along three levels of granularity. The Strategic level is enterprise-wide, long-term and low in detail — it provides direction across multiple segments. The Segment level zooms in on a coherent area of the business with medium detail. The Capability level is short-term and high in detail — typically the scope of an individual project, with enough specificity to be delivered. The three levels relate top-down: a Strategic architecture sets context for several Segment architectures, each of which sets context for several Capability architectures."
+    },
+    {
+      "id": "stakeholder-power-interest",
+      "title": "Stakeholder Power / Interest",
+      "topic": "Stakeholder Management",
+      "description": "The Power/Interest matrix is the most commonly cited stakeholder-classification technique used in Phase A. Stakeholders with high power and high interest are Key Players — TOGAF labels them as needing to be 'managed closely' through frequent, substantive engagement. Stakeholders with high power but low interest must be Kept Satisfied — informed enough to avoid surprises that would activate their power. Stakeholders with low power but high interest must be Kept Informed — they can advocate, brief and provide useful detail. Stakeholders with low power and low interest need only Minimal Effort. This classification feeds the Communications Plan and the Stakeholder Map produced in Phase A."
+    },
+    {
+      "id": "architecture-partitioning",
+      "title": "Architecture Partitioning",
+      "topic": "Applying the ADM",
+      "description": "Architecture Partitioning is the practice of dividing architecture work along well-defined criteria so that large, complex estates can be modelled and governed without producing a single unwieldy enterprise-wide architecture. TOGAF identifies four canonical criteria. Subject Matter (also called Breadth) partitions by functional area — applications, departments, divisions, products, services or sites. Time partitions across baseline, transition and target states. Depth (level of detail) partitions from summary down to fully elaborated. Maturity/Volatility partitions stable architectures from those whose scope is still changing. Partitions are distinct from the Strategic/Segment/Capability levels — those are Landscape levels, not partitions."
+    }
+  ]
+}

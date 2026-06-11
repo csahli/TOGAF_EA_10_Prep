@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 180" class="svg-diagram" role="img" aria-label="Enterprise Continuum diagram">
+  <defs>
+    <marker id="ec-arrowhead" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="var(--accent)" />
+    </marker>
+  </defs>
+  <text x="10" y="24" class="ec-row">Architecture Continuum</text>
+  <rect x="10" y="30" width="70" height="34" rx="6" class="ec-box" /><text x="45" y="51" class="ec-lbl">Foundation</text>
+  <rect x="98" y="30" width="70" height="34" rx="6" class="ec-box" /><text x="133" y="51" class="ec-lbl">Common</text>
+  <rect x="186" y="30" width="70" height="34" rx="6" class="ec-box" /><text x="221" y="51" class="ec-lbl">Industry</text>
+  <rect x="274" y="30" width="76" height="34" rx="6" class="ec-box" /><text x="312" y="51" class="ec-lbl">Org-Specific</text>
+  <path d="M20 78 H 340" class="ec-arrow" marker-end="url(#ec-arrowhead)" />
+  <text x="10" y="118" class="ec-row">Solutions Continuum</text>
+  <rect x="10" y="124" width="70" height="34" rx="6" class="ec-box" /><text x="45" y="145" class="ec-lbl">Products</text>
+  <rect x="98" y="124" width="70" height="34" rx="6" class="ec-box" /><text x="133" y="145" class="ec-lbl">Systems</text>
+  <rect x="186" y="124" width="70" height="34" rx="6" class="ec-box" /><text x="221" y="145" class="ec-lbl">Industry</text>
+  <rect x="274" y="124" width="76" height="34" rx="6" class="ec-box" /><text x="312" y="145" class="ec-lbl">Org-Specific</text>
+</svg>

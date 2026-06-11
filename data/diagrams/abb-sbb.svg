@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 130" class="svg-diagram" role="img" aria-label="Building blocks relationship diagram">
+  <defs>
+    <marker id="bb-arrowhead" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="var(--accent)" />
+    </marker>
+  </defs>
+  <rect x="20" y="35" width="110" height="56" rx="10" class="bb-abb" />
+  <text x="75" y="60" class="bb-lbl">ABB</text>
+  <text x="75" y="76" class="bb-sub">requirements · logical</text>
+  <path d="M132 63 H 188" class="bb-arrow" marker-end="url(#bb-arrowhead)" />
+  <text x="160" y="54" class="bb-arrow-lbl">realized by</text>
+  <rect x="190" y="35" width="110" height="56" rx="10" class="bb-sbb" />
+  <text x="245" y="60" class="bb-lbl">SBB</text>
+  <text x="245" y="76" class="bb-sub">product · physical</text>
+</svg>
