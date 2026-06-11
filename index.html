@@ -3,8 +3,75 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TOGAF® EA Practitioner — Mock Exam Studio</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f1418'/%3E%3Cpath d='M32 12 L50 44 L14 44 Z' fill='none' stroke='%237fd1c4' stroke-width='4' stroke-linejoin='round'/%3E%3Ccircle cx='32' cy='34' r='6' fill='%237fd1c4'/%3E%3C/svg%3E" />
+  <title>TOGAF® EA Practitioner Mock Exam Studio — Free OGEA-101 / OGEA-102 / OGEA-103 practice with 256 questions, ADM reference & diagrams</title>
+
+  <!-- ====================  SEO / discoverability  ====================
+       Canonical URL is the GitHub Pages address for this repo. The og:image
+       reuses the favicon; for a richer 1200x630 social banner, save it as
+       data/og-banner.svg and point og:image / twitter:image at it. -->
+  <meta name="description" content="Free, browser-based TOGAF Enterprise Architecture Practitioner mock-exam app aligned to TOGAF Standard 10th Edition. 128 Level 1 (Foundation) recall questions + 128 Level 2 (Practitioner) gradient-scored scenarios with the official OGEA-102 5/3/1/0 scoring, an Official Exam Simulation mode (OGEA-101/102/103 timer + pass mark), an ADM phase reference (objective, inputs, steps, outputs per phase) and 10 inline TOGAF reference diagrams. Open from file:// — no server, no tracking." />
+  <meta name="keywords" content="TOGAF, TOGAF 10, TOGAF Standard 10th Edition, TOGAF mock exam, TOGAF Practitioner, TOGAF Foundation, OGEA-101, OGEA-102, OGEA-103, Enterprise Architecture, ADM, Architecture Development Method, EA Practitioner exam, TOGAF practice questions, TOGAF study guide, Open Group" />
+  <meta name="author" content="TOGAF EA Practitioner Mock Exam Studio (open-source study tool)" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+  <meta name="theme-color" content="#0f1418" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#f4f6f9" media="(prefers-color-scheme: light)" />
+
+  <!-- Open Graph (Facebook, LinkedIn, Slack, Discord, etc.) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="TOGAF EA Practitioner Mock Exam Studio" />
+  <meta property="og:title" content="TOGAF® EA Practitioner — Free Mock Exam Studio (TOGAF 10)" />
+  <meta property="og:description" content="Practice OGEA-101, OGEA-102 and OGEA-103 with 256 original study questions, the official 5/3/1/0 gradient, exam-mode timer, ADM phase reference and 10 inline reference diagrams. Runs from file://. No server, no tracking." />
+  <meta property="og:url" content="https://csahli.github.io/TOGAF_EA_10_Exam_Mock/" />
+  <meta property="og:image" content="https://csahli.github.io/TOGAF_EA_10_Exam_Mock/favicon.svg" />
+  <meta property="og:image:alt" content="TOGAF EA Practitioner Mock Exam Studio logo" />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- Twitter / X card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="TOGAF® EA Practitioner — Free Mock Exam Studio (TOGAF 10)" />
+  <meta name="twitter:description" content="256 practice questions for OGEA-101 / OGEA-102 / OGEA-103, official 5/3/1/0 scoring, exam-mode timer, ADM phase reference, 10 diagrams. Browser-only, no tracking." />
+  <meta name="twitter:image" content="https://csahli.github.io/TOGAF_EA_10_Exam_Mock/favicon.svg" />
+  <meta name="twitter:image:alt" content="TOGAF EA Practitioner Mock Exam Studio logo" />
+
+  <!-- Canonical URL (GitHub Pages). -->
+  <link rel="canonical" href="https://csahli.github.io/TOGAF_EA_10_Exam_Mock/" />
+
+  <!-- JSON-LD structured data: helps Google understand this is a free
+       educational web app for a specific exam, not generic content. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "TOGAF EA Practitioner Mock Exam Studio",
+    "alternateName": ["TOGAF 10 Mock Exam", "OGEA-101 OGEA-102 Practice", "TOGAF EA Practitioner Practice Exam"],
+    "description": "Browser-based study tool for the TOGAF Enterprise Architecture Foundation (OGEA-101) and Practitioner (OGEA-102) exams. 128 Foundation questions + 128 gradient-scored Practitioner scenarios aligned to TOGAF Standard, 10th Edition.",
+    "applicationCategory": "EducationalApplication",
+    "applicationSubCategory": "Test Preparation",
+    "educationalUse": ["exam preparation", "self-study"],
+    "operatingSystem": "Any (modern web browser)",
+    "browserRequirements": "Requires a modern browser with JavaScript and localStorage",
+    "isAccessibleForFree": true,
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "inLanguage": "en",
+    "about": [
+      { "@type": "Thing", "name": "TOGAF Standard, 10th Edition" },
+      { "@type": "Thing", "name": "Enterprise Architecture" },
+      { "@type": "Thing", "name": "Architecture Development Method (ADM)" }
+    ],
+    "audience": {
+      "@type": "EducationalAudience",
+      "educationalRole": "student"
+    },
+    "license": "https://opensource.org/licenses/MIT"
+  }
+  </script>
+  <!-- =================  end SEO / discoverability  ================= -->
+
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -255,7 +322,7 @@
   <script src="data/questions_level1.js?v=3"></script>
   <script src="data/questions_level2.js?v=3"></script>
   <script src="data/glossary.js?v=3"></script>
-  <script src="data/diagrams.js?v=3"></script>
+  <script src="data/diagrams.js?v=4"></script>
   <script src="data/adm_phases.js?v=1"></script>
   <script src="app.js?v=11"></script>
 </body>

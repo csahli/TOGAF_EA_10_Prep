@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://csahli.github.io/TOGAF_EA_10_Exam_Mock/sitemap.xml
