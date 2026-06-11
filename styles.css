@@ -42,9 +42,27 @@
   --body-grad-top: #e3ebf2;
 }
 
-/* smooth transition when switching themes */
-body, .card, .option, .seg, .btn, .review-item, .hist-row {
+/* Smooth transition when switching themes. The `.review-item` / `.hist-row`
+   selectors are intentionally omitted — long history or review lists would
+   thrash on theme toggle. Inheritance handles their colour change. */
+body, .card, .option, .seg, .btn {
   transition: background 0.3s var(--ease), color 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+
+/* Visible focus ring for keyboard users; mouse-only clicks stay quiet. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Screen-reader-only live region (used by app.js for timer milestones). */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0);
+  white-space: nowrap; border: 0;
 }
 
 
@@ -179,6 +197,7 @@ input[type=range]::-webkit-slider-thumb {
 .progress-meta { display: flex; align-items: center; gap: 12px; font-size: 0.85rem; color: var(--text-dim); flex-wrap: wrap; }
 .pill { background: var(--accent-soft); color: var(--accent); padding: 4px 12px; border-radius: 99px; font-size: 0.74rem; font-weight: 600; }
 .pill-ghost { background: var(--surface-2); color: var(--text-dim); font-weight: 400; }
+.pill-l2 { background: rgba(167, 184, 216, 0.16); color: var(--accent-2); }
 .pill-timer { background: var(--surface-2); color: var(--text); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-variant-numeric: tabular-nums; letter-spacing: 0.05em; }
 .pill-timer.timer-warn { background: rgba(230, 194, 122, 0.18); color: var(--warn); }
 .pill-timer.timer-crit { background: rgba(224, 138, 138, 0.18); color: var(--bad); }
@@ -201,6 +220,7 @@ input[type=range]::-webkit-slider-thumb {
 }
 .option:hover:not(.locked) { border-color: var(--accent); background: var(--surface-2); }
 .option .opt-key { flex-shrink: 0; width: 26px; height: 26px; border-radius: 7px; background: var(--surface-2); display: grid; place-items: center; font-size: 0.8rem; font-weight: 600; color: var(--text-dim); }
+.option .opt-text { flex: 1; min-width: 0; }
 .option.selected { border-color: var(--accent); background: var(--accent-soft); }
 .option.selected .opt-key { background: var(--accent); color: var(--bg); }
 .option.correct { border-color: var(--good); background: rgba(127, 209, 164, 0.12); }
@@ -242,13 +262,17 @@ input[type=range]::-webkit-slider-thumb {
 .review-expl { font-size: 0.84rem; color: var(--text-dim); margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
 .review-ref { font-size: 0.78rem; color: var(--text-faint); margin-top: 8px; font-style: italic; }
 .review-ref strong { color: var(--text-dim); font-style: normal; }
+.review-opt-score { margin-left: auto; color: var(--text-faint); }
 
 /* history */
 .view-header { display: flex; align-items: center; justify-content: space-between; margin: 18px 0 22px; }
 .view-header h2 { font-size: 1.4rem; }
 .history-tools { display: flex; gap: 8px; }
 .hist-row { display: flex; align-items: center; gap: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px 20px; margin-bottom: 12px; }
-.hist-badge { width: 52px; height: 52px; border-radius: 12px; display: grid; place-items: center; font-weight: 700; font-size: 1rem; flex-shrink: 0; }
+.hist-badge { width: 52px; height: 52px; border-radius: 12px; display: grid; place-items: center; font-weight: 700; font-size: 1rem; flex-shrink: 0; color: var(--bg); }
+.hist-badge-good { background: var(--good); }
+.hist-badge-warn { background: var(--warn); }
+.hist-badge-bad  { background: var(--bad); }
 .hist-meta { flex: 1; min-width: 0; }
 .hist-mode { font-weight: 600; }
 .hist-date { font-size: 0.8rem; color: var(--text-faint); }
@@ -313,3 +337,23 @@ mark { background: var(--accent-soft); color: var(--accent); border-radius: 3px;
   .seg { flex-direction: column; }
   .result-actions { flex-direction: column; }
 }
+
+/* ---------- SVG diagram styling ----------
+   Scoped to .svg-diagram to keep these rules from leaking. Previously these
+   lived inline inside <svg><defs><style> blocks in index.html. */
+.svg-diagram .adm-seg { fill: var(--surface-2); stroke: var(--border); stroke-width: 1; }
+.svg-diagram .adm-lbl { fill: var(--text); font-size: 8px; font-family: Inter, sans-serif; }
+.svg-diagram .adm-core { fill: var(--accent-soft); stroke: var(--accent); }
+.svg-diagram .adm-core-lbl { fill: var(--accent); font-size: 10px; font-weight: 600; font-family: Inter, sans-serif; }
+
+.svg-diagram .ec-box { fill: var(--surface-2); stroke: var(--border); }
+.svg-diagram .ec-lbl { fill: var(--text); font-size: 11px; font-family: Inter, sans-serif; text-anchor: middle; }
+.svg-diagram .ec-row { fill: var(--text-dim); font-size: 10px; font-family: Inter, sans-serif; }
+.svg-diagram .ec-arrow { fill: none; stroke: var(--accent); stroke-width: 2; }
+
+.svg-diagram .bb-abb { fill: var(--accent-soft); stroke: var(--accent); }
+.svg-diagram .bb-sbb { fill: var(--surface-2); stroke: var(--border); }
+.svg-diagram .bb-lbl { fill: var(--text); font-size: 12px; font-family: Inter, sans-serif; text-anchor: middle; }
+.svg-diagram .bb-sub { fill: var(--text-dim); font-size: 9px; font-family: Inter, sans-serif; text-anchor: middle; }
+.svg-diagram .bb-arrow { fill: none; stroke: var(--accent); stroke-width: 2; }
+.svg-diagram .bb-arrow-lbl { fill: var(--text-dim); font-size: 10px; font-family: Inter, sans-serif; text-anchor: middle; }

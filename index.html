@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -7,13 +6,13 @@
   <title>TOGAF® EA Practitioner — Mock Exam Studio</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f1418'/%3E%3Cpath d='M32 12 L50 44 L14 44 Z' fill='none' stroke='%237fd1c4' stroke-width='4' stroke-linejoin='round'/%3E%3Ccircle cx='32' cy='34' r='6' fill='%237fd1c4'/%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=2" />
+  <link rel="stylesheet" href="styles.css?v=3" />
 
   <script>
-    // Apply saved/preferred theme before first paint to avoid a flash.
+    // Apply saved/preferred theme before first paint to avoid a white-flash.
+    // app.js syncs the toggle icon to whatever this script picked.
     (function () {
       try {
         var t = localStorage.getItem("togaf_exam_theme");
@@ -32,20 +31,18 @@
 
   <header class="topbar">
     <div class="brand">
-      <span class="brand-mark">◇</span>
+      <span class="brand-mark" aria-hidden="true">◇</span>
       <span class="brand-name">EA Practitioner <em>Studio</em></span>
     </div>
-    <nav class="topnav">
-      <button class="nav-link" data-nav="home">Home</button>
-      <button class="nav-link" data-nav="glossary">Glossary</button>
-      <button class="nav-link" data-nav="history">History</button>
-      <button class="nav-link" data-nav="about">About</button>
-
-      <button class="theme-toggle" id="themeToggle" title="Toggle light / dark mode" aria-label="Toggle light or dark mode">
-        <span class="theme-icon">☾</span>
+    <nav class="topnav" aria-label="Main navigation">
+      <button type="button" class="nav-link" data-nav="home">Home</button>
+      <button type="button" class="nav-link" data-nav="glossary">Glossary</button>
+      <button type="button" class="nav-link" data-nav="history">History</button>
+      <button type="button" class="nav-link" data-nav="about">About</button>
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle light / dark mode" aria-label="Toggle light or dark mode">
+        <span class="theme-icon" aria-hidden="true">☾</span>
       </button>
     </nav>
-
   </header>
 
   <main id="app">
@@ -63,20 +60,20 @@
         <h2 class="card-title">Configure your session</h2>
 
         <div class="field">
-          <label class="field-label">Exam mode</label>
-          <div class="seg" role="radiogroup" id="modeGroup">
-            <button class="seg-btn is-active" data-mode="1">Level 1 · Foundation</button>
-            <button class="seg-btn" data-mode="2">Level 2 · Practitioner</button>
-            <button class="seg-btn" data-mode="blended">Blended</button>
+          <span class="field-label" id="modeGroupLabel">Exam mode</span>
+          <div class="seg" id="modeGroup" role="group" aria-labelledby="modeGroupLabel">
+            <button type="button" class="seg-btn is-active" data-mode="1">Level 1 · Foundation</button>
+            <button type="button" class="seg-btn" data-mode="2">Level 2 · Practitioner</button>
+            <button type="button" class="seg-btn" data-mode="blended">Blended</button>
           </div>
           <p class="field-hint" id="modeHint">Single best answer. Knowledge recall across the TOGAF Standard.</p>
         </div>
 
         <div class="field">
-          <label class="field-label">Session style</label>
-          <div class="seg" role="radiogroup" id="styleGroup">
-            <button class="seg-btn is-active" data-style="practice">Practice (your settings)</button>
-            <button class="seg-btn" data-style="exam">Official exam simulation</button>
+          <span class="field-label" id="styleGroupLabel">Session style</span>
+          <div class="seg" id="styleGroup" role="group" aria-labelledby="styleGroupLabel">
+            <button type="button" class="seg-btn is-active" data-style="practice">Practice (your settings)</button>
+            <button type="button" class="seg-btn" data-style="exam">Official exam simulation</button>
           </div>
           <p class="field-hint" id="styleHint">
             Practice mode lets you pick a question count and toggle instant feedback.
@@ -107,7 +104,7 @@
           <p class="field-hint" id="examSummaryText"></p>
         </div>
 
-        <button class="btn btn-primary btn-lg" id="startBtn">Begin session →</button>
+        <button type="button" class="btn btn-primary btn-lg" id="startBtn">Begin session →</button>
         <p class="bank-note" id="bankNote">Loading question banks…</p>
       </div>
     </section>
@@ -119,9 +116,11 @@
           <span id="qCounter">Question 1 / 20</span>
           <span class="pill" id="qLevelPill">Level 1</span>
           <span class="pill pill-ghost" id="qTopic">Topic</span>
-          <span class="pill pill-timer hidden" id="qTimer" aria-live="polite">--:--</span>
+          <!-- Timer is intentionally aria-live="off" because it updates every
+               second; #liveRegion below handles throttled announcements. -->
+          <span class="pill pill-timer hidden" id="qTimer" aria-live="off">--:--</span>
         </div>
-        <button class="btn btn-ghost btn-sm" id="quitBtn">Quit</button>
+        <button type="button" class="btn btn-ghost btn-sm" id="quitBtn">Quit</button>
       </div>
       <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
 
@@ -132,8 +131,8 @@
       </div>
 
       <div class="quiz-foot">
-        <button class="btn btn-ghost" id="prevBtn">← Previous</button>
-        <button class="btn btn-primary" id="nextBtn">Next →</button>
+        <button type="button" class="btn btn-ghost" id="prevBtn">← Previous</button>
+        <button type="button" class="btn btn-primary" id="nextBtn">Next →</button>
       </div>
     </section>
 
@@ -150,11 +149,11 @@
         <p class="result-sub" id="resultSub"></p>
         <div class="result-stats" id="resultStats"></div>
         <div class="result-actions">
-          <button class="btn btn-primary" id="reviewBtn">Review answers</button>
-          <button class="btn btn-ghost" id="againBtn">New session</button>
+          <button type="button" class="btn btn-primary" id="reviewBtn">Review answers</button>
+          <button type="button" class="btn btn-ghost" id="againBtn">New session</button>
         </div>
       </div>
-      <div class="review-list hidden" id="reviewList"></div>
+      <div class="review-list hidden" id="reviewList" data-rendered="false"></div>
     </section>
 
     <!-- HISTORY -->
@@ -162,8 +161,8 @@
       <div class="view-header">
         <h2>Score history</h2>
         <div class="history-tools">
-          <button class="btn btn-ghost btn-sm" id="exportBtn">Export JSON</button>
-          <button class="btn btn-ghost btn-sm" id="clearBtn">Clear all</button>
+          <button type="button" class="btn btn-ghost btn-sm" id="exportBtn">Export JSON</button>
+          <button type="button" class="btn btn-ghost btn-sm" id="clearBtn">Clear all</button>
         </div>
       </div>
       <div id="historyBody"></div>
@@ -179,24 +178,16 @@
         to the relevant page of the official documentation. Use search or filter by category.</p>
 
       <div class="glossary-controls">
-        <input type="search" id="glossarySearch" class="glossary-search" placeholder="Search terms (e.g. ADM, building block, governance)…" />
-        <div class="glossary-cats" id="glossaryCats"></div>
+        <input type="search" id="glossarySearch" class="glossary-search" placeholder="Search terms (e.g. ADM, building block, governance)…" aria-label="Search glossary terms" />
+        <div class="glossary-cats" id="glossaryCats" role="group" aria-label="Filter glossary by category"></div>
       </div>
 
-      <!-- Recreated reference diagrams (original inline SVG, not copied artwork) -->
+      <!-- Recreated reference diagrams (original inline SVG, not copied artwork).
+           SVG-scoped CSS lives in styles.css under "SVG diagram styling". -->
       <div class="diagram-deck">
         <figure class="diagram-card">
           <figcaption>The ADM Cycle</figcaption>
           <svg viewBox="0 0 320 320" class="svg-diagram" role="img" aria-label="TOGAF ADM cycle diagram">
-            <defs>
-              <style>
-                .adm-seg { fill: var(--surface-2); stroke: var(--border); stroke-width: 1; }
-                .adm-lbl { fill: var(--text); font-size: 11px; font-family: Inter, sans-serif; }
-                .adm-core { fill: var(--accent-soft); stroke: var(--accent); }
-                .adm-core-lbl { fill: var(--accent); font-size: 10px; font-weight: 600; font-family: Inter, sans-serif; }
-              </style>
-            </defs>
-            <!-- 8 outer phases around a circle -->
             <g id="admRing"></g>
             <circle cx="160" cy="160" r="46" class="adm-core" />
             <text x="160" y="156" text-anchor="middle" class="adm-core-lbl">Requirements</text>
@@ -207,47 +198,39 @@
         <figure class="diagram-card">
           <figcaption>Enterprise Continuum</figcaption>
           <svg viewBox="0 0 360 180" class="svg-diagram" role="img" aria-label="Enterprise Continuum diagram">
-            <defs><style>
-              .ec-box { fill: var(--surface-2); stroke: var(--border); }
-              .ec-lbl { fill: var(--text); font-size: 11px; font-family: Inter, sans-serif; text-anchor: middle; }
-              .ec-row { fill: var(--text-dim); font-size: 10px; font-family: Inter, sans-serif; }
-              .ec-arrow { fill: none; stroke: var(--accent); stroke-width: 2; marker-end: url(#ah); }
-            </style>
-            <marker id="ah" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--accent)"/></marker>
+            <defs>
+              <marker id="ec-arrowhead" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L6,3 L0,6 Z" fill="var(--accent)" />
+              </marker>
             </defs>
             <text x="10" y="24" class="ec-row">Architecture Continuum</text>
-            <rect x="10" y="30" width="70" height="34" rx="6" class="ec-box"/><text x="45" y="51" class="ec-lbl">Foundation</text>
-            <rect x="98" y="30" width="70" height="34" rx="6" class="ec-box"/><text x="133" y="51" class="ec-lbl">Common</text>
-            <rect x="186" y="30" width="70" height="34" rx="6" class="ec-box"/><text x="221" y="51" class="ec-lbl">Industry</text>
-            <rect x="274" y="30" width="76" height="34" rx="6" class="ec-box"/><text x="312" y="51" class="ec-lbl">Org-Specific</text>
-            <path d="M20 78 H 340" class="ec-arrow"/>
+            <rect x="10" y="30" width="70" height="34" rx="6" class="ec-box" /><text x="45" y="51" class="ec-lbl">Foundation</text>
+            <rect x="98" y="30" width="70" height="34" rx="6" class="ec-box" /><text x="133" y="51" class="ec-lbl">Common</text>
+            <rect x="186" y="30" width="70" height="34" rx="6" class="ec-box" /><text x="221" y="51" class="ec-lbl">Industry</text>
+            <rect x="274" y="30" width="76" height="34" rx="6" class="ec-box" /><text x="312" y="51" class="ec-lbl">Org-Specific</text>
+            <path d="M20 78 H 340" class="ec-arrow" marker-end="url(#ec-arrowhead)" />
             <text x="10" y="118" class="ec-row">Solutions Continuum</text>
-            <rect x="10" y="124" width="70" height="34" rx="6" class="ec-box"/><text x="45" y="145" class="ec-lbl">Products</text>
-            <rect x="98" y="124" width="70" height="34" rx="6" class="ec-box"/><text x="133" y="145" class="ec-lbl">Systems</text>
-            <rect x="186" y="124" width="70" height="34" rx="6" class="ec-box"/><text x="221" y="145" class="ec-lbl">Industry</text>
-            <rect x="274" y="124" width="76" height="34" rx="6" class="ec-box"/><text x="312" y="145" class="ec-lbl">Org-Specific</text>
+            <rect x="10" y="124" width="70" height="34" rx="6" class="ec-box" /><text x="45" y="145" class="ec-lbl">Products</text>
+            <rect x="98" y="124" width="70" height="34" rx="6" class="ec-box" /><text x="133" y="145" class="ec-lbl">Systems</text>
+            <rect x="186" y="124" width="70" height="34" rx="6" class="ec-box" /><text x="221" y="145" class="ec-lbl">Industry</text>
+            <rect x="274" y="124" width="76" height="34" rx="6" class="ec-box" /><text x="312" y="145" class="ec-lbl">Org-Specific</text>
           </svg>
         </figure>
 
         <figure class="diagram-card">
           <figcaption>ABB → realized by → SBB</figcaption>
           <svg viewBox="0 0 320 130" class="svg-diagram" role="img" aria-label="Building blocks relationship diagram">
-            <defs><style>
-              .bb-abb { fill: var(--accent-soft); stroke: var(--accent); }
-              .bb-sbb { fill: var(--surface-2); stroke: var(--border); }
-              .bb-lbl { fill: var(--text); font-size: 12px; font-family: Inter, sans-serif; text-anchor: middle; }
-              .bb-sub { fill: var(--text-dim); font-size: 9px; font-family: Inter, sans-serif; text-anchor: middle; }
-              .bb-arrow { fill: none; stroke: var(--accent); stroke-width: 2; marker-end: url(#ah2); }
-              .bb-arrow-lbl { fill: var(--text-dim); font-size: 10px; font-family: Inter, sans-serif; text-anchor: middle; }
-            </style>
-            <marker id="ah2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--accent)"/></marker>
+            <defs>
+              <marker id="bb-arrowhead" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L6,3 L0,6 Z" fill="var(--accent)" />
+              </marker>
             </defs>
-            <rect x="20" y="35" width="110" height="56" rx="10" class="bb-abb"/>
+            <rect x="20" y="35" width="110" height="56" rx="10" class="bb-abb" />
             <text x="75" y="60" class="bb-lbl">ABB</text>
             <text x="75" y="76" class="bb-sub">requirements · logical</text>
-            <path d="M132 63 H 188" class="bb-arrow"/>
+            <path d="M132 63 H 188" class="bb-arrow" marker-end="url(#bb-arrowhead)" />
             <text x="160" y="54" class="bb-arrow-lbl">realized by</text>
-            <rect x="190" y="35" width="110" height="56" rx="10" class="bb-sbb"/>
+            <rect x="190" y="35" width="110" height="56" rx="10" class="bb-sbb" />
             <text x="245" y="60" class="bb-lbl">SBB</text>
             <text x="245" y="76" class="bb-sub">product · physical</text>
           </svg>
@@ -259,7 +242,6 @@
 
     <!-- ABOUT -->
     <section class="view view-about hidden" data-view="about">
-
       <div class="card about-card">
         <h2>About this tool</h2>
         <p>A self-study practice environment modeled on the format of the
@@ -285,14 +267,14 @@
 
   </main>
 
+  <!-- Screen-reader announcer used by app.js for throttled timer milestones. -->
+  <div id="liveRegion" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
   <footer class="footer">Built for focused study · localStorage only · No data leaves your browser</footer>
 
   <script src="data/questions_level1.js?v=3"></script>
   <script src="data/questions_level2.js?v=3"></script>
   <script src="data/glossary.js?v=3"></script>
-  <script src="app.js?v=3"></script>
-
-
-
+  <script src="app.js?v=4"></script>
 </body>
 </html>
