@@ -807,21 +807,26 @@ function renderGlossary() {
     glossaryState.built = true;
   }
 
-  // Toggle the special views. The diagram deck stays mounted in either case
-  // (the Diagrams view simply enlarges it; the ADM Phases view hides it).
+  // Toggle the special views and the diagram deck visibility.
+  //
+  // The diagram deck is only shown for the "All" category (overview) and the
+  // dedicated "Diagrams" view. Any specific topical filter (Fundamentals,
+  // ADM, Building Blocks, etc.) hides the deck so the user sees only the
+  // matching terms — otherwise the deck dominates the page regardless of
+  // filter. The ADM Phases view hides the deck too and shows its own panel.
   const diagramsOnly = glossaryState.cat === GLOSSARY_DIAGRAMS_CAT;
   const admPhasesOnly = glossaryState.cat === GLOSSARY_ADM_PHASES_CAT;
   const anySpecial = diagramsOnly || admPhasesOnly;
+  const showDeck = glossaryState.cat === "All" || diagramsOnly;
 
   $("#glossarySearch").classList.toggle("hidden", anySpecial);
   $("#glossaryList").classList.toggle("hidden", anySpecial);
-  $("#diagramDeck").classList.toggle("hidden", admPhasesOnly);
+  $("#diagramDeck").classList.toggle("hidden", !showDeck);
   $("#diagramDeck").classList.toggle("diagram-deck-only", diagramsOnly);
   $("#admPhasesView").classList.toggle("hidden", !admPhasesOnly);
-  // The diagram hint paragraph sits between the deck and the term list,
-  // so hide it whenever the deck is hidden.
+  // The deck hint paragraph follows the deck.
   const hint = document.querySelector(".diagram-hint");
-  if (hint) hint.classList.toggle("hidden", admPhasesOnly);
+  if (hint) hint.classList.toggle("hidden", !showDeck);
 
   if (admPhasesOnly) {
     renderAdmPhases();

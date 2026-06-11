@@ -546,13 +546,29 @@ mark { background: var(--accent-soft); color: var(--accent); border-radius: 3px;
 .svg-diagram .repo-cell-s { fill: var(--text-dim); font-size: 8.5px; font-family: Inter, sans-serif; text-anchor: middle; }
 
 /* Iteration cycles */
-.svg-diagram .iter-ph     { fill: var(--surface-2); stroke: var(--border); }
-.svg-diagram .iter-dev    { fill: var(--accent-soft); stroke: var(--accent); }
-.svg-diagram .iter-ph-lbl { fill: var(--text); font-size: 11px; font-weight: 600; font-family: Inter, sans-serif; text-anchor: middle; }
-.svg-diagram .iter-bracket     { fill: var(--accent-soft); stroke: var(--accent); opacity: 0.7; }
-.svg-diagram .iter-ctx, .svg-diagram .iter-tran { fill: rgba(167, 184, 216, 0.20); stroke: var(--accent-2); }
-.svg-diagram .iter-bracket-lbl { fill: var(--text-dim); font-size: 9px; font-family: Inter, sans-serif; text-anchor: middle; font-weight: 600; }
-.svg-diagram .iter-foot { fill: var(--text-faint); font-size: 9px; font-style: italic; font-family: Inter, sans-serif; text-anchor: middle; }
+.svg-diagram .iter-band            { stroke-width: 1.5; }
+.svg-diagram .iter-band-ctx        { fill: rgba(167, 184, 216, 0.18); stroke: var(--accent-2); }
+.svg-diagram .iter-band-dev        { fill: var(--accent-soft);        stroke: var(--accent); }
+.svg-diagram .iter-band-tran       { fill: rgba(230, 194, 122, 0.18); stroke: var(--warn); }
+.svg-diagram .iter-band-gov        { fill: rgba(127, 209, 164, 0.18); stroke: var(--good); }
+.svg-diagram .iter-band-lbl        { fill: var(--text); font-size: 10.5px; font-weight: 700; font-family: Inter, sans-serif; text-anchor: middle; }
+.svg-diagram .iter-loop            { fill: none; stroke: var(--accent); stroke-width: 1.5; opacity: 0.85; }
+.svg-diagram .iter-seq             { fill: none; stroke: var(--text-dim); stroke-width: 1.5; }
+.svg-diagram .iter-ph              { fill: var(--bg-soft); stroke: var(--border); stroke-width: 1; }
+.svg-diagram .iter-ph-ctx          { stroke: var(--accent-2); }
+.svg-diagram .iter-ph-dev          { stroke: var(--accent); fill: var(--accent-soft); }
+.svg-diagram .iter-ph-tran         { stroke: var(--warn); }
+.svg-diagram .iter-ph-gov          { stroke: var(--good); }
+.svg-diagram .iter-ph-code         { fill: var(--text); font-size: 11px; font-weight: 700; font-family: Inter, sans-serif; text-anchor: middle; }
+.svg-diagram .iter-ph-sub          { fill: var(--text-dim); font-size: 7.5px; font-family: Inter, sans-serif; text-anchor: middle; }
+.svg-diagram .iter-rm              { fill: var(--surface-2); stroke: var(--accent); stroke-width: 1.5; stroke-dasharray: 4 3; }
+.svg-diagram .iter-rm-lbl          { fill: var(--accent); font-size: 11px; font-weight: 700; font-family: Inter, sans-serif; text-anchor: middle; }
+.svg-diagram .iter-rm-sub          { fill: var(--text-dim); font-size: 8.5px; font-style: italic; font-family: Inter, sans-serif; text-anchor: middle; }
+.svg-diagram .iter-rm-link         { fill: none; stroke: var(--accent); stroke-width: 1; opacity: 0.45; stroke-dasharray: 2 2; }
+.svg-diagram .iter-legend-lbl      { fill: var(--text-faint); font-size: 9px; font-family: Inter, sans-serif; }
+.svg-diagram .iter-legend-dot      { stroke-width: 0; }
+.svg-diagram .iter-legend-loop     { fill: var(--accent); }
+.svg-diagram .iter-legend-seq      { fill: var(--text-dim); }
 
 /* Architecture Landscape (stacked trapezoids) */
 .svg-diagram .land-strat { fill: var(--accent-soft); stroke: var(--accent); }
