@@ -234,6 +234,8 @@ input[type=range]::-webkit-slider-thumb {
 
 .feedback { margin-top: 20px; padding: 16px 18px; border-radius: var(--radius-sm); background: var(--surface-2); border-left: 3px solid var(--accent); font-size: 0.9rem; color: var(--text-dim); animation: rise 0.3s var(--ease); }
 .feedback strong { color: var(--text); }
+.feedback-ref { margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--border); font-size: 0.78rem; color: var(--text-faint); font-style: italic; }
+.feedback-ref strong { color: var(--text-dim); font-style: normal; }
 
 .quiz-foot { display: flex; justify-content: space-between; margin-top: 22px; gap: 12px; }
 

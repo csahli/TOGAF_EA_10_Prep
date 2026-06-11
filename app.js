@@ -206,6 +206,33 @@ function buildSession() {
   state.index = 0;
 }
 
+// Identify a Level 2 scenario template — the L2 bank is built from 16
+// templates combined with org-name variants, so two distinct items can share
+// the same scenario, options and rationales. Without dedup, the user sees
+// the "same" question repeat under different company names. Topic + phase +
+// reference uniquely identifies the template (verified against the bank).
+function l2TemplateKey(q) {
+  return `${q.topic}|${q.phase || ""}|${q.reference || ""}`;
+}
+
+// Pick up to `count` items from `pool`, ensuring no two picks share an L2
+// template. L1 items have no template, so they're never blocked. If the
+// distinct-template supply runs out before `count`, returns what it has.
+function pickUniqueTemplates(pool, count) {
+  const out = [];
+  const seenTemplates = new Set();
+  for (const q of pool) {
+    if (out.length >= count) break;
+    if (q.level === 2) {
+      const k = l2TemplateKey(q);
+      if (seenTemplates.has(k)) continue;
+      seenTemplates.add(k);
+    }
+    out.push(q);
+  }
+  return out;
+}
+
 function buildPracticeSession() {
   let pool;
   if (state.mode === "1") pool = state.banks[1].slice();
@@ -225,24 +252,28 @@ function buildPracticeSession() {
       if (i < l2.length) pool.push(l2[i]);
     }
   }
-  return pool.slice(0, state.count);
+  return pickUniqueTemplates(pool, state.count);
 }
 
 function buildExamSession(spec) {
   if (spec.id === "OGEA-103") {
-    // Combined: Part 1 first (up to 40 L1), then Part 2 (up to 8 L2). The
-    // boundary is recorded so finishSession can split scores correctly even
-    // if the L1 bank ever has fewer than 40 items.
+    // Combined: Part 1 first (up to 40 L1), then Part 2 (up to 8 L2 with
+    // distinct scenario templates). The boundary is recorded so
+    // finishSession can split scores correctly even if the L1 bank ever has
+    // fewer than 40 items.
     const wantP1 = spec.sectionCounts[0];
     const wantP2 = spec.sectionCounts[1];
     const p1 = shuffleArr(state.banks[1]).slice(0, wantP1);
-    const p2 = shuffleArr(state.banks[2]).slice(0, wantP2);
+    const p2 = pickUniqueTemplates(shuffleArr(state.banks[2]), wantP2);
     state.examSplit = p1.length;
     return p1.concat(p2);
   }
-  // OGEA-101 / OGEA-102: single-level pool, shuffled, sized to spec.
+  // OGEA-101 (L1, no templates) / OGEA-102 (L2, dedup by template).
   const level = spec.levelsUsed[0];
-  return shuffleArr(state.banks[level]).slice(0, spec.count);
+  const shuffled = shuffleArr(state.banks[level]);
+  return level === 2
+    ? pickUniqueTemplates(shuffled, spec.count)
+    : shuffled.slice(0, spec.count);
 }
 
 
@@ -445,18 +476,26 @@ function showFeedback() {
   const q = state.session[state.index];
   const a = state.answers[state.index];
   const fb = $("#feedback");
+  let body;
   if (q.level === 2) {
     const rationales = q.rationales || [];
     const r = rationales[a.choice] || "";
     const best = q.options[q.answer] || "";
-    fb.innerHTML =
+    body =
       `<strong>You scored ${a.scored} / ${a.max}.</strong> ${escapeHtml(r)}` +
       (a.scored === a.max ? "" : `<br><br><strong>Best answer (${a.max} pts):</strong> ${escapeHtml(best)}`);
   } else {
-    fb.innerHTML = a.correct
+    body = a.correct
       ? `<strong>Correct.</strong> ${escapeHtml(q.explanation)}`
       : `<strong>Not quite.</strong> The best answer is <strong>${escapeHtml(q.options[q.answer])}</strong>. ${escapeHtml(q.explanation)}`;
   }
+  // Same reference line that appears in the review screen, shown inline as
+  // soon as the user answers so they can read or look up the source right
+  // away rather than waiting until the end of the session.
+  const refHtml = q.reference
+    ? `<div class="feedback-ref"><strong>Reference:</strong> ${escapeHtml(q.reference)}</div>`
+    : "";
+  fb.innerHTML = body + refHtml;
   fb.classList.remove("hidden");
 }
 

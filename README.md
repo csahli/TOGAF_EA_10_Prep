@@ -1,5 +1,7 @@
 # TOGAF® EA Practitioner — Mock Exam Studio
 
+**🌐 Live demo: <https://csahli.github.io/TOGAF_EA_10_Prep/>**
+
 A single-page web app for practising TOGAF Standard 10th Edition exam questions,
 aligned to the published OGEA-101 / OGEA-102 / OGEA-103 exam structure.
 
@@ -11,17 +13,24 @@ aligned to the published OGEA-101 / OGEA-102 / OGEA-103 exam structure.
 - **Level 2 (Practitioner)** — 128 scenario questions scored on the same
   5/3/1/0 gradient the OGEA-102 exam uses (best = 5, second-best = 3,
   third-best = 1, distractor = 0). The gradings themselves are the author's
-  interpretation, not an Open Group answer key.
+  interpretation, not an Open Group answer key. Built from 16 distinct
+  scenario templates × company-name variants — within any single session,
+  picks are deduplicated so the same scenario never repeats under a
+  different company name.
 - **Blended** — mixes both levels in one practice session.
 - **Practice mode** — pick your own question count, shuffle and toggle instant
-  feedback per question.
+  feedback per question. When you answer a question the rationale and the
+  C220 reference appear inline immediately.
 - **Official exam simulation** — enforces the published Open Group conditions:
   - OGEA-101: 40 questions / 60 minutes / closed book / 24-40 pass
   - OGEA-102: 8 questions / 90 minutes / open book / 24-40 pass
   - OGEA-103 Combined: 48 questions / 150 minutes / each part 24-40 to pass
   - Visible countdown timer, auto-submit on timeout
+  - The full set of questions is chosen up-front at the start of the
+    simulation (no on-the-fly resampling) and Level 2 picks are guaranteed
+    to come from distinct scenario templates.
 - Score ring, per-question review with rationales **and source citations**
-  shown on the review screen
+  on both the inline feedback and the final review screen
 - Glossary of 30 core TOGAF concepts with links to the official TOGAF Standard,
   plus 10 inline reference diagrams (ADM Cycle, TOGAF Enterprise Metamodel,
   Content Framework, Architecture Repository, Enterprise Continuum, ABB→SBB,
@@ -63,10 +72,12 @@ Known limitations:
   scenarios reflect the author's interpretation of TOGAF guidance, not an
   Open Group answer key. Real OGEA-102 grading may differ on borderline
   options.
-- The L2 question pool is built from a small number of scenario templates
-  combined with org-name variants; coverage is narrower than the headline
-  question count suggests. Treat repeated exposure as familiarity practice,
-  not as evidence of mastery.
+- The L2 question pool is built from 16 distinct scenario templates combined
+  with org-name variants. Within any one session the app enforces
+  template-distinct picks, so you won't see the same scenario twice in a
+  row — but across many sessions you will eventually see every template.
+  Coverage is narrower than the headline "128 L2 questions" suggests; treat
+  repeated exposure as familiarity practice, not as evidence of mastery.
 - Citation accuracy is the author's best read of where each concept lives in
   the standard; chapter and section numbers may be off by one in places.
 
