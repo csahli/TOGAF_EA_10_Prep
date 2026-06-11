@@ -20,8 +20,10 @@ aligned to the published OGEA-101 / OGEA-102 / OGEA-103 exam structure.
   - Visible countdown timer, auto-submit on timeout
 - Score ring, per-question review with rationales **and source citations**
   shown on the review screen
-- Glossary of 30 core TOGAF concepts with diagrams and links to the official
-  TOGAF Standard
+- Glossary of 30 core TOGAF concepts with links to the official TOGAF Standard,
+  plus 9 inline reference diagrams (ADM Cycle, Enterprise Continuum, ABB→SBB,
+  Content Framework, Architecture Repository, ADM Iteration Cycles, Architecture
+  Landscape levels, Stakeholder Power/Interest matrix, Architecture Partitioning)
 - **Score history stored in your browser (localStorage)** — plus Export to JSON
 
 ## Run it

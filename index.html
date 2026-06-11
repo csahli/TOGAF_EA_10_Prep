@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=3" />
+  <link rel="stylesheet" href="styles.css?v=4" />
 
   <script>
     // Apply saved/preferred theme before first paint to avoid a white-flash.
@@ -233,6 +233,170 @@
             <rect x="190" y="35" width="110" height="56" rx="10" class="bb-sbb" />
             <text x="245" y="60" class="bb-lbl">SBB</text>
             <text x="245" y="76" class="bb-sub">product · physical</text>
+          </svg>
+        </figure>
+
+        <figure class="diagram-card">
+          <figcaption>Architecture Content Framework</figcaption>
+          <svg viewBox="0 0 360 220" class="svg-diagram" role="img" aria-label="Architecture Content Framework: Deliverables contain Artifacts contain Building Blocks across the four architecture domains">
+            <!-- Domain header band -->
+            <rect x="10" y="10"  width="335" height="22" rx="5" class="cf-domain" />
+            <text x="178" y="25" class="cf-domain-lbl">Business · Data · Application · Technology</text>
+            <!-- Three nested layers -->
+            <rect x="10" y="42"  width="335" height="55" rx="6" class="cf-deliv" />
+            <text x="178" y="64" class="cf-lbl-h">Deliverables</text>
+            <text x="178" y="82" class="cf-lbl-s">SoAW · Architecture Definition Document · Roadmap · Contract</text>
+            <rect x="30" y="103" width="295" height="50" rx="6" class="cf-art" />
+            <text x="178" y="124" class="cf-lbl-h">Artifacts</text>
+            <text x="178" y="142" class="cf-lbl-s">Catalogs · Matrices · Diagrams</text>
+            <rect x="50" y="160" width="255" height="50" rx="6" class="cf-bb" />
+            <text x="178" y="181" class="cf-lbl-h">Building Blocks</text>
+            <text x="178" y="199" class="cf-lbl-s">ABBs (logical) → realized by SBBs (physical)</text>
+          </svg>
+        </figure>
+
+        <figure class="diagram-card">
+          <figcaption>Architecture Repository</figcaption>
+          <svg viewBox="0 0 360 230" class="svg-diagram" role="img" aria-label="Architecture Repository: six core parts holding architectures, requirements, references, standards, governance records, and solutions">
+            <rect x="10" y="10" width="340" height="210" rx="10" class="repo-shell" />
+            <text x="180" y="30" class="repo-title">Architecture Repository</text>
+            <!-- 6 parts in a 3x2 grid -->
+            <g class="repo-cells">
+              <rect x="22"  y="46"  width="100" height="74" rx="6" class="repo-cell" />
+              <text x="72"  y="76"  class="repo-cell-h">Architecture</text>
+              <text x="72"  y="92"  class="repo-cell-h">Landscape</text>
+              <text x="72"  y="110" class="repo-cell-s">Strategic · Segment · Capability</text>
+
+              <rect x="130" y="46"  width="100" height="74" rx="6" class="repo-cell" />
+              <text x="180" y="76"  class="repo-cell-h">Architecture</text>
+              <text x="180" y="92"  class="repo-cell-h">Requirements</text>
+              <text x="180" y="110" class="repo-cell-s">authorised requirements</text>
+
+              <rect x="238" y="46"  width="100" height="74" rx="6" class="repo-cell" />
+              <text x="288" y="76"  class="repo-cell-h">Reference</text>
+              <text x="288" y="92"  class="repo-cell-h">Library</text>
+              <text x="288" y="110" class="repo-cell-s">models · patterns</text>
+
+              <rect x="22"  y="128" width="100" height="74" rx="6" class="repo-cell" />
+              <text x="72"  y="158" class="repo-cell-h">Standards</text>
+              <text x="72"  y="174" class="repo-cell-h">Library</text>
+              <text x="72"  y="192" class="repo-cell-s">tech · biz · regulatory</text>
+
+              <rect x="130" y="128" width="100" height="74" rx="6" class="repo-cell" />
+              <text x="180" y="158" class="repo-cell-h">Governance</text>
+              <text x="180" y="174" class="repo-cell-h">Repository</text>
+              <text x="180" y="192" class="repo-cell-s">decisions · dispensations</text>
+
+              <rect x="238" y="128" width="100" height="74" rx="6" class="repo-cell" />
+              <text x="288" y="158" class="repo-cell-h">Solutions</text>
+              <text x="288" y="174" class="repo-cell-h">Landscape</text>
+              <text x="288" y="192" class="repo-cell-s">deployed SBBs</text>
+            </g>
+          </svg>
+        </figure>
+
+        <figure class="diagram-card">
+          <figcaption>ADM Iteration Cycles</figcaption>
+          <svg viewBox="0 0 360 220" class="svg-diagram" role="img" aria-label="Four ADM iteration cycles: Context (Prelim and A), Development (B, C, D), Transition Planning (E and F), Governance (G and H)">
+            <!-- Phase row -->
+            <g class="iter-phases">
+              <rect x="8"   y="80" width="34" height="36" rx="5" class="iter-ph" />
+              <text x="25"  y="103" class="iter-ph-lbl">Pre</text>
+              <rect x="48"  y="80" width="34" height="36" rx="5" class="iter-ph" />
+              <text x="65"  y="103" class="iter-ph-lbl">A</text>
+              <rect x="88"  y="80" width="34" height="36" rx="5" class="iter-ph iter-dev" />
+              <text x="105" y="103" class="iter-ph-lbl">B</text>
+              <rect x="128" y="80" width="34" height="36" rx="5" class="iter-ph iter-dev" />
+              <text x="145" y="103" class="iter-ph-lbl">C</text>
+              <rect x="168" y="80" width="34" height="36" rx="5" class="iter-ph iter-dev" />
+              <text x="185" y="103" class="iter-ph-lbl">D</text>
+              <rect x="208" y="80" width="34" height="36" rx="5" class="iter-ph" />
+              <text x="225" y="103" class="iter-ph-lbl">E</text>
+              <rect x="248" y="80" width="34" height="36" rx="5" class="iter-ph" />
+              <text x="265" y="103" class="iter-ph-lbl">F</text>
+              <rect x="288" y="80" width="34" height="36" rx="5" class="iter-ph" />
+              <text x="305" y="103" class="iter-ph-lbl">G</text>
+              <rect x="328" y="80" width="22" height="36" rx="5" class="iter-ph" />
+              <text x="339" y="103" class="iter-ph-lbl">H</text>
+            </g>
+            <!-- Iteration brackets above (Context, Development) -->
+            <path d="M12 64 H 82 V 76 H 12 Z" class="iter-bracket iter-ctx" />
+            <text x="47"  y="58"  class="iter-bracket-lbl">Architecture Context</text>
+            <path d="M92 64 H 202 V 76 H 92 Z" class="iter-bracket iter-devb" />
+            <text x="147" y="58"  class="iter-bracket-lbl">Architecture Development</text>
+            <!-- Iteration brackets below (Transition, Governance) -->
+            <path d="M212 120 H 282 V 132 H 212 Z" class="iter-bracket iter-tran" />
+            <text x="247" y="150" class="iter-bracket-lbl">Transition Planning</text>
+            <path d="M292 120 H 350 V 132 H 292 Z" class="iter-bracket iter-gov" />
+            <text x="321" y="150" class="iter-bracket-lbl">Governance</text>
+            <text x="180" y="200" class="iter-foot">Requirements Management iterates throughout</text>
+          </svg>
+        </figure>
+
+        <figure class="diagram-card">
+          <figcaption>Architecture Landscape Levels</figcaption>
+          <svg viewBox="0 0 360 210" class="svg-diagram" role="img" aria-label="Architecture Landscape: Strategic level is long-term and low detail, Segment is medium, Capability is short-term and high detail">
+            <!-- Pyramid-style trapezoidal stack -->
+            <polygon points="120,20 240,20 280,70 80,70"   class="land-strat" />
+            <text x="180" y="50" class="land-lbl">Strategic</text>
+            <polygon points="80,75 280,75 320,135 40,135"  class="land-seg" />
+            <text x="180" y="110" class="land-lbl">Segment</text>
+            <polygon points="40,140 320,140 355,200 5,200" class="land-cap" />
+            <text x="180" y="175" class="land-lbl">Capability</text>
+            <!-- Axis annotations -->
+            <text x="345" y="35"  class="land-axis" text-anchor="end">long term · low detail</text>
+            <text x="345" y="195" class="land-axis" text-anchor="end">short term · high detail</text>
+          </svg>
+        </figure>
+
+        <figure class="diagram-card">
+          <figcaption>Stakeholder Power / Interest</figcaption>
+          <svg viewBox="0 0 360 220" class="svg-diagram" role="img" aria-label="Stakeholder Power versus Interest matrix: four quadrants — Keep Satisfied, Key Players, Minimal Effort, Keep Informed">
+            <!-- Four quadrants -->
+            <rect x="60"  y="20"  width="130" height="80" class="sm-q sm-ks" />
+            <text x="125" y="50"  class="sm-q-h">Keep Satisfied</text>
+            <text x="125" y="68"  class="sm-q-s">high power</text>
+            <text x="125" y="82"  class="sm-q-s">low interest</text>
+            <rect x="190" y="20"  width="130" height="80" class="sm-q sm-kp" />
+            <text x="255" y="50"  class="sm-q-h">Key Players</text>
+            <text x="255" y="68"  class="sm-q-s">high power</text>
+            <text x="255" y="82"  class="sm-q-s">high interest · manage closely</text>
+            <rect x="60"  y="100" width="130" height="80" class="sm-q sm-me" />
+            <text x="125" y="130" class="sm-q-h">Minimal Effort</text>
+            <text x="125" y="148" class="sm-q-s">low power</text>
+            <text x="125" y="162" class="sm-q-s">low interest</text>
+            <rect x="190" y="100" width="130" height="80" class="sm-q sm-ki" />
+            <text x="255" y="130" class="sm-q-h">Keep Informed</text>
+            <text x="255" y="148" class="sm-q-s">low power</text>
+            <text x="255" y="162" class="sm-q-s">high interest</text>
+            <!-- Axes -->
+            <text x="40"  y="100" class="sm-axis" transform="rotate(-90 40 100)">Power</text>
+            <text x="190" y="205" class="sm-axis" text-anchor="middle">Interest</text>
+          </svg>
+        </figure>
+
+        <figure class="diagram-card">
+          <figcaption>Architecture Partitioning</figcaption>
+          <svg viewBox="0 0 360 200" class="svg-diagram" role="img" aria-label="Architecture Partitioning: four partition criteria — Subject Matter, Time, Depth, Maturity">
+            <rect x="10" y="10" width="340" height="180" rx="10" class="part-shell" />
+            <text x="180" y="34" class="part-title">Partitioning criteria</text>
+            <g class="part-cells">
+              <rect x="24"  y="50"  width="150" height="60" rx="6" class="part-cell" />
+              <text x="99"  y="76"  class="part-cell-h">Subject Matter</text>
+              <text x="99"  y="94"  class="part-cell-s">apps · depts · products · sites</text>
+
+              <rect x="186" y="50"  width="150" height="60" rx="6" class="part-cell" />
+              <text x="261" y="76"  class="part-cell-h">Time</text>
+              <text x="261" y="94"  class="part-cell-s">baseline · transition · target</text>
+
+              <rect x="24"  y="118" width="150" height="60" rx="6" class="part-cell" />
+              <text x="99"  y="144" class="part-cell-h">Depth</text>
+              <text x="99"  y="162" class="part-cell-s">summary → fully elaborated</text>
+
+              <rect x="186" y="118" width="150" height="60" rx="6" class="part-cell" />
+              <text x="261" y="144" class="part-cell-h">Maturity / Volatility</text>
+              <text x="261" y="162" class="part-cell-s">stable vs. changing scope</text>
+            </g>
           </svg>
         </figure>
       </div>

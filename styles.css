@@ -357,3 +357,52 @@ mark { background: var(--accent-soft); color: var(--accent); border-radius: 3px;
 .svg-diagram .bb-sub { fill: var(--text-dim); font-size: 9px; font-family: Inter, sans-serif; text-anchor: middle; }
 .svg-diagram .bb-arrow { fill: none; stroke: var(--accent); stroke-width: 2; }
 .svg-diagram .bb-arrow-lbl { fill: var(--text-dim); font-size: 10px; font-family: Inter, sans-serif; text-anchor: middle; }
+
+/* Content Framework */
+.svg-diagram .cf-domain { fill: var(--accent); }
+.svg-diagram .cf-domain-lbl { fill: var(--bg); font-size: 11px; font-weight: 600; font-family: Inter, sans-serif; text-anchor: middle; }
+.svg-diagram .cf-deliv { fill: var(--surface-2); stroke: var(--border); }
+.svg-diagram .cf-art   { fill: var(--accent-soft); stroke: var(--accent); }
+.svg-diagram .cf-bb    { fill: var(--surface-2); stroke: var(--accent-2); }
+.svg-diagram .cf-lbl-h { fill: var(--text); font-size: 12px; font-weight: 600; font-family: Inter, sans-serif; text-anchor: middle; }
+.svg-diagram .cf-lbl-s { fill: var(--text-dim); font-size: 9.5px; font-family: Inter, sans-serif; text-anchor: middle; }
+
+/* Architecture Repository */
+.svg-diagram .repo-shell { fill: var(--surface); stroke: var(--border); }
+.svg-diagram .repo-title { fill: var(--accent); font-size: 12px; font-weight: 600; font-family: Inter, sans-serif; text-anchor: middle; }
+.svg-diagram .repo-cell  { fill: var(--bg-soft); stroke: var(--border); }
+.svg-diagram .repo-cell-h { fill: var(--text); font-size: 10.5px; font-weight: 600; font-family: Inter, sans-serif; text-anchor: middle; }
+.svg-diagram .repo-cell-s { fill: var(--text-dim); font-size: 8.5px; font-family: Inter, sans-serif; text-anchor: middle; }
+
+/* Iteration cycles */
+.svg-diagram .iter-ph     { fill: var(--surface-2); stroke: var(--border); }
+.svg-diagram .iter-dev    { fill: var(--accent-soft); stroke: var(--accent); }
+.svg-diagram .iter-ph-lbl { fill: var(--text); font-size: 11px; font-weight: 600; font-family: Inter, sans-serif; text-anchor: middle; }
+.svg-diagram .iter-bracket     { fill: var(--accent-soft); stroke: var(--accent); opacity: 0.7; }
+.svg-diagram .iter-ctx, .svg-diagram .iter-tran { fill: rgba(167, 184, 216, 0.20); stroke: var(--accent-2); }
+.svg-diagram .iter-bracket-lbl { fill: var(--text-dim); font-size: 9px; font-family: Inter, sans-serif; text-anchor: middle; font-weight: 600; }
+.svg-diagram .iter-foot { fill: var(--text-faint); font-size: 9px; font-style: italic; font-family: Inter, sans-serif; text-anchor: middle; }
+
+/* Architecture Landscape (stacked trapezoids) */
+.svg-diagram .land-strat { fill: var(--accent-soft); stroke: var(--accent); }
+.svg-diagram .land-seg   { fill: rgba(167, 184, 216, 0.18); stroke: var(--accent-2); }
+.svg-diagram .land-cap   { fill: var(--surface-2); stroke: var(--border); }
+.svg-diagram .land-lbl   { fill: var(--text); font-size: 12px; font-weight: 600; font-family: Inter, sans-serif; text-anchor: middle; }
+.svg-diagram .land-axis  { fill: var(--text-faint); font-size: 9px; font-style: italic; font-family: Inter, sans-serif; }
+
+/* Stakeholder Power / Interest matrix */
+.svg-diagram .sm-q    { stroke: var(--border); }
+.svg-diagram .sm-ks   { fill: rgba(230, 194, 122, 0.16); }
+.svg-diagram .sm-kp   { fill: var(--accent-soft); stroke: var(--accent); }
+.svg-diagram .sm-me   { fill: var(--surface-2); }
+.svg-diagram .sm-ki   { fill: rgba(167, 184, 216, 0.16); }
+.svg-diagram .sm-q-h  { fill: var(--text); font-size: 12px; font-weight: 600; font-family: Inter, sans-serif; text-anchor: middle; }
+.svg-diagram .sm-q-s  { fill: var(--text-dim); font-size: 9px; font-family: Inter, sans-serif; text-anchor: middle; }
+.svg-diagram .sm-axis { fill: var(--accent); font-size: 10px; font-weight: 600; font-family: Inter, sans-serif; }
+
+/* Architecture Partitioning */
+.svg-diagram .part-shell { fill: var(--surface); stroke: var(--border); }
+.svg-diagram .part-title { fill: var(--accent); font-size: 12px; font-weight: 600; font-family: Inter, sans-serif; text-anchor: middle; }
+.svg-diagram .part-cell   { fill: var(--bg-soft); stroke: var(--border); }
+.svg-diagram .part-cell-h { fill: var(--text); font-size: 11px; font-weight: 600; font-family: Inter, sans-serif; text-anchor: middle; }
+.svg-diagram .part-cell-s { fill: var(--text-dim); font-size: 9px; font-family: Inter, sans-serif; text-anchor: middle; }
